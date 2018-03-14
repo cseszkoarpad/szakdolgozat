@@ -16,9 +16,25 @@
   },
   "scripts": {
     "server": "nodemon server.js",
-    "client": "npm run start --prefix client"
+    "client": "npm run start --prefix client",
+    "deploy": "now --public"
   },
   "devDependencies": {
     "nodemon": "^1.14.12"
+  },
+
+  "now": {
+    "alias":"auto-react",
+    "name": "auto-react",
+    "env": {
+      "PORT": 4000,
+      "MONGO_URI": "@mongouri",
+      "SESSION_SECRET": "@secret",
+      "GOOGLE_CLIENT_ID": "@googleclientid",
+      "GOOGLE_CLIENT_SECRET": "@googleclientsecret",
+      "STRIPE_PUBLISHABLE_KEY": "@stripepubkey",
+      "STRIPE_SECRET_KEY": "@stripesecretkey"
+    }
   }
+
 }
