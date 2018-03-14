@@ -1,0 +1,12 @@
+.container-auto {
+	max-width: 150px;
+	margin: 5px;
+}
+
+.img-auto {
+	max-width: 150px;
+}
+
+.title-auto {
+	text-align: center;
+}

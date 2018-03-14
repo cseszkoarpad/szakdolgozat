@@ -1,0 +1,1 @@
+Szakdolgozat projekt. Személyautó véleményezés Stripe integrálással MERN Stackben megvalósítva.
