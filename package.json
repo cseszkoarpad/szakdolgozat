@@ -12,6 +12,7 @@
     "morgan": "^1.9.0",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
+    "path": "^0.12.7",
     "stripe": "^5.5.0"
   },
   "scripts": {
@@ -22,9 +23,8 @@
   "devDependencies": {
     "nodemon": "^1.14.12"
   },
-
   "now": {
-    "alias":"auto-react",
+    "alias": "auto-react",
     "name": "auto-react",
     "env": {
       "PORT": 4000,
@@ -36,5 +36,4 @@
       "STRIPE_SECRET_KEY": "@stripesecretkey"
     }
   }
-
 }

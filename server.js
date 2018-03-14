@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const session = require('express-session')
 const passport = require('passport')
 const morgan = require('morgan')
+const path = require("path");
 
 const config = require('./config/keys')
 
@@ -29,6 +30,11 @@ app.use(session({
   saveUninitialized: false
 }));
 
+//deployhoz
+app.use(express.static(path.resolve(__dirname, "client", "build")));  
+app.get("/", (req, res) => {  
+  res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+}); 
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
