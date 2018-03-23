@@ -29,6 +29,7 @@ class Header extends Component {
           <Link
             to='/'
             className="left brand-logo"
+            style={{ marginLeft: '20px' }}
           >
             AutoReact
           </Link>
