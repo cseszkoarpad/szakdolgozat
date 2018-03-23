@@ -6,7 +6,7 @@ Indítás:
 
 Vétel funkció (teszteléshez):
 email: bármilyen email cím,
-card number: 4141 4141 4141 4141,
+card number: 4242 4242 4242 4242,
 MM/YY: bármi ami a jelenlegi dátumtól később van,
 CVC: bármilyen 3 jegyű szám
 
