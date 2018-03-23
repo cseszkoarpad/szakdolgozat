@@ -4,7 +4,8 @@
 }
 
 .img-auto {
-	max-width: 150px;
+	width: 150px;
+	height: 110px;
 }
 
 .title-auto {
