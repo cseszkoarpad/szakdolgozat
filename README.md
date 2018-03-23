@@ -16,3 +16,4 @@ Todo:
 Csak az szerkeszthesse/törölhesse az autó információit, aki feltöltötte.
 Egy felhasználó egy autót csak egyszer kedvelhessen.
 Teljes responsive design.
+Kommentelés megvalósítása.

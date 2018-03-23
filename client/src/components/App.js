@@ -20,12 +20,18 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <Header />
-          <Route exact path="/" component={Main} />
-          <Route exact path="/upload/new" component={NewAutoPage} />
-          <Route exact path="/autos/:id" component={AutoDetailsPage} />
-          <Route exact path="/autos/:id/edit" component={AutoEditPage} />
-          <Footer />
+          <header>
+            <Header />
+          </header>
+          <main>
+            <Route exact path="/" component={Main} />
+            <Route exact path="/upload/new" component={NewAutoPage} />
+            <Route exact path="/autos/:id" component={AutoDetailsPage} />
+            <Route exact path="/autos/:id/edit" component={AutoEditPage} />
+          </main>
+          <footer>
+            <Footer />
+          </footer>
         </div>
       </BrowserRouter>
     )
