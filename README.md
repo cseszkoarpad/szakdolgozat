@@ -15,3 +15,4 @@ A legtöbb funkció használatához be kell jelentkezni, a feltöltéshez 1 kred
 Todo:
 Csak az szerkeszthesse/törölhesse az autó információit, aki feltöltötte.
 Egy felhasználó egy autót csak egyszer kedvelhessen.
+Teljes responsive design.
