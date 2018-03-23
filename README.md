@@ -13,6 +13,7 @@ CVC: bármilyen 3 jegyű szám
 A legtöbb funkció használatához be kell jelentkezni, a feltöltéshez 1 kreditre van szükség.
 
 Todo:
+Flash screen sikeres/sikertelen akció után.
 Csak az szerkeszthesse/törölhesse az autó információit, aki feltöltötte.
 Egy felhasználó egy autót csak egyszer kedvelhessen.
 Teljes responsive design.
