@@ -24,7 +24,7 @@ class Header extends Component {
 
   render() {
     return (
-      <nav>
+      <nav style={{ background: 'black' }}>
         <div className="nav-wrapper">
           <Link
             to='/'

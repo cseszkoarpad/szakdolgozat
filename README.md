@@ -1,8 +1,6 @@
 Szakdolgozat projekt. Személyautó véleményezés Stripe integrálással MERN Stackben megvalósítva.
 
-Indítás:
-1. terminál: nodemon server.js
-2. terminál: npm run start --prefix client
+Live: https://szakdolgozat-projekt.herokuapp.com/
 
 Vétel funkció (teszteléshez):
 email: bármilyen email cím,
