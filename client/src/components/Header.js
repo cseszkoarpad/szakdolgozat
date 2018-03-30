@@ -24,20 +24,22 @@ class Header extends Component {
 
   render() {
     return (
-      <nav style={{ background: 'black' }}>
-        <div className="nav-wrapper">
-          <Link
-            to='/'
-            className="left brand-logo"
-            style={{ marginLeft: '20px' }}
-          >
-            AutoReact
-          </Link>
-          <ul className="right">
-            {this.renderMenu()}
-          </ul>
-        </div>
-      </nav>
+      <header>
+        <nav>
+          <div className="nav-wrapper"  style={{ background: 'black' }}>
+            <Link
+              to='/'
+              className="left brand-logo"
+              style={{ marginLeft: '20px' }}
+            >
+              AutoReact
+            </Link>
+            <ul className="right">
+              {this.renderMenu()}
+            </ul>
+          </div>
+        </nav>
+      </header>
     );
   }
 }

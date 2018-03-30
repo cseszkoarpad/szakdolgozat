@@ -61,9 +61,9 @@ class AutoDetailsPage extends Component {
 							<li className="text"><span>Váltó:</span>{valto}</li>
 							<li className="desc"><span>Leírás:</span>{leiras}</li>
 			
-							<button className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
-							<Link to={`/autos/${_id}/edit`}><button className="waves-effect waves-light btn">Szerkesztés <i className="material-icons">edit</i></button></Link>
-							<button className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
+							<button style={{ margin: '5px', display: 'block' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
+							<Link to={`/autos/${_id}/edit`}><button style={{ margin: '5px' }} className="waves-effect waves-light btn">Szerkesztés <i className="material-icons">edit</i></button></Link>
+							<button style={{ margin: '5px' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
 			
 						</ul>	
 					</div>

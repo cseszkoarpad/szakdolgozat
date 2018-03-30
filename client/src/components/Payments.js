@@ -10,6 +10,7 @@ class Payments extends Component {
         name="AutoReact"
         description="$1 a képfeltöltésért"
         amount={100}
+        panelLabel="Fizetek:"
         token={token => this.props.handleToken(token)}
         stripeKey={'pk_test_7veAZeDwcZrBccb8HOmxCb0s'}
       >

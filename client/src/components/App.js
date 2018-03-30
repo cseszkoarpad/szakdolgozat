@@ -10,6 +10,8 @@ import Footer from './Footer'
 import AutoDetailsPage from './AutoDetailsPage'
 import AutoEditPage from './AutoEditPage'
 
+import '../styles/index.css'
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser()
@@ -20,18 +22,14 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div>
-          <header>
-            <Header />
-          </header>
+          <Header />
           <main>
             <Route exact path="/" component={Main} />
             <Route exact path="/upload/new" component={NewAutoPage} />
             <Route exact path="/autos/:id" component={AutoDetailsPage} />
             <Route exact path="/autos/:id/edit" component={AutoEditPage} />
           </main>
-          <footer>
-            <Footer />
-          </footer>
+          <Footer />
         </div>
       </BrowserRouter>
     )
