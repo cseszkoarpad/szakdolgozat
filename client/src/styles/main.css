@@ -1,6 +1,7 @@
-.container-main {
+.autos {
 	margin: 20px;
 	display: inline-flex;
 	flex-wrap: wrap;
 	justify-content: space-evenly;
+	height: calc(100vh - 300px);
 }

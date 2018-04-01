@@ -9,8 +9,10 @@ class Main extends Component {
 		const autos = this.props.autos.map(auto => <Auto key={auto._id} {...auto} />)
 		
 		return (
-			<div className="container-main">
-				{ autos }
+			<div className="container">
+				<div className="row autos">
+                    { autos }
+                </div>
 			</div>
 		)
 	}
