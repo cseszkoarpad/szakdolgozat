@@ -1,3 +1,7 @@
 body {
 	background: #EFEBE9;
 }
+
+md-icon{
+	font-family: 'Material Icons' !important;
+}

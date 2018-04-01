@@ -18,8 +18,7 @@
   "scripts": {
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "npm run start --prefix client",
-    "deploy": "now --public"
+    "client": "npm run start --prefix client"
   },
   "devDependencies": {
     "nodemon": "^1.14.12"
