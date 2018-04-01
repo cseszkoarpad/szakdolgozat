@@ -6,7 +6,7 @@ const requireCredits = require('..//middlewares/requireCredits')
 
 module.exports = app => {
 
-	//nincs rá szükség de működik
+	//ok
 	app.get('/api/autos/:id', (req, res) => {
 		Auto.findById({ _id: req.params.id }, (err, auto) => {
 			if(err) return err

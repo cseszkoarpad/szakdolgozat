@@ -32,6 +32,13 @@ class AutoDetailsPage extends Component {
 		this.props.history.push('/')
 	}
 
+	convertPrice() {
+	    if(this.state.auto.ar) {
+            return this.state.auto.ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+        }
+	    return 0
+    }
+
 	render() {
 		let { _id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes } = this.state.auto
 		return (
@@ -47,7 +54,7 @@ class AutoDetailsPage extends Component {
 					</div>
 					<div className="col s5">
 						<ul className="points">
-							<li className="text"><span>Ár:</span>{ar}<span className="unit">Ft</span></li>							
+							<li className="text"><span>Ár:</span>{this.convertPrice()}<span className="unit">Ft</span></li>
 							<li className="text"><span>Évjárat:</span>{ev}</li>
 							<li className="text"><span>Állapot:</span>{allapot}</li>
 							<li className="text"><span>Kivitel:</span>{kivitel}</li>
@@ -61,9 +68,9 @@ class AutoDetailsPage extends Component {
 							<li className="text"><span>Váltó:</span>{valto}</li>
 							<li className="desc"><span>Leírás:</span>{leiras}</li>
 			
-							<button style={{ margin: '5px', display: 'block' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
-							<Link to={`/autos/${_id}/edit`}><button style={{ margin: '5px' }} className="waves-effect waves-light btn">Szerkesztés <i className="material-icons">edit</i></button></Link>
-							<button style={{ margin: '5px' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
+							<button style={{ margin: '5px', display: 'block', background: '#1565C0' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
+							<Link to={`/autos/${_id}/edit`}><button style={{ margin: '5px', background: '#4CAF50' }} className="waves-effect waves-light btn">Szerkesztés <i className="material-icons">edit</i></button></Link>
+							<button style={{ margin: '5px', background: '#f44336' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
 			
 						</ul>	
 					</div>
