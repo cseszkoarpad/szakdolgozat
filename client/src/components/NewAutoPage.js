@@ -9,7 +9,7 @@ import TextInput from './form/TextInput'
 class NewAutoPage extends Component {
 	constructor() {
 		super()
-		this.state = {
+        this.state = {
 			auto: {
 				marka: '',
 				modell: '',
@@ -35,11 +35,11 @@ class NewAutoPage extends Component {
 	}
 
 	onChange(event) {
-    const field = event.target.name;
-    const auto = this.state.auto;
-    auto[field] = event.target.value;
-    this.setState({ auto: auto });
-  }
+        const field = event.target.name;
+        const auto = this.state.auto;
+        auto[field] = event.target.value;
+        this.setState({ auto: auto });
+      }
 
 	async uploadAuto(e) {
 		e.preventDefault()
@@ -68,6 +68,10 @@ class NewAutoPage extends Component {
 	}
 
 	render() {
+	    if(!this.props.auth) {
+            this.props.history.push('/')
+	        return null
+	    }
 		let { kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras } = this.state.auto
 		return (
 			<div className="container" style={{ margin: '50px auto'}}>

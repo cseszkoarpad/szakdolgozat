@@ -19,6 +19,10 @@ class AutoEditPage extends Component {
 	}
 
 	componentDidMount() {
+		if(!this.props.auth) {
+			this.props.history.goBack()
+			return null
+		}
 		this.setState({ auto: this.props.auto })
 	}
 

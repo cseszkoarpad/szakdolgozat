@@ -40,7 +40,7 @@ class AutoDetailsPage extends Component {
     }
 
 	render() {
-		let { _id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes } = this.state.auto
+		let { _id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes } = this.state.auto
 		return (
 			<div className="container">
 				<div className="row">
