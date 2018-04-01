@@ -9,7 +9,8 @@ class AutoDetailsPage extends Component {
 	constructor() {
 		super()
 		this.state = {
-			auto: {}
+			auto: {},
+            error: null
 		}
 	}
 
@@ -22,11 +23,29 @@ class AutoDetailsPage extends Component {
 	}
 
 	async incrementLikes(id) {
+	    if(!this.props.auth) {
+	        this.setState({ error: 'Ehhez a funkcióhoz be kell jelentkezni!' })
+            return
+        }
 		await axios.put('/api/autos/likes', { id: id })
 		this.setState({ auto: {...this.state.auto, likes: this.state.auto.likes + 1 } })
 	}
 
+	goToEditAutoPage(id) {
+	    if(!this.props.auth) {
+            this.setState({ error: 'Ehhez a funkcióhoz be kell jelentkezni!' })
+            return
+        }
+
+        this.props.history.push(`/autos/${id}/edit`)
+	}
+
+
 	async deleteAuto(id) {
+        if(!this.props.auth) {
+            this.setState({ error: 'Ehhez a funkcióhoz be kell jelentkezni!' })
+            return
+        }
 		await axios.delete('/api/autos/delete', { data: { id: id } })
 		this.props.fetchAutos()
 		this.props.history.push('/')
@@ -41,17 +60,35 @@ class AutoDetailsPage extends Component {
 
     convertUploadTime() {
 	    if(this.state.auto.feltoltve) {
-	        let date = this.state.auto.feltoltve.split('T')
+	        const date = this.state.auto.feltoltve.split('T')
             return date[0]
 	    }
         return ''
     }
 
+    errorShowUp(errorMessage) {
+        return (
+            <div className="alert">
+                <span className="closebtn" onClick={ () => this.closeDialog() }>&times;</span>
+                {errorMessage}
+            </div>
+        )
+    }
+
+    closeDialog() {
+	    this.setState({ error: null })
+    }
+
 	render() {
-		let { _id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes } = this.state.auto
+		let { _id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, likes } = this.state.auto
 		return (
 			<div className="container" style={{ marginTop: '40px', marginBottom: '40px' }}>
 				<div className="row">
+
+                    <div className="error">
+                        {this.state.error ? this.errorShowUp(this.state.error) : null}
+                    </div>
+
 					<h6 className="title">{marka} - {modell}</h6>
 					<div className="col s7">
 						<img className="img" src={kep ? kep : "http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg"} alt={`${marka}-${modell}`}/>
@@ -77,7 +114,7 @@ class AutoDetailsPage extends Component {
 							<li className="desc"><span>Leírás:</span>{leiras}</li>
 			
 							<button style={{ margin: '10px', display: 'block', background: '#1565C0' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
-							<Link to={`/autos/${_id}/edit`}><button style={{ margin: '10px', display: 'block', background: '#4CAF50' }} className="waves-effect waves-light btn">Szerkesztés <i className="material-icons">edit</i></button></Link>
+							<button style={{ margin: '10px', display: 'block', background: '#4CAF50' }} className="waves-effect waves-light btn" onClick={ () => this.goToEditAutoPage(_id) }>Szerkesztés <i className="material-icons">edit</i></button>
 							<button style={{ margin: '10px', display: 'block', background: '#f44336' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
 			
 						</ul>	
