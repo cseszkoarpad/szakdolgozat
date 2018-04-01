@@ -1,3 +1,9 @@
+.auto {
+    margin: 40px 40px 0 0;
+    width: 150px;
+    height: 200px;
+}
+
 .img-auto {
 	width: 150px;
 	height: 110px;

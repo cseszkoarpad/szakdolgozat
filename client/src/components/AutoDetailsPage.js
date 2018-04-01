@@ -39,16 +39,24 @@ class AutoDetailsPage extends Component {
 	    return 0
     }
 
+    convertUploadTime() {
+	    if(this.state.auto.feltoltve) {
+	        let date = this.state.auto.feltoltve.split('T')
+            return date[0]
+	    }
+        return ''
+    }
+
 	render() {
 		let { _id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes } = this.state.auto
 		return (
-			<div className="container">
+			<div className="container" style={{ marginTop: '40px', marginBottom: '40px' }}>
 				<div className="row">
 					<h6 className="title">{marka} - {modell}</h6>
 					<div className="col s7">
 						<img className="img" src={kep ? kep : "http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg"} alt={`${marka}-${modell}`}/>
 						<ul className="points">
-							<li className="uploaded"><span>Feltöltve:</span>{feltoltve}</li>
+							<li className="uploaded"><span>Feltöltve:</span>{this.convertUploadTime()}</li>
 							<li className="text"><span>Kedvelések:</span>{likes}</li>					
 						</ul>
 					</div>
@@ -68,9 +76,9 @@ class AutoDetailsPage extends Component {
 							<li className="text"><span>Váltó:</span>{valto}</li>
 							<li className="desc"><span>Leírás:</span>{leiras}</li>
 			
-							<button style={{ margin: '5px', display: 'block', background: '#1565C0' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
-							<Link to={`/autos/${_id}/edit`}><button style={{ margin: '5px', background: '#4CAF50' }} className="waves-effect waves-light btn">Szerkesztés <i className="material-icons">edit</i></button></Link>
-							<button style={{ margin: '5px', background: '#f44336' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
+							<button style={{ margin: '10px', display: 'block', background: '#1565C0' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
+							<Link to={`/autos/${_id}/edit`}><button style={{ margin: '10px', display: 'block', background: '#4CAF50' }} className="waves-effect waves-light btn">Szerkesztés <i className="material-icons">edit</i></button></Link>
+							<button style={{ margin: '10px', display: 'block', background: '#f44336' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
 			
 						</ul>	
 					</div>
@@ -85,7 +93,7 @@ class AutoDetailsPage extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const autoId = ownProps.match.params.id;
+    const autoId = ownProps.match.params.id;
 	const auto = Object.assign({}, state.autos.find(auto => auto._id === autoId))
   return {
 		auto

@@ -1,7 +1,7 @@
-.autos {
-	margin: 20px;
-	display: inline-flex;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
-	height: calc(100vh - 300px);
+.autos-flex {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: center;
+    justify-content: space-evenly;
+    min-height: 60vh;
 }

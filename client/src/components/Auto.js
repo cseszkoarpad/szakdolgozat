@@ -5,12 +5,12 @@ import '../styles/auto.css'
 const Auto = (props) => {
 	const { kep, marka, modell, _id } = props
 	return (
-		<Link to={`/autos/${_id}`}>
-			<div className="container-auto">
-				<img className="img-auto" src={kep ? kep : "http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg"} alt={`${marka}-${modell}`}/>
-				<h6 className="title-auto">{marka} - {modell}</h6>
-			</div>
-		</Link>
+        <div className="auto">
+		    <Link to={`/autos/${_id}`}>
+                <img className="img-auto" src={kep ? kep : "http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg"} alt={`${marka}-${modell}`}/>
+                <h6 className="title-auto">{marka} - {modell}</h6>
+    		</Link>
+        </div>
 	)
 }
 

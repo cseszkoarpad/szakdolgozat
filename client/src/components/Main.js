@@ -10,8 +10,10 @@ class Main extends Component {
 		
 		return (
 			<div className="container">
-				<div className="row autos">
-                    { autos }
+				<div className="row">
+                    <div className="autos-flex">
+                        { autos }
+                    </div>
                 </div>
 			</div>
 		)
