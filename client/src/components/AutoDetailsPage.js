@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
-import {fetchAutos} from '../actions';
+import {fetchAutos, submitComment} from '../actions';
 import '../styles/autoDetails.css'
 
 class AutoDetailsPage extends Component {
@@ -11,6 +11,8 @@ class AutoDetailsPage extends Component {
             auto: {},
             error: null
         }
+
+        this.renderComments = this.renderComments.bind(this)
     }
 
     componentDidMount() {
@@ -78,6 +80,23 @@ class AutoDetailsPage extends Component {
         this.setState({error: null})
     }
 
+    renderComments() {
+        if(this.state.auto._comments) {
+            return (
+                <div>
+
+                </div>
+            )
+        }
+        console.log(this.state.auto._comments)
+    }
+
+    submitComment(e) {
+        e.preventDefault()
+        if(this.props.auth && this.state.auto)
+            this.props.submitComment(this.props.auth._id, this.state.auto._id, this.refs.comment.value)
+    }
+
     render() {
         let {_id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, likes} = this.state.auto
         return (
@@ -135,7 +154,11 @@ class AutoDetailsPage extends Component {
                 </div>
                 {/* komment szekció */}
                 <div className="comment-container">
-
+                    {this.renderComments()}
+                    <form onSubmit={ (e) => this.submitComment()}>
+                        <input type="text" ref="comment" />
+                        <button type="submit" className="btn">Hozzászólok</button>
+                    </form>
                 </div>
             </div>
         )
@@ -152,4 +175,4 @@ function mapStateToProps(state, ownProps) {
     };
 }
 
-export default connect(mapStateToProps, {fetchAutos})(AutoDetailsPage)
+export default connect(mapStateToProps, {fetchAutos, submitComment})(AutoDetailsPage)
