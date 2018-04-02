@@ -113,9 +113,9 @@ class AutoDetailsPage extends Component {
 							<li className="text"><span>Váltó:</span>{valto}</li>
 							<li className="desc"><span>Leírás:</span>{leiras}</li>
 			
-							<button style={{ margin: '10px', display: 'block', background: '#1565C0' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="material-icons">thumb_up</i></button>
-							<button style={{ margin: '10px', display: 'block', background: '#4CAF50' }} className="waves-effect waves-light btn" onClick={ () => this.goToEditAutoPage(_id) }>Szerkesztés <i className="material-icons">edit</i></button>
-							<button style={{ margin: '10px', display: 'block', background: '#f44336' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
+							<button style={{ margin: '10px', display: 'block', background: '#1565C0' }} className="waves-effect waves-light btn" onClick={() => this.incrementLikes(_id)}>Kedvelés <i className="icon ion-thumbsup"></i></button>
+							<button style={{ margin: '10px', display: 'block', background: '#4CAF50' }} className="waves-effect waves-light btn" onClick={ () => this.goToEditAutoPage(_id) }>Szerkesztés <i className="icon ion-edit"></i></button>
+							<button style={{ margin: '10px', display: 'block', background: '#f44336' }} className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="icon ion-trash-b"></i></button>
 			
 						</ul>	
 					</div>

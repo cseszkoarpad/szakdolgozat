@@ -176,9 +176,9 @@ class AutoEditPage extends Component {
 									<textarea type="text" rows="15" cols="150" maxLength="400" name="leiras" value={leiras} onChange={this.onChange} />
 								</div>
 								
-								<button type="submit" className="waves-effect waves-light btn">Mentés <i className="material-icons">save</i></button>
-								<button className="waves-effect waves-light btn"><Link style={{ color: 'white' }} to={`/autos/${_id}`}>Mégse <i className="material-icons">arrow_back</i></Link></button>								
-								<button className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="material-icons">delete</i></button>
+								<button type="submit" className="waves-effect waves-light btn">Mentés <i className="icon ion-bookmark"></i></button>
+								<button className="waves-effect waves-light btn"><Link style={{ color: 'white' }} to={`/autos/${_id}`}>Mégse <i className="icon ion-arrow-left-a"></i></Link></button>
+								<button className="waves-effect waves-light btn" onClick={() => this.deleteAuto(_id)}>Törlés <i className="icon ion-trash-b"></i></button>
 				
 							</ul>	
 						</div>
