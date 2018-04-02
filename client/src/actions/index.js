@@ -26,9 +26,3 @@ export const submitComment = comment => async dispatch => {
 	dispatch({ type: FETCH_AUTOS, payload: res.data })
 }
 
-export const submitAuto = (auto) => async dispatch => {
-	const res = await axios.post('/api/autos', auto)
-
-	dispatch({ type: FETCH_AUTOS, payload: res.data })
-}
-
