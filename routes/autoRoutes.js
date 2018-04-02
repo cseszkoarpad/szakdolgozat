@@ -32,7 +32,7 @@ module.exports = app => {
         console.log(reqComment)
 
         const comment = new Comment()
-        comment.user = userName
+        comment.name = userName
         comment.text = userText
         comment.save((err, newComment) => {
             if (err) return err
