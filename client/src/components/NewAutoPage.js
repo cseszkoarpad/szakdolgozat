@@ -174,8 +174,12 @@ class NewAutoPage extends Component {
 								
 								<p className="info">A feltöltés 1 creditbe kerül.</p>
 								<p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>
-								<button style={{ margin: '45px 20px 0 0' }} type="submit" className="waves-effect waves-light btn"><i className="icon ion-plus-round"></i> Létrehozás</button>
-								<button style={{ marginTop: '45px' }} className="waves-effect waves-light btn"><Link style={{ color: 'white'}} to="/">Mégse <i className="icon ion-arrow-left-a"></i></Link></button>
+								<button style={{ margin: '45px 20px 0 0', background: '#4CAF50' }} type="submit" className="waves-effect waves-light btn">
+									<i className="icon ion-plus-round"></i> Létrehozás
+								</button>
+								<button style={{ marginTop: '45px', background: '#FFEB3B' }} className="waves-effect waves-light btn">
+									<Link style={{ color: 'white'}} to="/">Mégse <i className="icon ion-arrow-left-a"></i></Link>
+								</button>
 				
 						</form>
 				</div>

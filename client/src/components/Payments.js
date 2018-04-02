@@ -14,7 +14,7 @@ class Payments extends Component {
         token={token => this.props.handleToken(token)}
         stripeKey={'pk_test_7veAZeDwcZrBccb8HOmxCb0s'}
       >
-        <button className="waves-effect waves-light btn">
+        <button className="waves-effect waves-light btn" style={{ background: 'rgb(21, 101, 192)' }}>
           Vétel
         </button>
       </StripeCheckout>
