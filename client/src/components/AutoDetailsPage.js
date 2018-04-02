@@ -13,6 +13,7 @@ class AutoDetailsPage extends Component {
         }
 
         this.renderComments = this.renderComments.bind(this)
+        this.submitComment = this.submitComment.bind(this)
     }
 
     componentDidMount() {
@@ -83,18 +84,26 @@ class AutoDetailsPage extends Component {
     renderComments() {
         if(this.state.auto._comments) {
             return (
-                <div>
-
+                <div className="comments">
+                    {this.state.auto._comments.map((comment, i) => {
+                        return (
+                            <div key={i}>
+                                {comment.user} - {comment.text}
+                            </div>
+                        )
+                    })}
                 </div>
             )
         }
-        console.log(this.state.auto._comments)
     }
 
     submitComment(e) {
         e.preventDefault()
-        if(this.props.auth && this.state.auto)
-            this.props.submitComment(this.props.auth._id, this.state.auto._id, this.refs.comment.value)
+        if(this.props.auth && this.state.auto) {
+            this.props.submitComment(this.props.auth._id, this.state.auto._id, this.props.auth.name, this.refs.comment.value)
+            this.refs.commentForm.reset()
+            console.log("asd")
+        }
     }
 
     render() {
@@ -155,7 +164,7 @@ class AutoDetailsPage extends Component {
                 {/* komment szekció */}
                 <div className="comment-container">
                     {this.renderComments()}
-                    <form onSubmit={ (e) => this.submitComment()}>
+                    <form ref="commentForm" onSubmit={ (e) => this.submitComment(e) }>
                         <input type="text" ref="comment" />
                         <button type="submit" className="btn">Hozzászólok</button>
                     </form>

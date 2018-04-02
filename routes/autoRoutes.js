@@ -27,22 +27,20 @@ module.exports = app => {
     app.post('/api/autos/comments', async (req, res) => {
         const userId = req.body.userId
         const autoId = req.body.autoId
-        const reqComment = req.body.comment
+        const userName = req.body.userName
+        const userText = req.body.userText
         console.log(reqComment)
 
         const comment = new Comment()
-        comment.text = req.body.text
-        comment.save(err => {
+        comment.user = userName
+        comment.text = userText
+        comment.save((err, newComment) => {
             if (err) return err
 
-            Auto.findById({_id: id}, (err, auto) => {
+            Auto.findById({_id: autoId}, (err, auto) => {
                 if (err) return err
 
-                if (auto.comments)
-                    auto.comments += comment
-                else
-                    auto.comments = comment
-
+                auto._comments.push(newComment._id)
                 auto.save(err => {
                     if (err) return err
 
