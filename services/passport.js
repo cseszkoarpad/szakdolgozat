@@ -27,12 +27,14 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             User.findOne({googleId: profile.id}, (err, user) => {
+                console.log(profile)
                 if(user)
                     return done(err, user)
 
                 const newUser = new User()
                 newUser.googleId = profile.id
                 newUser.name = profile.displayName
+                newUser.profilePic = profile.photos[0].value
                 newUser.save((err, user) => {
                     return done(err, user)
                 })

@@ -114,7 +114,8 @@ class AutoDetailsPage extends Component {
             this.props.submitComment(this.props.auth._id, this.state.auto._id, this.props.auth.name, this.refs.comment.value)
             this.refs.commentForm.reset()
             this.props.fetchComments()
-        }
+        } else
+            return
     }
 
     render() {
@@ -175,11 +176,10 @@ class AutoDetailsPage extends Component {
                 {/* komment szekció */}
                 <div className="comment-container">
                     {this.renderComments()}
-                    {this.props.auth ?
                         <form ref="commentForm" onSubmit={(e) => this.submitComment(e)}>
                             <input type="text" ref="comment"/>
                             <button type="submit" className="btn" style={{background: '#1565C0'}}>Hozzászólok</button>
-                        </form> : null}
+                        </form>
                 </div>
             </div>
         )
