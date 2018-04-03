@@ -23,7 +23,13 @@ module.exports = app => {
         })
     })
 
-    //tesztelni kell - nem műkszik
+    app.get('/api/comments', (req, res) => {
+        Comment.find((err, comments) => {
+            if(err) return err
+            res.send(comments)
+        })
+    })
+
     app.post('/api/autos/comments', async (req, res) => {
         const userId = req.body.userId
         const autoId = req.body.autoId

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import axios from 'axios'
-import {fetchAutos, submitComment} from '../actions';
+import {fetchAutos, fetchComments, submitComment} from '../actions';
 import '../styles/autoDetails.css'
 
 class AutoDetailsPage extends Component {
@@ -17,6 +17,7 @@ class AutoDetailsPage extends Component {
     }
 
     componentDidMount() {
+        this.props.fetchComments()
         this.setState({auto: this.props.auto})
     }
 
@@ -82,26 +83,37 @@ class AutoDetailsPage extends Component {
     }
 
     renderComments() {
+        let comments = []
         if (this.state.auto._comments) {
-            return (
-                <div className="comments">
-                    {this.state.auto._comments.map((comment, i) => {
-                        return (
-                            <div key={i}>
-                                {comment.user} - {comment.text}
-                            </div>
-                        )
-                    })}
-                </div>
-            )
+            this.props.comments.map(comment => {
+                return this.state.auto._comments.forEach(thisAutoComment => {
+                    if (thisAutoComment === comment._id) {
+                        let commentObject = Object.assign({}, comment)
+                        comments.push(commentObject)
+                    }
+                })
+            })
         }
+        return (
+            <div className="comments">
+                {comments.map((comment, i) => {
+                    return (
+                        <div key={i}>
+                            <strong>{comment.name}</strong> - {comment.text}
+                        </div>
+                    )
+                })}
+            </div>
+        )
     }
+
 
     submitComment(e) {
         e.preventDefault()
         if (this.props.auth && this.state.auto) {
             this.props.submitComment(this.props.auth._id, this.state.auto._id, this.props.auth.name, this.refs.comment.value)
             this.refs.commentForm.reset()
+            this.props.fetchComments()
         }
     }
 
@@ -166,7 +178,7 @@ class AutoDetailsPage extends Component {
                     {this.props.auth ?
                         <form ref="commentForm" onSubmit={(e) => this.submitComment(e)}>
                             <input type="text" ref="comment"/>
-                            <button type="submit" className="btn" style={{ background: '#1565C0' }}>Hozzászólok</button>
+                            <button type="submit" className="btn" style={{background: '#1565C0'}}>Hozzászólok</button>
                         </form> : null}
                 </div>
             </div>
@@ -180,8 +192,9 @@ function mapStateToProps(state, ownProps) {
 
     return {
         auto,
-        auth: state.auth
+        auth: state.auth,
+        comments: state.comments
     };
 }
 
-export default connect(mapStateToProps, {fetchAutos, submitComment})(AutoDetailsPage)
+export default connect(mapStateToProps, {fetchAutos, fetchComments, submitComment})(AutoDetailsPage)
