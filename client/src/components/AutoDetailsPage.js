@@ -102,7 +102,6 @@ class AutoDetailsPage extends Component {
         if (this.props.auth && this.state.auto) {
             this.props.submitComment(this.props.auth._id, this.state.auto._id, this.props.auth.name, this.refs.comment.value)
             this.refs.commentForm.reset()
-            console.log("asd")
         }
     }
 

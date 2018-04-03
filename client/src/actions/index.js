@@ -1,4 +1,4 @@
-import {FETCH_USER, FETCH_AUTOS} from './types'
+import {FETCH_USER, FETCH_AUTOS, FETCH_COMMENTS} from './types'
 import axios from 'axios'
 
 export const fetchUser = () => async dispatch => {
@@ -13,6 +13,12 @@ export const fetchAutos = () => async dispatch => {
     dispatch({type: FETCH_AUTOS, payload: res.data})
 }
 
+export const fetchComments = () => async dispatch => {
+    const res = await axios.get('/api/comments')
+
+    dispatch({type: FETCH_COMMENTS, payload: res.data})
+}
+
 export const handleToken = token => async dispatch => {
     const res = await axios.post('/api/stripe', token);
 
@@ -21,7 +27,7 @@ export const handleToken = token => async dispatch => {
 
 //érdemes tesztelni
 export const submitComment = (userId, autoId, userName, userText) => async dispatch => {
-    const res = await axios.post('/api/autos/comments',
+    await axios.post('/api/autos/comments',
         {
             userId: userId,
             autoId: autoId,
@@ -29,6 +35,7 @@ export const submitComment = (userId, autoId, userName, userText) => async dispa
             userText: userText
         })
 
+    const res = await axios.get('/api/autos')
     dispatch({type: FETCH_AUTOS, payload: res.data})
 }
 

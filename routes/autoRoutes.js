@@ -29,7 +29,6 @@ module.exports = app => {
         const autoId = req.body.autoId
         const userName = req.body.userName
         const userText = req.body.userText
-        console.log(reqComment)
 
         const comment = new Comment()
         comment.name = userName
@@ -40,7 +39,7 @@ module.exports = app => {
             Auto.findById({_id: autoId}, (err, auto) => {
                 if (err) return err
 
-                auto._comments.push(newComment._id)
+                auto._comments.unshift(newComment._id)
                 auto.save(err => {
                     if (err) return err
 
