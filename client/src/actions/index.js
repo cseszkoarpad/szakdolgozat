@@ -25,7 +25,6 @@ export const handleToken = token => async dispatch => {
     dispatch({type: FETCH_USER, payload: res.data});
 };
 
-//érdemes tesztelni
 export const submitComment = (userId, autoId, userName, userText) => async dispatch => {
     await axios.post('/api/autos/comments',
         {

@@ -33,11 +33,10 @@ module.exports = app => {
     app.post('/api/autos/comments', async (req, res) => {
         const userId = req.body.userId
         const autoId = req.body.autoId
-        const userName = req.body.userName
         const userText = req.body.userText
 
         const comment = new Comment()
-        comment.name = userName
+        comment.userId = userId
         comment.text = userText
         comment.save((err, newComment) => {
             if (err) return err

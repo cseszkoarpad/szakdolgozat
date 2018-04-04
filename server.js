@@ -9,10 +9,6 @@ const morgan = require('morgan')
 
 const config = require('./config/keys')
 
-const Comment = require('./models/Comment')
-const Auto = require('./models/Auto')
-const User = require('./models/User')
-
 require('./services/passport');
 
 mongoose.connect(config.database);

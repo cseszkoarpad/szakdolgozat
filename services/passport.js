@@ -3,7 +3,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const mongoose = require('mongoose');
 const keys = require('../config/keys');
 
-const User = mongoose.model('User');
+const User = require('../models/User');
 
 mongoose.Promise = Promise
 

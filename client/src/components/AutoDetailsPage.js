@@ -84,21 +84,25 @@ class AutoDetailsPage extends Component {
 
     renderComments() {
         let comments = []
+        let commentsNum = 0
         if (this.state.auto._comments) {
             this.props.comments.map(comment => {
                 return this.state.auto._comments.forEach(thisAutoComment => {
                     if (thisAutoComment === comment._id) {
                         let commentObject = Object.assign({}, comment)
-                        comments.push(commentObject)
+                        comments.unshift(commentObject)
+                        commentsNum++
                     }
                 })
             })
         }
         return (
             <div className="comments">
+                <h5>{commentsNum} hozzászólás</h5>
                 {comments.map((comment, i) => {
                     return (
-                        <div key={i}>
+                        <div className="comment" key={i} style={{ margin: '20px' }}>
+                            <img src={comment.picture} alt={`${comment.name} profile`} style={{ width: '50px' }} />
                             <strong>{comment.name}</strong> - {comment.text}
                         </div>
                     )
@@ -114,8 +118,11 @@ class AutoDetailsPage extends Component {
             this.props.submitComment(this.props.auth._id, this.state.auto._id, this.props.auth.name, this.refs.comment.value)
             this.refs.commentForm.reset()
             this.props.fetchComments()
-        } else
+        } else {
+            this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'})
+            document.documentElement.scrollTop = 0;
             return
+        }
     }
 
     render() {
@@ -176,10 +183,10 @@ class AutoDetailsPage extends Component {
                 {/* komment szekció */}
                 <div className="comment-container">
                     {this.renderComments()}
-                        <form ref="commentForm" onSubmit={(e) => this.submitComment(e)}>
-                            <input type="text" ref="comment"/>
-                            <button type="submit" className="btn" style={{background: '#1565C0'}}>Hozzászólok</button>
-                        </form>
+                    <form ref="commentForm" onSubmit={(e) => this.submitComment(e)}>
+                        <input type="text" ref="comment"/>
+                        <button type="submit" className="btn" style={{background: '#1565C0'}}>Hozzászólok</button>
+                    </form>
                 </div>
             </div>
         )
