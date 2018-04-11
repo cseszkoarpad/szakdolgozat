@@ -6,21 +6,32 @@ const requireCredits = require('..//middlewares/requireCredits')
 
 module.exports = app => {
 
-    //ok
     app.get('/api/autos/:id', (req, res) => {
-        Auto.findById({_id: req.params.id}, (err, auto) => {
-            if (err) return err
-
-            res.send(auto)
-        })
+        db.one('SELECT * FROM Autos WHERE id = $1', req.params.id)
+            .then(data => {
+                res.send(data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     })
 
-    //ok
+    /*
     app.get('/api/autos', (req, res) => {
         Auto.find((err, autos) => {
             if (err) return console.error(err);
             res.send(autos)
         })
+    })*/
+
+    app.get('/api/autos', (req, res) => {
+        db.multi('SELECT * FROM Autos')
+            .then(data => {
+                res.send(data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     })
 
     app.get('/api/comments', (req, res) => {

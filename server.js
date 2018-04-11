@@ -1,6 +1,5 @@
 require('dotenv').config()
 const express = require('express')
-const mongoose = require('mongoose');
 const app = express()
 const bodyParser = require('body-parser')
 const session = require('express-session')
@@ -11,8 +10,6 @@ const config = require('./config/keys')
 
 require('./services/passport');
 
-mongoose.connect(config.database);
-
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -22,14 +19,12 @@ app.use(session({
   saveUninitialized: false
 }));
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log("connected to the database")
-});
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+const pgp = require('pg-promise')();
+
+const db = pgp(config.DATABASE_URL);
 
 require('./routes/authRoutes')(app);
 require('./routes/autoRoutes')(app);
