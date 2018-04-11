@@ -1,4 +1,5 @@
 module.exports = {
+  mongoDatabase: process.env.MONGO_URI,
   database: process.env.DATABASE_URL,
   secret: process.env.SESSION_SECRET,
   googleClientID: process.env.GOOGLE_CLIENT_ID,

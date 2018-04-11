@@ -5,7 +5,7 @@ const requireLogin = require('..//middlewares/requireLogin')
 const requireCredits = require('..//middlewares/requireCredits')
 
 module.exports = app => {
-
+/*
     app.get('/api/autos/:id', (req, res) => {
         db.one('SELECT * FROM Autos WHERE id = $1', req.params.id)
             .then(data => {
@@ -15,15 +15,16 @@ module.exports = app => {
                 console.log(err)
             })
     })
+*/
 
-    /*
     app.get('/api/autos', (req, res) => {
         Auto.find((err, autos) => {
             if (err) return console.error(err);
             res.send(autos)
         })
-    })*/
+    })
 
+    /*
     app.get('/api/autos', (req, res) => {
         db.multi('SELECT * FROM Autos')
             .then(data => {
@@ -33,7 +34,7 @@ module.exports = app => {
                 console.log(err)
             })
     })
-
+*/
     app.get('/api/comments', (req, res) => {
         Comment.find((err, comments) => {
             if(err) return err
