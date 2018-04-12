@@ -24,7 +24,7 @@ app.use(passport.session());
 
 const pgp = require('pg-promise')();
 
-const db = pgp(config.DATABASE_URL);
+const db = pgp(config.database);
 
 require('./routes/authRoutes')(app);
 require('./routes/autoRoutes')(app);
