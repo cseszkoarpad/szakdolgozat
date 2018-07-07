@@ -60,7 +60,7 @@ class AutoEditPage extends Component {
     }
 
     async deleteAuto(id) {
-        await axios.delete('/api/autos/delete', {data: {id: id}})
+        await axios.delete('/api/autos/delete', {data: {id}})
         this.props.fetchAutos()
         this.props.history.push('/')
     }

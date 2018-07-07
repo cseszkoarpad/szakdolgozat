@@ -1,6 +1,5 @@
 const Comment = require('../models/Comment')
 const Auto = require('../models/Auto')
-const User = require('../models/User')
 const requireLogin = require('..//middlewares/requireLogin')
 const requireCredits = require('..//middlewares/requireCredits')
 

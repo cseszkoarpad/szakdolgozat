@@ -30,7 +30,7 @@ class AutoDetailsPage extends Component {
             this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'})
             return
         }
-        await axios.put('/api/autos/likes', {id: id})
+        await axios.put('/api/autos/likes', {id})
         this.setState({auto: {...this.state.auto, likes: this.state.auto.likes + 1}})
     }
 
@@ -49,7 +49,7 @@ class AutoDetailsPage extends Component {
             this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'})
             return
         }
-        await axios.delete('/api/autos/delete', {data: {id: id}})
+        await axios.delete('/api/autos/delete', {data: {id}})
         this.props.fetchAutos()
         this.props.history.push('/')
     }
