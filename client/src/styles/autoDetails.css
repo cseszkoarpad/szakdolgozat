@@ -1,41 +1,41 @@
 .img {
-	max-width: 100%;
-	display: inline;
+    max-width: 100%;
+    display: inline;
 }
 
 .title {
-	margin-bottom: 15px;
-	font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
 }
 
 .points {
-	display: inline;
-	max-width: 40%;
+    display: inline;
+    max-width: 40%;
 }
 
 .points li {
-	margin-left: 20px;
-	font-size: 1.1rem;
-	margin-top: 4px;
+    margin-left: 20px;
+    font-size: 1.1rem;
+    margin-top: 4px;
 }
 
 ul.points span:first-child {
-	font-weight: bold;
-	margin-right: 15px;
+    font-weight: bold;
+    margin-right: 15px;
 }
 
 .unit {
-	font-style: italic;
-	font-size: 0.95rem;
-	margin-left: 1px;
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-left: 1px;
 }
 
 li.uploaded {
-	font-size: 0.9rem;
+    font-size: 0.9rem;
 }
 
 li.desc {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 /* error alert section */

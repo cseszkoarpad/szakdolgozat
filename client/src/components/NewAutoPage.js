@@ -1,49 +1,38 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
-import axios from 'axios'
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import axios from 'axios';
 import {fetchAutos, fetchUser} from '../actions';
 
-import TextInput from './form/TextInput'
+import TextInput from './form/TextInput';
 
 class NewAutoPage extends Component {
-  constructor() {
-    super()
-    this.state = {
-      auto: {
-        marka: '',
-        modell: '',
-        kep: '',
-        ar: 0,
-        ev: 0,
-        allapot: '',
-        kivitel: '',
-        km: 0,
-        szin: '',
-        tomeg: 0,
-        uzemanyag: '',
-        hengerUrTartalom: 0,
-        teljesitmeny: 0,
-        hajtas: '',
-        valto: '',
-        leiras: ''
-      }
-    }
+  state = {
+    marka: '',
+    modell: '',
+    kep: '',
+    ar: 0,
+    ev: 0,
+    allapot: '',
+    kivitel: '',
+    km: 0,
+    szin: '',
+    tomeg: 0,
+    uzemanyag: '',
+    hengerUrTartalom: 0,
+    teljesitmeny: 0,
+    hajtas: '',
+    valto: '',
+    leiras: ''
+  };
 
-    this.onChange = this.onChange.bind(this)
-    this.uploadAuto = this.uploadAuto.bind(this)
-  }
-
-  onChange(event) {
-    const field = event.target.name;
-    const auto = this.state.auto;
-    auto[field] = event.target.value;
-    this.setState({auto: auto});
-  }
+  onChange = (event) => {
+    this.setState({[event.target.name]: event.target.value});
+  };
 
   async uploadAuto(e) {
-    e.preventDefault()
-    const auto = this.state.auto
+    e.preventDefault();
+    const auto = this.state.auto;
     await axios.post('/api/autos/', {
       marka: auto.marka,
       modell: auto.modell,
@@ -61,17 +50,17 @@ class NewAutoPage extends Component {
       hajtas: auto.hajtas,
       valto: auto.valto,
       leiras: auto.leiras
-    })
-    this.props.fetchAutos()
-    this.props.fetchUser()
-    this.props.history.push('/')
+    });
+    this.props.fetchAutos();
+    this.props.fetchUser();
+    this.props.history.push('/');
   }
 
   render() {
     if (!this.props.auth) {
-      this.props.history.push('/')
+      this.props.history.push('/');
     }
-    let {kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras} = this.state.auto
+    let {kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras} = this.state.auto;
     return (
       <div className="container" style={{margin: '50px auto'}}>
         <div className="row">
@@ -185,14 +174,14 @@ class NewAutoPage extends Component {
           </form>
         </div>
       </div>
-    )
+    );
   }
 }
 
-function mapStateToProps({auth}) {
+const mapStateToProps = ({auth}) => {
   return {
     auth
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps, {fetchAutos, fetchUser})(NewAutoPage)
+export default connect(mapStateToProps, {fetchAutos, fetchUser})(NewAutoPage);

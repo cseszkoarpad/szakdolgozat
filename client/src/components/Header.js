@@ -1,36 +1,36 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import Payments from './Payments';
 
 class Header extends Component {
-  renderMenu() {
+  renderMenu = () => {
     switch (this.props.auth) {
       case null:
         return;
       case false:
-        return <li><a href="/auth/google">Bejelentkezés</a></li>;
+        return <li><Link to="/auth/google">Bejelentkezés</Link></li>;
       default:
         return [
           <li key="4"><Link to="/upload/new">Feltöltés</Link></li>,
-          <li key="1"><Payments /></li>,
-          <li key="3" style={{ margin: '0 10px' }}>
+          <li key="1"><Payments/></li>,
+          <li key="3" style={{margin: '0 10px'}}>
             Creditek: {this.props.auth.credits}
           </li>,
-          <li key="2"><a href="/api/logout">Kijelentkezés</a></li>
+          <li key="2"><Link to="/api/logout">Kijelentkezés</Link></li>
         ];
     }
-  }
+  };
 
   render() {
     return (
       <header>
         <nav>
-          <div className="nav-wrapper"  style={{ background: 'black' }}>
+          <div className="nav-wrapper" style={{background: 'black'}}>
             <Link
               to='/'
               className="left brand-logo"
-              style={{ marginLeft: '20px' }}
+              style={{marginLeft: '20px'}}
             >
               AutoReact
             </Link>
@@ -44,8 +44,8 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { auth };
+function mapStateToProps({auth}) {
+  return {auth};
 }
 
 export default connect(mapStateToProps)(Header);
