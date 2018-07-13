@@ -10,7 +10,7 @@ const config = require('./config/keys');
 
 require('./services/passport');
 
-mongoose.connect(config.mongoDatabase);
+mongoose.connect(config.mongoDB);
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
