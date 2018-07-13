@@ -1,4 +1,4 @@
-import {FETCH_AUTOS, ADD_AUTO, UPDATE_AUTO, DELETE_AUTO} from '../constants';
+import {FETCH_AUTOS, ADD_AUTO, UPDATE_AUTO, DELETE_AUTO, INCREMENT_LIKES} from '../constants';
 import axios from 'axios';
 
 export const fetchAutos = () => async dispatch => {

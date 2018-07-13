@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Auto from './Auto';
+import Auto from '../components/Auto';
 import '../styles/main.css';
 
 class Main extends Component {

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {addAuto, deleteAuto, fetchAutos, updateAuto} from '../actions/auto';
 import '../styles/autoDetails.css';
 
-import TextInput from './form/TextInput';
+import TextInput from '../components/form/TextInput';
 
 class AutoEditPage extends Component {
   state = {

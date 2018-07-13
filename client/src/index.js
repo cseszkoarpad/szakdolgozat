@@ -3,11 +3,11 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fetchUser} from './actions/user';
 import {fetchAutos} from './actions/auto';
-import Main from './components/Main';
+import Main from './containers/Main';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import AutoDetailsPage from './components/AutoDetailsPage';
-import AutoEditPage from './components/AutoEditPage';
+import AutoDetailsPage from './containers/AutoDetailsPage';
+import AutoEditPage from './containers/AutoEditPage';
 
 import './styles/index.css';
 

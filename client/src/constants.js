@@ -4,3 +4,4 @@ export const FETCH_COMMENTS = 'fetch_comments';
 export const ADD_AUTO = 'ADD_AUTO';
 export const UPDATE_AUTO = 'UPDATE_AUTO';
 export const DELETE_AUTO = 'DELETE_AUTO';
+export const INCREMENT_LIKES = 'INCREMENT_LIKES';
