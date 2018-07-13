@@ -122,7 +122,7 @@ class AutoDetailsPage extends Component {
   };
 
   render() {
-    let {_id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, likes} = this.state.auto;
+    let {_id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = this.state.auto;
     return (
       <div className="container" style={{marginTop: '40px', marginBottom: '40px'}}>
         <div className="row">
@@ -152,7 +152,7 @@ class AutoDetailsPage extends Component {
               <li className="text"><span>Szín:</span>{szin}</li>
               <li className="text"><span>Tömeg:</span>{tomeg}<span className="unit">kg</span></li>
               <li className="text"><span>Üzemanyag:</span>{uzemanyag}</li>
-              <li className="text"><span>Hengerűrtartalom:</span>{hengerUrTartalom}<span
+              <li className="text"><span>Hengerűrtartalom:</span>{hengerUrtartalom}<span
                 className="unit">cc</span></li>
               <li className="text"><span>Teljesítmény:</span>{teljesitmeny}<span
                 className="unit">le</span></li>

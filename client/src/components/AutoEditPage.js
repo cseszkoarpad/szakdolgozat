@@ -1,82 +1,137 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import axios from 'axios';
-import {Link} from 'react-router-dom';
-import {fetchAutos} from '../actions/auto';
+import {addAuto, deleteAuto, fetchAutos, updateAuto} from '../actions/auto';
 import '../styles/autoDetails.css';
 
 import TextInput from './form/TextInput';
 
 class AutoEditPage extends Component {
   state = {
-    auto: {}
+    id: '',
+    marka: '',
+    modell: '',
+    kep: '',
+    ar: 0,
+    ev: 0,
+    allapot: '',
+    kivitel: '',
+    km: 0,
+    szin: '',
+    tomeg: 0,
+    uzemanyag: '',
+    hengerUrtartalom: 0,
+    teljesitmeny: 0,
+    hajtas: '',
+    valto: '',
+    leiras: '',
+    likes: 0,
+    feltoltve: '',
+    isEditing: false,
+    originalAuto: {}
   };
 
-  componentDidMount() {
+  componentWillMount() {
     if (!this.props.auth) {
-      this.props.history.goBack();
-      return null;
+      this.props.history.push('/');
     }
-    const autoId = this.props.match.params.id;
-    const auto = Object.assign({}, this.props.autos.find(auto => auto._id === autoId));
-    this.setState({auto});
+    if (this.state.isEditing) {
+      const id = this.props.match.params.id;
+      const originalAuto = Object.assign({}, this.props.autos.find(auto => auto.id === id));
+      this.setState({...originalAuto, originalAuto, id});
+    }
   }
 
   onChange = (event) => {
-    const field = event.target.name;
-    const auto = this.state.auto;
-    auto[field] = event.target.value;
-    this.setState({auto});
+    this.setState({[event.target.name]: event.target.value});
   };
 
   updateAuto = (event) => {
     event.preventDefault();
-    const auto = this.state.auto;
-    axios.put('/api/autos/edit', {
-      id: auto._id,
-      marka: auto.marka,
-      modell: auto.modell,
-      kep: auto.kep,
-      ar: auto.ar,
-      ev: auto.ev,
-      allapot: auto.allapot,
-      kivitel: auto.kivitel,
-      km: auto.km,
-      szin: auto.szin,
-      tomeg: auto.tomeg,
-      uzemanyag: auto.uzemanyag,
-      hengerUrTartalom: auto.hengerUrTartalom,
-      teljesitmeny: auto.teljesitmeny,
-      hajtas: auto.hajtas,
-      valto: auto.valto,
-      leiras: auto.leiras
-    });
-    this.props.fetchAutos();
-    this.props.history.push(`/autos/${this.state.auto._id}`);
+    const {
+      id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      teljesitmeny, hajtas, valto, leiras
+    } = this.state;
+    const auto = {
+      id,
+      marka,
+      modell,
+      kep,
+      ar,
+      ev,
+      allapot,
+      kivitel,
+      km,
+      szin,
+      tomeg,
+      uzemanyag,
+      hengerUrtartalom,
+      teljesitmeny,
+      hajtas,
+      valto,
+      leiras
+    };
+    this.props.updateAuto(auto);
+    this.props.history.push(`/autos/${id}`);
   };
 
-  async deleteAuto(id) {
-    await axios.delete('/api/autos/delete', {data: {id}});
-    this.props.fetchAutos();
-    this.props.history.push('/');
-  }
+  addAuto = (event) => {
+    event.preventDefault();
+    const {
+      id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      teljesitmeny, hajtas, valto, leiras
+    } = this.state;
+    const auto = {
+      id,
+      marka,
+      modell,
+      kep,
+      ar,
+      ev,
+      allapot,
+      kivitel,
+      km,
+      szin,
+      tomeg,
+      uzemanyag,
+      hengerUrtartalom,
+      teljesitmeny,
+      hajtas,
+      valto,
+      leiras
+    };
+    this.props.addAuto(auto);
+    this.props.history.push(`/autos/${id}`);
+  };
+
+  handleCancelButton = (event) => {
+    event.preventDefault();
+    this.props.history.goBack();
+  };
+
+  deleteAuto = (event, id) => {
+    event.preventDefault();
+    this.props.deleteAuto(id);
+  };
 
   render() {
-    let {_id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrTartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes} = this.state.auto;
+    let {id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
     return (
       <div className="container">
         <div className="row">
-          <h6 className="title">{marka} - {modell}</h6>
-          <div className="col s7">
-            <img className="img"
-                 src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
-                 alt={`${marka}-${modell}`}/>
-            <ul className="points">
-              <li className="uploaded"><span>Feltöltve:</span>{feltoltve}</li>
-              <li className="text"><span>Kedvelések:</span>{likes}</li>
-            </ul>
-          </div>
-          <form onSubmit={this.updateAuto}>
+          {(marka && modell && kep) &&
+          <div>
+            <h6 className="title">{marka} - {modell}</h6>
+            <div className="col s7">
+              <img className="img"
+                   src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
+                   alt={`${marka}-${modell}`}/>
+              {isEditing && <ul className="points">
+                <li className="uploaded"><span>Feltöltve:</span>{feltoltve}</li>
+                <li className="text"><span>Kedvelések:</span>{likes}</li>
+              </ul>}
+            </div>
+          </div>}
+          <form onSubmit={(e) => isEditing ? this.updateAuto(e) : this.addAuto(e)}>
             <div className="col s5">
               <ul className="points">
                 <TextInput
@@ -146,9 +201,9 @@ class AutoEditPage extends Component {
                   onChange={this.onChange}/>
 
                 <TextInput
-                  name="hengerUrTartalom"
+                  name="hengerUrtartalom"
                   label="Hengerűrtartalom:"
-                  value={hengerUrTartalom}
+                  value={hengerUrtartalom}
                   onChange={this.onChange}/>
 
                 <TextInput
@@ -170,19 +225,31 @@ class AutoEditPage extends Component {
                   onChange={this.onChange}/>
 
                 <div className="form-group">
-                  <label htmlFor="leiras">Leírás:</label>
-                  <textarea type="text" rows="15" cols="150" maxLength="400" name="leiras"
+                  <label>Leírás:</label>
+                  <textarea rows="15" cols="150" maxLength="400" name="leiras"
                             value={leiras} onChange={this.onChange}/>
                 </div>
 
-                <button type="submit" className="waves-effect waves-light btn">Mentés <i
-                  className="icon ion-bookmark"></i></button>
-                <button className="waves-effect waves-light btn"><Link style={{color: 'white'}}
-                                                                       to={`/autos/${_id}`}>Mégse <i
-                  className="icon ion-arrow-left-a"></i></Link></button>
-                <button className="waves-effect waves-light btn"
-                        onClick={() => this.deleteAuto(_id)}>Törlés <i className="icon ion-trash-b"></i>
-                </button>
+                {isEditing
+                  ? <div>
+                    <button type="submit" className="waves-effect waves-light btn">Mentés <i
+                      className="icon ion-bookmark"></i></button>
+                    <button className="waves-effect waves-light btn" onClick={(e) => this.handleCancelButton(e)}>Mégse <i
+                      className="icon ion-arrow-left-a"></i></button>
+                    <button className="waves-effect waves-light btn"
+                            onClick={(e) => this.deleteAuto(e, id)}>Törlés <i
+                      className="icon ion-trash-b"></i>
+                    </button>
+                  </div>
+                  : <div><p className="info">A feltöltés 1 creditbe kerül.</p>
+                    <p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>
+                    <button style={{margin: '45px 20px 0 0', background: '#4CAF50'}} type="submit"
+                            className="waves-effect waves-light btn">
+                      <i className="icon ion-plus-round"></i> Létrehozás
+                    </button>
+                    <button style={{marginTop: '45px', background: '#FFEB3B'}} onClick={(e) => this.handleCancelButton(e)} className="waves-effect waves-light btn">Mégse <i className="icon ion-arrow-left-a"></i>
+                    </button>
+                  </div>}
 
               </ul>
             </div>
@@ -191,6 +258,8 @@ class AutoEditPage extends Component {
       </div>
     );
   }
+
+
 }
 
 const mapStateToProps = ({autos, auth}) => {
@@ -198,6 +267,6 @@ const mapStateToProps = ({autos, auth}) => {
     autos,
     auth
   };
-}
+};
 
-export default connect(mapStateToProps, {fetchAutos})(AutoEditPage);
+export default connect(mapStateToProps, {fetchAutos, updateAuto, deleteAuto, addAuto})(AutoEditPage);

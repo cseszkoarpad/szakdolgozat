@@ -51,7 +51,7 @@ module.exports = app => {
     auto.szin = req.body.szin;
     auto.tomeg = req.body.tomeg;
     auto.uzemanyag = req.body.uzemanyag;
-    auto.hengerUrTartalom = req.body.hengerUrTartalom;
+    auto.hengerUrtartalom = req.body.hengerUrtartalom;
     auto.teljesitmeny = req.body.teljesitmeny;
     auto.hajtas = req.body.hajtas;
     auto.valto = req.body.valto;
@@ -97,7 +97,7 @@ module.exports = app => {
       auto.szin = req.body.szin;
       auto.tomeg = req.body.tomeg;
       auto.uzemanyag = req.body.uzemanyag;
-      auto.hengerUrTartalom = req.body.hengerUrTartalom;
+      auto.hengerUrtartalom = req.body.hengerUrtartalom;
       auto.teljesitmeny = req.body.teljesitmeny;
       auto.hajtas = req.body.hajtas;
       auto.valto = req.body.valto;

@@ -13,7 +13,7 @@ const autoSchema = Schema({
 	szin: String,
 	tomeg: Number,
 	uzemanyag: String,
-	hengerUrTartalom: Number,
+	hengerUrtartalom: Number,
 	teljesitmeny: Number,
 	hajtas: String,
 	valto: String,
