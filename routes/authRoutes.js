@@ -1,8 +1,8 @@
-const passport = require('passport')
-const User = require('../models/User')
+const passport = require('passport');
+const User = require('../models/User');
 
 module.exports = app => {
-	app.get(
+  app.get(
     '/auth/google',
     passport.authenticate('google', {
       scope: ['profile']
@@ -26,23 +26,18 @@ module.exports = app => {
     res.send(req.user);
   });
 
-  //lekérni a usereket
   app.get('/api/users', (req, res) => {
-    User.find((err, users) => {
-      if(err) return err
-
-      res.send(users)
-    })
-  })
+    User.find()
+    .then(users => res.send(users))
+    .catch(error => console.error(error));
+  });
 
   //tesztelni kell
   app.delete('/api/users/:id', (req, res) => {
-    const id = req.params.id
+    const id = req.params.id;
 
-    User.findByIdAndRemove({ _id: id }, (err, user) => {
-      if(err) return err
-
-      res.send({ "message": `${user} felhasznalo torolve` })
-    })
-  })
-}
+    User.findByIdAndRemove({_id: id})
+    .then((user) => res.send({'message': `${user} felhasznalo torolve`}))
+    .catch(error => console.error(error));
+  });
+};

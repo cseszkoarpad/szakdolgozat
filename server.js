@@ -1,20 +1,20 @@
-require('dotenv').config()
-const express = require('express')
-const app = express()
-const bodyParser = require('body-parser')
-const session = require('express-session')
-const passport = require('passport')
-const morgan = require('morgan')
+require('dotenv').config();
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
+const morgan = require('morgan');
 const mongoose = require('mongoose');
-const config = require('./config/keys')
+const config = require('./config/keys');
 
 require('./services/passport');
 
 mongoose.connect(config.mongoDatabase);
 
-app.use(morgan('dev'))
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 app.use(session({
   secret: config.secret,
   resave: true,
@@ -23,8 +23,8 @@ app.use(session({
 
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    console.log("connected to the database")
+db.once('open', function () {
+  console.log('connected to the database');
 });
 
 app.use(passport.initialize());
@@ -44,5 +44,5 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const PORT = process.env.PORT || 4000
-app.listen(PORT, () => console.log('Example app listening on port 4000!'))
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log('Example app listening on port 4000!'));
