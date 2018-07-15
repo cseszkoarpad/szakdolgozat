@@ -1,4 +1,4 @@
-import {FETCH_COMMENTS} from '../actions/types';
+import {FETCH_COMMENTS} from '../constants';
 
 export default function (state = [], action) {
   switch (action.type) {

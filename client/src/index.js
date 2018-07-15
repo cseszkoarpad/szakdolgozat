@@ -1,37 +1,25 @@
-import React, {Component} from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {fetchUser} from './actions/user';
-import {fetchAutos} from './actions/auto';
-import Main from './containers/Main';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import AutoDetailsPage from './containers/AutoDetailsPage';
-import AutoEditPage from './containers/AutoEditPage';
+import 'materialize-css';
+import React from 'react';
+import {render} from 'react-dom';
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware, compose} from 'redux';
+import reduxThunk from 'redux-thunk';
 
-import './styles/main.css';
+import App from './App';
+import reducers from './reducers';
 
-class App extends Component {
-  componentDidMount() {
-    this.props.fetchUser();
-    this.props.fetchAutos();
-  }
+const store = createStore(
+  reducers,
+  {},
+  compose(
+    applyMiddleware(reduxThunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);
 
-  render() {
-    return (
-      <BrowserRouter>
-        <div>
-          <Header/>
-          <main>
-            <Route exact path="/" component={Main}/>
-            <Route exact path="/autos/:id" component={AutoDetailsPage}/>
-            <Route exact path="/autos/:id/edit" component={AutoEditPage}/>
-          </main>
-          <Footer/>
-        </div>
-      </BrowserRouter>
-    );
-  }
-}
-
-export default connect(null, {fetchUser, fetchAutos})(App);
+render(
+  <Provider store={store}>
+    <App/>
+  </Provider>,
+  document.getElementById('root')
+);
