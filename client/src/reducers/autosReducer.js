@@ -6,8 +6,8 @@ export default function (state = [], action) {
       return action.payload;
     case ADD_AUTO:
       return [
-        action.payload,
-        ...state
+        ...state,
+        action.payload
       ];
     case UPDATE_AUTO:
       const updatedAutoIndex = state.findIndex(auto => auto.id === action.payload.id);

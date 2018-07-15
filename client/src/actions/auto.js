@@ -27,7 +27,7 @@ export const deleteAuto = (id) => async dispatch => {
 
 //TO TEST
 export const incrementLikes = (autoId, userId) => async dispatch => {
-  const res = await axios.patch('/api/autos/likes', {autoId, userId});
+  await axios.patch('/api/autos/likes', {autoId, userId});
 
-  dispatch({type: INCREMENT_LIKES, meta: {autoId, userId}});
+  dispatch({type: INCREMENT_LIKES, payload: autoId});
 };

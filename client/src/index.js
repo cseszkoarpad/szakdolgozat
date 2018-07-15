@@ -9,9 +9,9 @@ import Footer from './components/Footer';
 import AutoDetailsPage from './containers/AutoDetailsPage';
 import AutoEditPage from './containers/AutoEditPage';
 
-import './styles/index.css';
+import './styles/main.css';
 
-class Index extends Component {
+class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
     this.props.fetchAutos();
@@ -34,4 +34,4 @@ class Index extends Component {
   }
 }
 
-export default connect(null, {fetchUser, fetchAutos})(Index);
+export default connect(null, {fetchUser, fetchAutos})(App);

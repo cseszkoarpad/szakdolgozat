@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Auto from '../components/Auto';
-import '../styles/main.css';
+import Loader from '../components/Loader';
 
 class Main extends Component {
   renderAutos = () => {
@@ -9,15 +9,20 @@ class Main extends Component {
   };
 
   render() {
-    return (
-      <div className="container">
-        <div className="row">
-          <div className="autos-flex">
-            {this.renderAutos()}
+    if (this.props.autos) {
+      return (
+        <div className="container">
+          <div className="row">
+            <div className="autos-flex">
+              {this.renderAutos()}
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <Loader/>;
+    }
+
   }
 }
 
