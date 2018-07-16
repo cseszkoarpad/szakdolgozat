@@ -9,7 +9,7 @@ class Header extends Component {
       case null:
         return;
       case false:
-        return <li><Link to="/auth/google">Bejelentkezés</Link></li>;
+        return <li key="5"><a href="/auth/google">Bejelentkezés</a></li>;
       default:
         return [
           <li key="4"><Link to="/upload/new">Feltöltés</Link></li>,
@@ -17,7 +17,7 @@ class Header extends Component {
           <li key="3" style={{margin: '0 10px'}}>
             Creditek: {this.props.auth.credits}
           </li>,
-          <li key="2"><Link to="/api/logout">Kijelentkezés</Link></li>
+          <li key="2"><a href="/api/logout">Kijelentkezés</a></li>
         ];
     }
   };
@@ -45,7 +45,9 @@ class Header extends Component {
 }
 
 function mapStateToProps({auth}) {
-  return {auth};
+  return {
+    auth
+  };
 }
 
 export default connect(mapStateToProps)(Header);
