@@ -1,10 +1,16 @@
-import {FETCH_AUTOS, ADD_AUTO, UPDATE_AUTO, DELETE_AUTO, INCREMENT_LIKES} from '../constants';
+import {FETCH_AUTOS, ADD_AUTO, UPDATE_AUTO, DELETE_AUTO, INCREMENT_LIKES, SEARCH_AUTOS} from '../constants';
 import axios from 'axios';
 
 export const fetchAutos = () => async dispatch => {
   const res = await axios.get('/api/autos');
 
   dispatch({type: FETCH_AUTOS, payload: res.data});
+};
+
+export const search = (data) => async dispatch => {
+  const res = await axios.get('/api/autos/search', data);
+
+  dispatch({type: SEARCH_AUTOS, payload: res.data});
 };
 
 export const addAuto = (auto) => async dispatch => {

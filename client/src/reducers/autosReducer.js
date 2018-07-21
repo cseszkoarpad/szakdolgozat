@@ -1,8 +1,10 @@
-import {ADD_AUTO, DELETE_AUTO, FETCH_AUTOS, UPDATE_AUTO} from '../constants';
+import {ADD_AUTO, DELETE_AUTO, FETCH_AUTOS, SEARCH_AUTOS, UPDATE_AUTO} from '../constants';
 
 export default function (state = [], action) {
   switch (action.type) {
     case FETCH_AUTOS:
+      return action.payload;
+    case SEARCH_AUTOS:
       return action.payload;
     case ADD_AUTO:
       return [

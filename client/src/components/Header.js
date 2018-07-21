@@ -2,6 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import Payments from './Payments';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
 
 class Header extends Component {
   renderMenu = () => {
@@ -9,37 +15,28 @@ class Header extends Component {
       case null:
         return;
       case false:
-        return <li key="5"><a href="/auth/google">Bejelentkezés</a></li>;
+        return <Button href="/auth/google">Bejelentkezés</Button>;
       default:
         return [
-          <li key="4"><Link to="/upload/new">Feltöltés</Link></li>,
-          <li key="1"><Payments/></li>,
-          <li key="3" style={{margin: '0 10px'}}>
-            Creditek: {this.props.auth.credits}
-          </li>,
-          <li key="2"><a href="/api/logout">Kijelentkezés</a></li>
+          <Button key="1" href="/upload/new">Feltöltés</Button>,
+          <Payments key="2"/>,
+          <Typography key="3" color="inherit">Creditek: {this.props.auth.credits}</Typography>,
+          <Button key="4" href="/api/logout">Kijelentkezés</Button>
         ];
     }
   };
 
   render() {
     return (
-      <header>
-        <nav>
-          <div className="nav-wrapper" style={{background: 'black'}}>
-            <Link
-              to='/'
-              className="left brand-logo"
-              style={{marginLeft: '20px'}}
-            >
-              AutoReact
-            </Link>
-            <ul className="right">
-              {this.renderMenu()}
-            </ul>
-          </div>
-        </nav>
-      </header>
+      <AppBar className="add-margin-bottom" position="static" color="default">
+        <Toolbar>
+          <IconButton color="inherit" aria-label="Menu">
+            <MenuIcon/>
+          </IconButton>
+          <Button className="flex-grow" component={Link} to="/">Premium autó portál</Button>
+          {this.renderMenu()}
+        </Toolbar>
+      </AppBar>
     );
   }
 }

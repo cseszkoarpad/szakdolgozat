@@ -11,18 +11,19 @@
     }
   },
   "dependencies": {
+    "@material-ui/core": "^1.4.0",
+    "@material-ui/icons": "^1.1.0",
     "axios": "^0.18.0",
-    "materialize-css": "^1.0.0-alpha.4",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
     "react-redux": "^5.0.7",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.1",
     "react-stripe-checkout": "^2.6.3",
     "redux": "^3.7.2",
-    "redux-form": "^7.2.3",
-    "redux-thunk": "^2.2.0"
+    "redux-form": "^7.4.2",
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -2,10 +2,48 @@ body {
     background: #EFEBE9;
 }
 
-.autos-flex {
+.search {
+    padding: 10px;
+}
+
+.autos {
     display: flex;
     flex-flow: row wrap;
     align-content: center;
     justify-content: space-evenly;
-    min-height: 70vh;
+    padding: 20px;
+}
+
+.auto {
+    width: 200px;
+}
+
+.auto img {
+    width: 150px;
+    height: 100px;
+}
+
+.field {
+    margin-bottom: 15px;
+}
+
+.submit-button {
+    display: flex;
+    justify-content: center;
+}
+
+.loader {
+    position: absolute;
+    left: 48%;
+    top: 50%;
+}
+
+/* NEUTRAL */
+
+.add-margin-bottom {
+    margin-bottom: 10px;
+}
+
+.flex-grow {
+    flex-grow: 1;
 }

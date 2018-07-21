@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fetchUser} from './actions/user';
 import {fetchAutos} from './actions/auto';
@@ -22,11 +22,11 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header/>
-          <main>
+          <Switch>
             <Route exact path="/" component={Main}/>
             <Route exact path="/autos/:id" component={AutoDetailsPage}/>
             <Route exact path="/autos/:id/edit" component={AutoEditPage}/>
-          </main>
+          </Switch>
           <Footer/>
         </div>
       </BrowserRouter>
