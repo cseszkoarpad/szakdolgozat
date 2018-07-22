@@ -27,6 +27,7 @@ class App extends Component {
             <Route exact path="/my-cars/:id" component={CarListPage}/>
             <Route exact path="/cars/:id" component={CarDetailsPage}/>
             <Route exact path="/cars/:id/edit" component={CarEditPage}/>
+            <Route exact path="/upload/new" component={CarEditPage}/>
             <Redirect to="/"/>
           </Switch>
           <Footer/>

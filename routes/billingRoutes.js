@@ -11,7 +11,7 @@ module.exports = app => {
       source: req.body.id
     });
 
-    req.user.credits += 1;
+    req.user.credits += 10;
     req.user.save()
     .then(user => res.send(user))
     .catch(error => console.error(error))

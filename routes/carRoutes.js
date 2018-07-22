@@ -39,23 +39,35 @@ module.exports = app => {
   });
 
   app.post('/api/cars', requireLogin, requireCredits, (req, res) => {
+    const {
+      marka,
+      modell,
+      kep,
+      ar, ev, allapot,
+      kivitel, km, szin,
+      tomeg, uzemanyag,
+      hengerUrtartalom,
+      teljesitmeny, hajtas,
+      valto, leiras
+    } = req.body.car
+
     const car = new Car();
-    car.marka = req.body.marka;
-    car.modell = req.body.modell;
-    car.kep = req.body.kep;
-    car.ar = req.body.ar;
-    car.ev = req.body.ev;
-    car.allapot = req.body.allapot;
-    car.kivitel = req.body.kivitel;
-    car.km = req.body.km;
-    car.szin = req.body.szin;
-    car.tomeg = req.body.tomeg;
-    car.uzemanyag = req.body.uzemanyag;
-    car.hengerUrtartalom = req.body.hengerUrtartalom;
-    car.teljesitmeny = req.body.teljesitmeny;
-    car.hajtas = req.body.hajtas;
-    car.valto = req.body.valto;
-    car.leiras = req.body.leiras;
+    car.marka = marka;
+    car.modell = modell;
+    car.kep = kep;
+    car.ar = ar;
+    car.ev = ev;
+    car.allapot = allapot;
+    car.kivitel = kivitel;
+    car.km = km;
+    car.szin = szin;
+    car.tomeg = tomeg;
+    car.uzemanyag = uzemanyag;
+    car.hengerUrtartalom = hengerUrtartalom;
+    car.teljesitmeny = teljesitmeny;
+    car.hajtas = hajtas;
+    car.valto = valto;
+    car.leiras = leiras;
 
     car.save((err, car) => {
       if (err) return err;
@@ -63,9 +75,9 @@ module.exports = app => {
       req.user.credits -= 1;
       req.user._cars.push(car._id);
       req.user.save();
+
+      res.send(car)
     })
-    .then(car => res.send(car))
-    .catch(error => console.error(error));
   });
 
   app.put('/api/cars/likes', requireLogin, (req, res) => {
@@ -81,31 +93,39 @@ module.exports = app => {
   });
 
   app.put('/api/cars/edit', requireLogin, (req, res) => {
-    const id = req.body.id;
+    const {
+      marka,
+      modell,
+      kep,
+      ar, ev, allapot,
+      kivitel, km, szin,
+      tomeg, uzemanyag,
+      hengerUrtartalom,
+      teljesitmeny, hajtas,
+      valto, leiras
+    } = req.body.car
+
+    car.marka = marka;
+    car.modell = modell;
+    car.kep = kep;
+    car.ar = ar;
+    car.ev = ev;
+    car.allapot = allapot;
+    car.kivitel = kivitel;
+    car.km = km;
+    car.szin = szin;
+    car.tomeg = tomeg;
+    car.uzemanyag = uzemanyag;
+    car.hengerUrtartalom = hengerUrtartalom;
+    car.teljesitmeny = teljesitmeny;
+    car.hajtas = hajtas;
+    car.valto = valto;
+    car.leiras = leiras;
 
     Car.findById({_id: id}, (err, car) => {
       if (err) return err;
 
-      car.marka = req.body.marka;
-      car.modell = req.body.modell;
-      car.kep = req.body.kep;
-      car.ar = req.body.ar;
-      car.ev = req.body.ev;
-      car.allapot = req.body.allapot;
-      car.kivitel = req.body.kivitel;
-      car.km = req.body.km;
-      car.szin = req.body.szin;
-      car.tomeg = req.body.tomeg;
-      car.uzemanyag = req.body.uzemanyag;
-      car.hengerUrtartalom = req.body.hengerUrtartalom;
-      car.teljesitmeny = req.body.teljesitmeny;
-      car.hajtas = req.body.hajtas;
-      car.valto = req.body.valto;
-      car.leiras = req.body.leiras;
-
       car.save()
-      .then(car => res.send(car))
-      .catch(error => console.error(error));
     });
   });
 

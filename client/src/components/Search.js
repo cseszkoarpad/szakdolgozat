@@ -3,7 +3,7 @@ import Select from 'react-select';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {search} from '../actions/car';
-import {MARKAK, KIVITELEK} from '../constants';
+import {MARKAK, KIVITELEK, UZEMANYAG_TIPUSOK} from '../constants';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -64,7 +64,6 @@ function SelectWrapped(props) {
             <Chip
               tabIndex={-1}
               label={children}
-              className={classes.chip}
               deleteIcon={<CancelIcon onTouchEnd={onDelete}/>}
               onDelete={onDelete}
             />
@@ -81,24 +80,27 @@ function SelectWrapped(props) {
 class Search extends Component {
   state = {
     marka: '',
-    kivitel: ''
+    kivitel: null,
+    uzemanyag: null
   };
 
   onChange = (name) => (value) => {
     this.setState({[name]: value});
+    console.log(this.state.uzemanyag)
   };
 
   handleSearch = () => {
-    const {marka, kivitel} = this.state;
+    const {marka, kivitel, uzemanyag} = this.state;
     const data = {
       marka,
-      kivitel
+      kivitel,
+      uzemanyag
     };
     this.props.search(data);
   };
 
   render() {
-    const {marka, kivitel} = this.state;
+    const {marka, kivitel, uzemanyag} = this.state;
     return (
       <form onSubmit={this.handleSearch}>
         <div className="field">
@@ -137,14 +139,36 @@ class Search extends Component {
               inputComponent: SelectWrapped,
               inputProps: {
                 instanceId: 'kivitel',
+                multi: true,
                 simpleValue: true,
                 options: KIVITELEK
               }
             }}
           />
         </div>
+        <div className="field">
+          <TextField
+            fullWidth
+            value={uzemanyag}
+            onChange={this.onChange('uzemanyag')}
+            name="uzemanyag"
+            label="Üzemanyag"
+            InputLabelProps={{
+              shrink: true
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'uzemanyag',
+                multi: true,
+                simpleValue: true,
+                options: UZEMANYAG_TIPUSOK
+              }
+            }}
+          />
+        </div>
         <div className="submit-button">
-          <Button variant="contained" color="primary">Keresés</Button>
+          <Button type="submit" variant="contained" color="primary">Keresés</Button>
         </div>
       </form>
     );

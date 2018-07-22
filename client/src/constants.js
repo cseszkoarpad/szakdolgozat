@@ -1,4 +1,5 @@
 export const FETCH_USER = 'fetch_user';
+export const ADD_CREDIT = 'ADD_CREDIT';
 export const FETCH_CARS = 'fetch_cars';
 export const FETCH_COMMENTS = 'fetch_comments';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
@@ -29,4 +30,10 @@ export const KIVITELEK = [
   {value: 'Sedan', label: 'Sedan'},
   {value: 'Sport', label: 'Sport'},
   {value: 'SUV', label: 'SUV'}
+];
+export const UZEMANYAG_TIPUSOK = [
+  {value: 'Benzin', label: 'Benzin'},
+  {value: 'Dízel', label: 'Dízel'},
+  {value: 'Elektromos', label: 'Elektromos'},
+  {value: 'Hibrid', label: 'Hibrid'}
 ];

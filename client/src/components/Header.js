@@ -18,8 +18,8 @@ class Header extends Component {
         return <Button href="/auth/google">Bejelentkezés</Button>;
       default:
         return [
-          <Button key="1" href="/upload/new">Feltöltés</Button>,
-          <Button key="5" href={`/my-cars/${this.props.auth._id}`}>Autóim</Button>,
+          <Button key="1" component={Link} to="/upload/new">Feltöltés</Button>,
+          <Button key="5" component={Link} to={`/my-cars/${this.props.auth._id}`}>Autóim</Button>,
           <Payments key="2"/>,
           <Typography key="3" color="inherit">Creditek: {this.props.auth.credits}</Typography>,
           <Button key="4" href="/api/logout">Kijelentkezés</Button>
