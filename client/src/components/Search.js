@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Select from 'react-select';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {search} from '../actions/auto';
+import {search} from '../actions/car';
 import {MARKAK, KIVITELEK} from '../constants';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -151,9 +151,9 @@ class Search extends Component {
   }
 }
 
-function mapStateToProps({autos}) {
+function mapStateToProps({cars}) {
   return {
-    autos
+    cars
   };
 }
 

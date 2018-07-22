@@ -1,16 +1,15 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import axios from 'axios';
-import {deleteAuto, fetchAutos, incrementLikes} from '../actions/auto';
+import {deleteCar, fetchCars, incrementLikes} from '../actions/car';
 import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
-import '../styles/autoDetails.css';
+import '../styles/carDetails.css';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 
-class AutoDetailsPage extends Component {
+class CarDetailsPage extends Component {
   state = {
     text: '',
     error: null
@@ -29,22 +28,22 @@ class AutoDetailsPage extends Component {
     this.props.incrementLikes(id);
   }
 
-  goToEditAutoPage(id) {
+  goToEditCarPage(id) {
     if (!this.props.auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       return;
     }
 
-    this.props.history.push(`/autos/${id}/edit`);
+    this.props.history.push(`/cars/${id}/edit`);
   }
 
 
-  deleteAuto(id) {
+  deleteCar(id) {
     if (!this.props.auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       return;
     }
-    this.props.deleteAuto(id);
+    this.props.deleteCar(id);
     this.props.history.push('/');
   }
 
@@ -72,13 +71,13 @@ class AutoDetailsPage extends Component {
     this.setState({error: null});
   }
 
-  renderComments = (auto) => {
+  renderComments = (car) => {
     let comments = [];
     let commentsNum = 0;
-    if (auto._comments.length) {
+    if (car._comments.length) {
       this.props.comments.map(comment => {
-        return auto._comments.forEach(thisAutoComment => {
-          if (thisAutoComment === comment._id) {
+        return car._comments.forEach(thisCarComment => {
+          if (thisCarComment === comment._id) {
             let commentObject = Object.assign({}, comment);
             comments.unshift(commentObject);
             commentsNum++;
@@ -103,14 +102,14 @@ class AutoDetailsPage extends Component {
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value,
+      [name]: event.target.value
     });
-    console.log(this.state.text)
+    console.log(this.state.text);
   };
 
-  submitComment = (autoId) => {
+  submitComment = (carId) => {
     if (this.props.auth) {
-      this.props.submitComment(this.props.auth._id, autoId, this.props.auth.name, this.state.text);
+      this.props.submitComment(this.props.auth._id, carId, this.props.auth.name, this.state.text);
     } else {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       document.documentElement.scrollTop = 0;
@@ -118,10 +117,10 @@ class AutoDetailsPage extends Component {
   };
 
   render() {
-    const autoId = this.props.match.params.id;
-    const auto = this.props.autos.find(auto => auto._id === autoId);
-    if (auto) {
-      let {_id, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = auto;
+    const carId = this.props.match.params.id;
+    const car = this.props.cars.find(car => car._id === carId);
+    if (car) {
+      let {_id, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = car;
       return (
         <Paper>
           <Grid container>
@@ -159,13 +158,13 @@ class AutoDetailsPage extends Component {
                 <li className="desc"><span>Leírás:</span>{leiras}</li>
 
                 <Button onClick={() => this.incrementLikes(_id)}>Kedvelés</Button>
-                <Button onClick={() => this.goToEditAutoPage(_id)}>Szerkesztés</Button>
-                <Button onClick={() => this.deleteAuto(_id)}>Törlés</Button>
+                <Button onClick={() => this.goToEditCarPage(_id)}>Szerkesztés</Button>
+                <Button onClick={() => this.deleteCar(_id)}>Törlés</Button>
               </ul>
             </Grid>
             <Grid item xs={12}>
               <div className="comment-container">
-                {this.renderComments(auto)}
+                {this.renderComments(car)}
                 <form onSubmit={this.submitComment}>
                   <TextField
                     label="Hozzászólás"
@@ -186,18 +185,18 @@ class AutoDetailsPage extends Component {
   }
 }
 
-const mapStateToProps = ({autos, auth, comments}) => {
+const mapStateToProps = ({cars, auth, comments}) => {
   return {
-    autos,
+    cars,
     auth,
     comments
   };
 };
 
 export default connect(mapStateToProps, {
-  fetchAutos,
+  fetchCars,
   incrementLikes,
-  deleteAuto,
+  deleteCar,
   fetchComments,
   submitComment
-})(AutoDetailsPage);
+})(CarDetailsPage);

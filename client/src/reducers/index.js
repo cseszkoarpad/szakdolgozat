@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import auth from './authReducer';
-import autos from './autosReducer';
+import cars from './carsReducer';
 import comments from './commentsReducer';
 
 export default combineReducers({
   auth,
-  autos,
+  cars,
   comments
 });

@@ -1,18 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import Auto from '../components/Auto';
+import Car from '../components/Car';
 import Loader from '../components/Loader';
 import Search from '../components/Search';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 
 class Main extends Component {
-  renderAutos = () => {
-    return this.props.autos.map(auto => <Auto key={auto._id} {...auto} />);
+  renderCars = () => {
+    return this.props.cars.map(car => <Car key={car._id} {...car} />);
   };
 
   render() {
-    if (this.props.autos) {
+    if (this.props.cars) {
       return (
         <Grid container spacing={8}>
           <Grid item xs={2}>
@@ -21,7 +21,7 @@ class Main extends Component {
             </Paper>
           </Grid>
           <Grid item xs={10}>
-            <Paper className="autos">{this.renderAutos()}</Paper>
+            <Paper className="cars">{this.renderCars()}</Paper>
           </Grid>
         </Grid>
       );
@@ -32,9 +32,9 @@ class Main extends Component {
   }
 }
 
-function mapStateToProps({autos}) {
+function mapStateToProps({cars}) {
   return {
-    autos
+    cars
   };
 }
 

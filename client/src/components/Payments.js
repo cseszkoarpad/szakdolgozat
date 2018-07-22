@@ -8,7 +8,7 @@ class Payments extends Component {
   render() {
     return (
       <StripeCheckout
-        name="AutoReact"
+        name="CarReact"
         description="$1 a képfeltöltésért"
         amount={100}
         panelLabel="Fizetek:"

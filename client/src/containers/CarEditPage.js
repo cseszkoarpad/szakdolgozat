@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addAuto, deleteAuto, fetchAutos, updateAuto} from '../actions/auto';
-import '../styles/autoDetails.css';
-
+import {addCar, deleteCar, fetchCars, updateCar} from '../actions/car';
+import '../styles/carDetails.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-class AutoEditPage extends Component {
+class CarEditPage extends Component {
   state = {
     _id: '',
     marka: '',
@@ -28,7 +27,7 @@ class AutoEditPage extends Component {
     likes: 0,
     feltoltve: '',
     isEditing: false,
-    originalAuto: {}
+    originalCar: {}
   };
 
   componentWillMount() {
@@ -37,8 +36,8 @@ class AutoEditPage extends Component {
     }
     if (this.state.isEditing) {
       const id = this.props.match.params.id;
-      const originalAuto = Object.assign({}, this.props.autos.find(auto => auto._id === id));
-      this.setState({...originalAuto, originalAuto});
+      const originalCar = Object.assign({}, this.props.cars.find(car => car._id === id));
+      this.setState({...originalCar, originalCar});
     }
   }
 
@@ -52,12 +51,12 @@ class AutoEditPage extends Component {
     });
   };
 
-  handleUpdateAuto = () => {
+  handleUpdateCar = () => {
     const {
       _id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras
     } = this.state;
-    const auto = {
+    const car = {
       _id,
       marka,
       modell,
@@ -76,16 +75,16 @@ class AutoEditPage extends Component {
       valto,
       leiras
     };
-    this.props.updateAuto(auto);
-    this.props.history.push(`/autos/${_id}`);
+    this.props.updateCar(car);
+    this.props.history.push(`/cars/${_id}`);
   };
 
-  handleAddAuto = () => {
+  handleAddCar = () => {
     const {
       marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras
     } = this.state;
-    const auto = {
+    const car = {
       marka,
       modell,
       kep,
@@ -103,7 +102,7 @@ class AutoEditPage extends Component {
       valto,
       leiras
     };
-    this.props.addAuto(auto);
+    this.props.addCar(car);
     this.props.history.push(`/`);
   };
 
@@ -111,8 +110,8 @@ class AutoEditPage extends Component {
     this.props.history.goBack();
   };
 
-  deleteAuto = (_id) => {
-    this.props.deleteAuto(_id);
+  deleteCar = (_id) => {
+    this.props.deleteCar(_id);
   };
 
   render() {
@@ -133,7 +132,7 @@ class AutoEditPage extends Component {
               </ul>}
             </div>
           </div>}
-          <form onSubmit={isEditing ? this.handleUpdateAuto : this.handleAddAuto}>
+          <form onSubmit={isEditing ? this.handleUpdateCar : this.handleAddCar}>
             <div className="col s5">
               <ul className="points">
                 <TextField
@@ -236,7 +235,7 @@ class AutoEditPage extends Component {
                   ? <div>
                     <Button>Mentés</Button>
                     <Button onClick={this.handleCancelButton}>Mégse</Button>
-                    <Button onClick={() => this.deleteAuto(_id)}>Törlés</Button>
+                    <Button onClick={() => this.deleteCar(_id)}>Törlés</Button>
                   </div>
                   : <div><p className="info">A feltöltés 1 creditbe kerül.</p>
                     <p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>
@@ -255,11 +254,11 @@ class AutoEditPage extends Component {
 
 }
 
-const mapStateToProps = ({autos, auth}) => {
+const mapStateToProps = ({cars, auth}) => {
   return {
-    autos,
+    cars,
     auth
   };
 };
 
-export default connect(mapStateToProps, {fetchAutos, updateAuto, deleteAuto, addAuto})(AutoEditPage);
+export default connect(mapStateToProps, {fetchCars, updateCar, deleteCar, addCar})(CarEditPage);

@@ -6,7 +6,7 @@ body {
     padding: 10px;
 }
 
-.autos {
+.cars {
     display: flex;
     flex-flow: row wrap;
     align-content: center;
@@ -14,11 +14,11 @@ body {
     padding: 20px;
 }
 
-.auto {
+.car {
     width: 200px;
 }
 
-.auto img {
+.car img {
     width: 150px;
     height: 100px;
 }

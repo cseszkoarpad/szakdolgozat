@@ -7,14 +7,14 @@ export const fetchComments = () => async dispatch => {
   dispatch({type: FETCH_COMMENTS, payload: res.data});
 };
 
-export const submitComment = (userId, autoId, userName, userText) => async dispatch => {
+export const submitComment = (userId, carId, userName, userText) => async dispatch => {
   const data = {userId,
-    autoId,
+    carId,
     userName,
     userText
   }
   console.log(data)
-  const res = await axios.post('/api/autos/comments', data);
+  const res = await axios.post('/api/cars/comments', data);
   console.log(res.data)
   dispatch({type: SUBMIT_COMMENT, payload: res.data});
 };
