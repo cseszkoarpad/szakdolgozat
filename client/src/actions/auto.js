@@ -26,8 +26,7 @@ export const updateAuto = (auto) => async dispatch => {
 };
 
 export const deleteAuto = (id) => async dispatch => {
-  const res = await axios.delete('/api/autos/delete', id);
-  console.log(res);
+  const res = await axios.delete(`/api/autos/${id}`);
   dispatch({type: DELETE_AUTO, id});
 };
 

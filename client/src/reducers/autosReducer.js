@@ -12,15 +12,14 @@ export default function (state = [], action) {
         action.payload
       ];
     case UPDATE_AUTO:
-      const updatedAutoIndex = state.findIndex(auto => auto.id === action.payload.id);
+      const updatedAutoIndex = state.findIndex(auto => auto._id === action.payload.id);
       return [
         ...state.slice(0, updatedAutoIndex),
         action.payload,
         ...state.slice(updatedAutoIndex + 1)
       ];
     case DELETE_AUTO:
-      console.log('reducer-2.remélem')
-      return state.filter(auto => auto.id !== action.id)
+      return state.filter(auto => auto._id !== action.id);
     default:
       return state;
   }

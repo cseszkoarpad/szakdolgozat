@@ -16,7 +16,7 @@ module.exports = app => {
     .catch(error => console.error(error));
   });
 
-  app.post('/api/autos/comments', async (req, res) => {
+  app.post('/api/autos/comments', requireLogin, async (req, res) => {
     const userId = req.body.userId;
     const autoId = req.body.autoId;
     const userText = req.body.userText;
@@ -109,14 +109,10 @@ module.exports = app => {
     });
   });
 
-  app.delete('/api/autos/delete', requireLogin, (req, res) => {
-    const id = req.body.id;
-
-    Auto.findById({_id: id})
-    .then(auto => {
-      auto.remove()
-      .then(() => res.send({message: 'success'}));
-    })
+  app.delete('/api/autos/:id', requireLogin, (req, res) => {
+    const id = req.params.id;
+    console.log(req.params.id)
+    Auto.remove({_id: id}).then(() => res.send({message: 'success'}))
     .catch(error => console.error(error));
   });
 };

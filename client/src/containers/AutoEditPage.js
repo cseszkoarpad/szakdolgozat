@@ -3,11 +3,12 @@ import {connect} from 'react-redux';
 import {addAuto, deleteAuto, fetchAutos, updateAuto} from '../actions/auto';
 import '../styles/autoDetails.css';
 
-import TextInput from '../components/form/TextInput';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
 class AutoEditPage extends Component {
   state = {
-    id: '',
+    _id: '',
     marka: '',
     modell: '',
     kep: '',
@@ -36,8 +37,8 @@ class AutoEditPage extends Component {
     }
     if (this.state.isEditing) {
       const id = this.props.match.params.id;
-      const originalAuto = Object.assign({}, this.props.autos.find(auto => auto.id === id));
-      this.setState({...originalAuto, originalAuto, id});
+      const originalAuto = Object.assign({}, this.props.autos.find(auto => auto._id === id));
+      this.setState({...originalAuto, originalAuto});
     }
   }
 
@@ -45,14 +46,19 @@ class AutoEditPage extends Component {
     this.setState({[event.target.name]: event.target.value});
   };
 
-  updateAuto = (event) => {
-    event.preventDefault();
+  handleChange = name => value => {
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleUpdateAuto = () => {
     const {
-      id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      _id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras
     } = this.state;
     const auto = {
-      id,
+      _id,
       marka,
       modell,
       kep,
@@ -71,17 +77,15 @@ class AutoEditPage extends Component {
       leiras
     };
     this.props.updateAuto(auto);
-    this.props.history.push(`/autos/${id}`);
+    this.props.history.push(`/autos/${_id}`);
   };
 
-  addAuto = (event) => {
-    event.preventDefault();
+  handleAddAuto = () => {
     const {
-      id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras
     } = this.state;
     const auto = {
-      id,
       marka,
       modell,
       kep,
@@ -100,21 +104,19 @@ class AutoEditPage extends Component {
       leiras
     };
     this.props.addAuto(auto);
-    this.props.history.push(`/autos/${id}`);
+    this.props.history.push(`/`);
   };
 
-  handleCancelButton = (event) => {
-    event.preventDefault();
+  handleCancelButton = () => {
     this.props.history.goBack();
   };
 
-  deleteAuto = (event, id) => {
-    event.preventDefault();
-    this.props.deleteAuto(id);
+  deleteAuto = (_id) => {
+    this.props.deleteAuto(_id);
   };
 
   render() {
-    let {id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
+    let {_id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
     return (
       <div className="container">
         <div className="row">
@@ -131,94 +133,94 @@ class AutoEditPage extends Component {
               </ul>}
             </div>
           </div>}
-          <form onSubmit={(e) => isEditing ? this.updateAuto(e) : this.addAuto(e)}>
+          <form onSubmit={isEditing ? this.handleUpdateAuto : this.handleAddAuto}>
             <div className="col s5">
               <ul className="points">
-                <TextInput
+                <TextField
                   name="marka"
                   label="Márka:"
                   value={marka}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="modell"
                   label="Modell:"
                   value={modell}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="kep"
                   label="Kép url:"
                   value={kep}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="ar"
                   label="Ár:"
                   value={ar}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="ev"
                   label="Évjárat:"
                   value={ev}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="allapot"
                   label="Állapot:"
                   value={allapot}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="kivitel"
                   label="Kivitel:"
                   value={kivitel}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="km"
                   label="Km óra állása:"
                   value={km}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="szin"
                   label="Szín:"
                   value={szin}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="tomeg"
                   label="Tömeg:"
                   value={tomeg}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="uzemanyag"
                   label="Üzemanyag:"
                   value={uzemanyag}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="hengerUrtartalom"
                   label="Hengerűrtartalom:"
                   value={hengerUrtartalom}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="teljesitmeny"
                   label="Teljesítmény:"
                   value={teljesitmeny}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="hajtas"
                   label="Hajtás:"
                   value={hajtas}
                   onChange={this.onChange}/>
 
-                <TextInput
+                <TextField
                   name="valto"
                   label="Váltó:"
                   value={valto}
@@ -232,23 +234,14 @@ class AutoEditPage extends Component {
 
                 {isEditing
                   ? <div>
-                    <button type="submit" className="waves-effect waves-light btn">Mentés <i
-                      className="icon ion-bookmark"></i></button>
-                    <button className="waves-effect waves-light btn" onClick={(e) => this.handleCancelButton(e)}>Mégse <i
-                      className="icon ion-arrow-left-a"></i></button>
-                    <button className="waves-effect waves-light btn"
-                            onClick={(e) => this.deleteAuto(e, id)}>Törlés <i
-                      className="icon ion-trash-b"></i>
-                    </button>
+                    <Button>Mentés</Button>
+                    <Button onClick={this.handleCancelButton}>Mégse</Button>
+                    <Button onClick={() => this.deleteAuto(_id)}>Törlés</Button>
                   </div>
                   : <div><p className="info">A feltöltés 1 creditbe kerül.</p>
                     <p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>
-                    <button style={{margin: '45px 20px 0 0', background: '#4CAF50'}} type="submit"
-                            className="waves-effect waves-light btn">
-                      <i className="icon ion-plus-round"></i> Létrehozás
-                    </button>
-                    <button style={{marginTop: '45px', background: '#FFEB3B'}} onClick={(e) => this.handleCancelButton(e)} className="waves-effect waves-light btn">Mégse <i className="icon ion-arrow-left-a"></i>
-                    </button>
+                    <Button>Létrehozás</Button>
+                    <Button onClick={this.handleCancelButton}>Mégse</Button>
                   </div>}
 
               </ul>

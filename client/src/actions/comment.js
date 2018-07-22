@@ -1,4 +1,4 @@
-import {FETCH_AUTOS, FETCH_COMMENTS} from '../constants';
+import {SUBMIT_COMMENT, FETCH_COMMENTS} from '../constants';
 import axios from 'axios';
 
 export const fetchComments = () => async dispatch => {
@@ -8,14 +8,13 @@ export const fetchComments = () => async dispatch => {
 };
 
 export const submitComment = (userId, autoId, userName, userText) => async dispatch => {
-  await axios.post('/api/autos/comments',
-    {
-      userId: userId,
-      autoId: autoId,
-      userName: userName,
-      userText: userText
-    });
-
-  const res = await axios.get('/api/autos');
-  dispatch({type: FETCH_AUTOS, payload: res.data});
+  const data = {userId,
+    autoId,
+    userName,
+    userText
+  }
+  console.log(data)
+  const res = await axios.post('/api/autos/comments', data);
+  console.log(res.data)
+  dispatch({type: SUBMIT_COMMENT, payload: res.data});
 };

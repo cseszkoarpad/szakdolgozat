@@ -1,35 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import {fetchAutos} from '../actions/auto';
+import {deleteAuto, fetchAutos, incrementLikes} from '../actions/auto';
 import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
 import '../styles/autoDetails.css';
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 
 class AutoDetailsPage extends Component {
   state = {
-    auto: {},
+    text: '',
     error: null
   };
 
   componentDidMount() {
     this.props.fetchComments();
-    const autoId = this.props.match.params.id;
-    const auto = Object.assign({}, this.props.autos.find(auto => auto._id === autoId));
-    this.setState({auto});
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({auto: nextProps.auto});
-  }
-
+  //TODO: handleerrorból kiszedni és azzal lekezelni ezt
   async incrementLikes(id) {
     if (!this.props.auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       return;
     }
-    await axios.put('/api/autos/likes', {id});
-    this.setState({auto: {...this.state.auto, likes: this.state.auto.likes + 1}});
+    this.props.incrementLikes(id);
   }
 
   goToEditAutoPage(id) {
@@ -42,29 +39,24 @@ class AutoDetailsPage extends Component {
   }
 
 
-  async deleteAuto(id) {
+  deleteAuto(id) {
     if (!this.props.auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       return;
     }
-    await axios.delete('/api/autos/delete', {data: {id}});
-    this.props.fetchAutos();
+    this.props.deleteAuto(id);
     this.props.history.push('/');
   }
 
-  convertPrice() {
-    if (this.state.auto.ar) {
-      return this.state.auto.ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
+  convertPrice(ar) {
+    if (ar) {
+      return ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1,');
     }
-    return 0;
+    return 'Nincs megadva';
   }
 
-  convertUploadTime() {
-    if (this.state.auto.feltoltve) {
-      const date = this.state.auto.feltoltve.split('T');
-      return date[0];
-    }
-    return '';
+  convertUploadTime(date) {
+    return date.split('T')[0];
   }
 
   errorShowUp(errorMessage) {
@@ -80,12 +72,12 @@ class AutoDetailsPage extends Component {
     this.setState({error: null});
   }
 
-  renderComments = () => {
+  renderComments = (auto) => {
     let comments = [];
     let commentsNum = 0;
-    if (this.state.auto._comments) {
+    if (auto._comments.length) {
       this.props.comments.map(comment => {
-        return this.state.auto._comments.forEach(thisAutoComment => {
+        return auto._comments.forEach(thisAutoComment => {
           if (thisAutoComment === comment._id) {
             let commentObject = Object.assign({}, comment);
             comments.unshift(commentObject);
@@ -109,13 +101,16 @@ class AutoDetailsPage extends Component {
     );
   };
 
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+    console.log(this.state.text)
+  };
 
-  submitComment = (e) => {
-    e.preventDefault();
-    if (this.props.auth && this.state.auto) {
-      this.props.submitComment(this.props.auth._id, this.state.auto._id, this.props.auth.name, this.refs.comment.value);
-      this.refs.commentForm.reset();
-      this.props.fetchComments();
+  submitComment = (autoId) => {
+    if (this.props.auth) {
+      this.props.submitComment(this.props.auth._id, autoId, this.props.auth.name, this.state.text);
     } else {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       document.documentElement.scrollTop = 0;
@@ -123,30 +118,31 @@ class AutoDetailsPage extends Component {
   };
 
   render() {
-    if (this.state.auto) {
-      let {_id, kep, modell, marka, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = this.state.auto;
+    const autoId = this.props.match.params.id;
+    const auto = this.props.autos.find(auto => auto._id === autoId);
+    if (auto) {
+      let {_id, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = auto;
       return (
-        <div className="container" style={{marginTop: '40px', marginBottom: '40px'}}>
-          <div className="row">
-
-            <div className="error">
-              {this.state.error ? this.errorShowUp(this.state.error) : null}
-            </div>
-
-            <h6 className="title">{marka} - {modell}</h6>
-            <div className="col s7">
+        <Paper>
+          <Grid container>
+            <Grid item xs={12}>
+              <div className="error">
+                {this.state.error ? this.errorShowUp(this.state.error) : null}
+              </div>
+            </Grid>
+            <Grid item xs={4}>
+              <h6 className="title">{marka} - {modell}</h6>
               <img className="img"
                    src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
                    alt={`${marka}-${modell}`}/>
               <ul className="points">
-                <li className="uploaded"><span>Feltöltve:</span>{this.convertUploadTime()}</li>
+                <li className="uploaded"><span>Feltöltve:</span>{this.convertUploadTime(feltoltve)}</li>
                 <li className="text"><span>Kedvelések:</span>{likes}</li>
               </ul>
-            </div>
-            <div className="col s5">
+            </Grid>
+            <Grid item xs={8}>
               <ul className="points">
-                <li className="text"><span>Ár:</span>{this.convertPrice()}<span className="unit">Ft</span>
-                </li>
+                <li className="text"><span>Ár:</span>{this.convertPrice(ar)}<span className="unit">Ft</span></li>
                 <li className="text"><span>Évjárat:</span>{ev}</li>
                 <li className="text"><span>Állapot:</span>{allapot}</li>
                 <li className="text"><span>Kivitel:</span>{kivitel}</li>
@@ -162,30 +158,27 @@ class AutoDetailsPage extends Component {
                 <li className="text"><span>Váltó:</span>{valto}</li>
                 <li className="desc"><span>Leírás:</span>{leiras}</li>
 
-                <button style={{margin: '10px', display: 'block', background: '#1565C0'}}
-                        className="waves-effect waves-light btn"
-                        onClick={() => this.incrementLikes(_id)}>Kedvelés <i
-                  className="icon ion-thumbsup"></i></button>
-                <button style={{margin: '10px', display: 'block', background: '#4CAF50'}}
-                        className="waves-effect waves-light btn"
-                        onClick={() => this.goToEditAutoPage(_id)}>Szerkesztés <i
-                  className="icon ion-edit"></i></button>
-                <button style={{margin: '10px', display: 'block', background: '#f44336'}}
-                        className="waves-effect waves-light btn"
-                        onClick={() => this.deleteAuto(_id)}>Törlés <i className="icon ion-trash-b"></i>
-                </button>
-
+                <Button onClick={() => this.incrementLikes(_id)}>Kedvelés</Button>
+                <Button onClick={() => this.goToEditAutoPage(_id)}>Szerkesztés</Button>
+                <Button onClick={() => this.deleteAuto(_id)}>Törlés</Button>
               </ul>
-            </div>
-          </div>
-          <div className="comment-container">
-            {this.renderComments()}
-            <form ref="commentForm" onSubmit={(e) => this.submitComment(e)}>
-              <input type="text" ref="comment"/>
-              <button type="submit" className="btn" style={{background: '#1565C0'}}>Hozzászólok</button>
-            </form>
-          </div>
-        </div>
+            </Grid>
+            <Grid item xs={12}>
+              <div className="comment-container">
+                {this.renderComments(auto)}
+                <form onSubmit={this.submitComment}>
+                  <TextField
+                    label="Hozzászólás"
+                    value={this.state.text}
+                    onChange={this.handleChange('text')}
+                    margin="normal"
+                  />
+                  <Button>Hozzászólok</Button>
+                </form>
+              </div>
+            </Grid>
+          </Grid>
+        </Paper>
       );
     } else {
       return <Loader/>;
@@ -201,4 +194,10 @@ const mapStateToProps = ({autos, auth, comments}) => {
   };
 };
 
-export default connect(mapStateToProps, {fetchAutos, fetchComments, submitComment})(AutoDetailsPage);
+export default connect(mapStateToProps, {
+  fetchAutos,
+  incrementLikes,
+  deleteAuto,
+  fetchComments,
+  submitComment
+})(AutoDetailsPage);

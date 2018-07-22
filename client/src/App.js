@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fetchUser} from './actions/user';
 import {fetchAutos} from './actions/auto';
@@ -8,7 +8,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import AutoDetailsPage from './containers/AutoDetailsPage';
 import AutoEditPage from './containers/AutoEditPage';
-
+import CarListPage from './containers/CarListPage';
 import './styles/main.css';
 
 class App extends Component {
@@ -24,8 +24,10 @@ class App extends Component {
           <Header/>
           <Switch>
             <Route exact path="/" component={Main}/>
+            <Route exact path="/my-cars/:id" component={CarListPage}/>
             <Route exact path="/autos/:id" component={AutoDetailsPage}/>
             <Route exact path="/autos/:id/edit" component={AutoEditPage}/>
+            <Redirect to="/"/>
           </Switch>
           <Footer/>
         </div>
