@@ -40,7 +40,7 @@ class Option extends React.Component {
   }
 }
 
-function SelectWrapped(props) {
+export function SelectWrapped(props) {
   const {classes, ...other} = props;
 
   return (
@@ -78,9 +78,9 @@ function SelectWrapped(props) {
   );
 }
 
-const ITEM_HEIGHT = 48;
+export const ITEM_HEIGHT = 48;
 
-const styles = theme => ({
+export const styles = theme => ({
   root: {
     flexGrow: 1,
     height: 250,
@@ -193,7 +193,6 @@ class Search extends Component {
 
   onChange = (name) => (value) => {
     this.setState({[name]: value});
-    console.log(this.state.uzemanyag);
   };
 
   handleSearch = () => {
@@ -258,6 +257,7 @@ class Search extends Component {
             fullWidth
             value={uzemanyag}
             onChange={this.onChange('uzemanyag')}
+            placeholder="Üzemanyag típusa"
             name="uzemanyag"
             label="Üzemanyag"
             InputLabelProps={{

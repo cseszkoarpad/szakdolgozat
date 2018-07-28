@@ -39,3 +39,18 @@ export const UZEMANYAG_TIPUSOK = [
   {value: 'Elektromos', label: 'Elektromos'},
   {value: 'Hibrid', label: 'Hibrid'},
 ];
+export const ALLAPOTOK = [
+  {value: 'Kitűnő', label: 'Kitűnő'},
+  {value: 'Újszerű', label: 'Újszerú'},
+  {value: 'Normál', label: 'Normál'},
+  {value: 'Sérült', label: 'Sérült'},
+];
+export const HAJTAS_TIPUSOK = [
+  {value: 'Hátsó kerék', label: 'Hátsó kerék'},
+  {value: 'Első kerék', label: 'Első kerék'},
+  {value: 'Összkerék hajtás', label: 'Összkerék hajtás'},
+];
+export const VALTO_TIPUSOK = [
+  {value: 'Manuális', label: 'Manuális'},
+  {value: 'Automata', label: 'Automata'},
+];
