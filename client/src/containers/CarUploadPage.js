@@ -9,7 +9,7 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import {withStyles} from '@material-ui/core';
-import {ALLAPOTOK, HAJTAS_TIPUSOK, KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK, VALTO_TIPUSOK} from '../constants';
+import {ALLAPOTOK, EVJARATOK, HAJTAS_TIPUSOK, KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK, VALTO_TIPUSOK} from '../constants';
 import {SelectWrapped, styles} from '../components/Search';
 
 function getSteps() {
@@ -88,6 +88,7 @@ class CarUploadPage extends Component {
       valto,
       leiras,
     };
+    console.log(car);
     this.props.addCar(car);
     this.props.history.push(`/`);
   };
@@ -103,7 +104,6 @@ class CarUploadPage extends Component {
       hengerUrtartalom, teljesitmeny, hajtas, valto, leiras,
     } = this.state;
     const steps = getSteps();
-    const {classes} = this.props;
 
     return (
       <Paper>
@@ -118,6 +118,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               name="marka"
@@ -149,6 +150,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               fullWidth
               required
               name="modell"
@@ -168,6 +170,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               fullWidth
               required
               name="kep"
@@ -187,6 +190,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               fullWidth
               type="number"
               name="ar"
@@ -206,16 +210,25 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               fullWidth
               required
-              type="date"
               name="ev"
               label="Évjárat"
               value={ev}
-              onChange={this.onChange}
+              onChange={this.onSelectChange('ev')}
               InputLabelProps={{
                 shrink: true,
-              }}/>
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'ev',
+                  simpleValue: true,
+                  options: EVJARATOK,
+                },
+              }}
+            />
           </div>
           }
 
@@ -229,6 +242,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               fullWidth
               required
               name="allapot"
@@ -260,6 +274,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               name="kivitel"
@@ -291,6 +306,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               type="number"
@@ -311,6 +327,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               name="szin"
@@ -330,6 +347,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               type="number"
@@ -350,6 +368,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               name="uzemanyag"
@@ -381,6 +400,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               type="number"
@@ -401,6 +421,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               required
               fullWidth
               type="number"
@@ -421,6 +442,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               name="hajtas"
               label="Hajtás"
               value={hajtas}
@@ -452,6 +474,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               name="valto"
               label="Váltó"
               value={valto}
@@ -483,6 +506,7 @@ class CarUploadPage extends Component {
           }}>
             <TextField
               style={{width: '300px'}}
+              autoFocus
               fullWidth
               name="leiras"
               label="Leírás"
