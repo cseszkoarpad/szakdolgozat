@@ -60,6 +60,10 @@ class CarUploadPage extends Component {
     this.setState({[event.target.name]: event.target.value});
   };
 
+  onSelectChange = (name) => (value) => {
+    this.setState({[name]: value});
+  };
+
   handleAddCar = (event) => {
     event.preventDefault();
     const {
@@ -105,15 +109,22 @@ class CarUploadPage extends Component {
       <Paper>
         <form onSubmit={(e) => this.handleAddCar(e)}>
           {activeStep === 0 &&
-          <div style={{padding: '50px'}}>
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
             <TextField
+              style={{width: '300px'}}
               required
               fullWidth
               name="marka"
               label="Márka"
               value={marka}
               placeholder="Márka kiválasztása"
-              onChange={this.onChange}
+              onChange={this.onSelectChange('marka')}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -128,194 +139,378 @@ class CarUploadPage extends Component {
             />
           </div>}
 
-          {activeStep === 1 && <TextField
-            fullWidth
-            name="modell"
-            label="Modell"
-            value={modell}
-            onChange={this.onChange}/>}
-
-          {activeStep === 2 && <TextField
-            fullWidth
-            name="kep"
-            label="Kép url"
-            value={kep}
-            onChange={this.onChange}/>}
-
-          {activeStep === 3 && <TextField
-            fullWidth
-            type="number"
-            name="ar"
-            label="Ár"
-            value={ar}
-            onChange={this.onChange}/>}
-
-          {activeStep === 4 && <TextField
-            fullWidth
-            type="date"
-            name="ev"
-            label="Évjárat"
-            value={ev}
-            onChange={this.onChange}
-            InputLabelProps={{
-              shrink: true,
-            }}/>
+          {activeStep === 1 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              fullWidth
+              required
+              name="modell"
+              label="Modell"
+              value={modell}
+              onChange={this.onChange}/>
+          </div>
           }
 
-          {activeStep === 5 && <TextField
-            name="allapot"
-            label="Állapot"
-            value={allapot}
-            onChange={this.onChange}
-            required
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'allapot',
-                simpleValue: true,
-                options: ALLAPOTOK,
-              },
-            }}
-          />}
+          {activeStep === 2 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              fullWidth
+              required
+              name="kep"
+              label="Kép url"
+              value={kep}
+              onChange={this.onChange}/>
+          </div>
+          }
 
-          {activeStep === 6 && <TextField
-            name="kivitel"
-            label="Kivitel"
-            value={kivitel}
-            onChange={this.onChange}
-            required
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'kivitel',
-                simpleValue: true,
-                options: KIVITELEK,
-              },
-            }}
-          />}
+          {activeStep === 3 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              fullWidth
+              type="number"
+              name="ar"
+              label="Ár"
+              value={ar}
+              onChange={this.onChange}/>
+          </div>
+          }
 
-          {activeStep === 7 && <TextField
-            type="number"
-            name="km"
-            label="Km óra állása"
-            value={km}
-            onChange={this.onChange}/>}
+          {activeStep === 4 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              fullWidth
+              required
+              type="date"
+              name="ev"
+              label="Évjárat"
+              value={ev}
+              onChange={this.onChange}
+              InputLabelProps={{
+                shrink: true,
+              }}/>
+          </div>
+          }
 
-          {activeStep === 8 && <TextField
-            name="szin"
-            label="Szín"
-            value={szin}
-            onChange={this.onChange}/>}
+          {activeStep === 5 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              fullWidth
+              required
+              name="allapot"
+              label="Állapot"
+              value={allapot}
+              onChange={this.onSelectChange('allapot')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'allapot',
+                  simpleValue: true,
+                  options: ALLAPOTOK,
+                },
+              }}
+            />
+          </div>
+          }
 
-          {activeStep === 9 && <TextField
-            type="number"
-            name="tomeg"
-            label="Tömeg"
-            value={tomeg}
-            onChange={this.onChange}/>}
+          {activeStep === 6 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              required
+              fullWidth
+              name="kivitel"
+              label="Kivitel"
+              value={kivitel}
+              onChange={this.onSelectChange('kivitel')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'kivitel',
+                  simpleValue: true,
+                  options: KIVITELEK,
+                },
+              }}
+            />
+          </div>
+          }
 
-          {activeStep === 10 && <TextField
-            name="uzemanyag"
-            label="Üzemanyag"
-            value={uzemanyag}
-            onChange={this.onChange}
-            required
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'uzemanyag',
-                simpleValue: true,
-                options: UZEMANYAG_TIPUSOK,
-              },
-            }}
-          />}
+          {activeStep === 7 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              required
+              fullWidth
+              type="number"
+              name="km"
+              label="Km óra állása"
+              value={km}
+              onChange={this.onChange}/>
+          </div>
+          }
 
-          {activeStep === 11 && <TextField
-            type="number"
-            name="hengerUrtartalom"
-            label="Hengerűrtartalom"
-            value={hengerUrtartalom}
-            onChange={this.onChange}/>}
+          {activeStep === 8 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              required
+              fullWidth
+              name="szin"
+              label="Szín"
+              value={szin}
+              onChange={this.onChange}/>
+          </div>
+          }
 
-          {activeStep === 12 && <TextField
-            type="number"
-            name="teljesitmeny"
-            label="Teljesítmény"
-            value={teljesitmeny}
-            onChange={this.onChange}/>}
+          {activeStep === 9 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              required
+              fullWidth
+              type="number"
+              name="tomeg"
+              label="Tömeg"
+              value={tomeg}
+              onChange={this.onChange}/>
+          </div>
+          }
 
-          {activeStep === 13 && <TextField
-            name="hajtas"
-            label="Hajtás"
-            value={hajtas}
-            onChange={this.onChange}
-            required
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'hajtas',
-                simpleValue: true,
-                options: HAJTAS_TIPUSOK,
-              },
-            }}
-          />}
+          {activeStep === 10 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              required
+              fullWidth
+              name="uzemanyag"
+              label="Üzemanyag"
+              value={uzemanyag}
+              onChange={this.onSelectChange('uzemanyag')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'uzemanyag',
+                  simpleValue: true,
+                  options: UZEMANYAG_TIPUSOK,
+                },
+              }}
+            />
+          </div>
+          }
 
-          {activeStep === 14 && <TextField
-            name="valto"
-            label="Váltó"
-            value={valto}
-            onChange={this.onChange}
-            required
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'valto',
-                simpleValue: true,
-                options: VALTO_TIPUSOK,
-              },
-            }}
-          />}
+          {activeStep === 11 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              required
+              fullWidth
+              type="number"
+              name="hengerUrtartalom"
+              label="Hengerűrtartalom"
+              value={hengerUrtartalom}
+              onChange={this.onChange}/>
+          </div>
+          }
 
-          {activeStep === 15 && <TextField
-            name="leiras"
-            label="Leírás"
-            value={leiras}
-            multiline={true}
-            onChange={this.onChange}/>}
+          {activeStep === 12 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              required
+              fullWidth
+              type="number"
+              name="teljesitmeny"
+              label="Teljesítmény"
+              value={teljesitmeny}
+              onChange={this.onChange}/>
+          </div>
+          }
+
+          {activeStep === 13 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              name="hajtas"
+              label="Hajtás"
+              value={hajtas}
+              onChange={this.onSelectChange('hajtas')}
+              required
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'hajtas',
+                  simpleValue: true,
+                  options: HAJTAS_TIPUSOK,
+                },
+              }}
+            />
+          </div>
+          }
+
+          {activeStep === 14 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              name="valto"
+              label="Váltó"
+              value={valto}
+              onChange={this.onSelectChange('valto')}
+              required
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'valto',
+                  simpleValue: true,
+                  options: VALTO_TIPUSOK,
+                },
+              }}
+            />
+          </div>
+          }
+
+          {activeStep === 15 &&
+          <div style={{
+            paddingTop: '100px',
+            paddingBottom: '40px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+            <TextField
+              style={{width: '300px'}}
+              fullWidth
+              name="leiras"
+              label="Leírás"
+              value={leiras}
+              multiline={true}
+              onChange={this.onChange}/>
+          </div>
+          }
 
           {this.state.activeStep === steps.length ? (
-            <div>
+            <div style={{
+              paddingTop: '100px',
+              paddingBottom: '40px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
               <p className="info">A feltöltés 1 creditbe kerül.</p>
               <p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>
               <Button type="submit">Létrehozás</Button>
               <Button onClick={this.handleCancelButton}>Mégse</Button>
             </div>
           ) : (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '80px'}}>
               <Button
                 disabled={activeStep === 0}
                 onClick={this.handleBack}
-                className={classes.backButton}
+                style={{marginRight: '20px'}}
               >
                 Vissza
               </Button>
@@ -324,7 +519,8 @@ class CarUploadPage extends Component {
               </Button>
             </div>
           )}
-          {window.innerWidth > 1350 && <Stepper activeStep={activeStep} alternativeLabel>
+          {window.innerWidth > 1350 && this.state.activeStep !== steps.length &&
+          <Stepper activeStep={activeStep} alternativeLabel>
             {steps.map(label => {
               return (
                 <Step key={label}>

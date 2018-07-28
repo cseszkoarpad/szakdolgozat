@@ -25,9 +25,6 @@ const styles = {
   spaceFiller: {
     flexGrow: 1,
   },
-  flex: {
-    flexGrow: 1,
-  },
   profile: {
     display: 'flex',
     flexDirection: 'row',
@@ -36,7 +33,10 @@ const styles = {
   },
   name: {
     textDecoration: 'none',
-    marginRight: '5px',
+    marginRight: '10px',
+  },
+  img: {
+    marginRight: '15px',
   },
 };
 
@@ -70,7 +70,8 @@ class Header extends Component {
         return [
           <Typography key="1" classes={{subheading: classes.name}} component={Link} to={'/'} variant='subheading'
                       color="inherit">{this.props.auth.name}</Typography>,
-          <Avatar key="2" component={Link} to={'/'} alt={`${this.props.auth.name}-profile-picture`}
+          <Avatar key="2" classes={{root: classes.img}} component={Link} to={'/'}
+                  alt={`${this.props.auth.name}-profile-picture`}
                   src={this.props.auth.profilePic}/>,
           <IconButton key="3"
                       aria-owns={anchorEl ? 'simple-menu' : null}
@@ -109,9 +110,6 @@ class Header extends Component {
     return (
       <AppBar className={classes.header} position="static" color="default">
         <Toolbar>
-          {/*
-          <Button className={classes.flex} component={Link} to="/">Premium autó portál</Button>
-*/}
           <Link to={'/'}>
             <img
               className={classes.icon}
