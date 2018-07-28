@@ -10,41 +10,54 @@ import GridList from '@material-ui/core/GridList';
 import {Link} from 'react-router-dom';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
+import {fetchCars} from '../actions/car';
+import Button from '@material-ui/core/Button';
 
 const styles = {
   search: {
-    padding: '10px',
+    padding: '15px',
   },
-  root: {
+  cars: {
     display: 'flex',
     flexDirection: 'row',
-    alignContent: 'space-around',
-    justifyContent: 'space-around',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  tileWrapper: {
+    borderRadius: '5px',
+  },
+  button: {
+    color: 'white',
   },
   icon: {
-    color: 'rgba(255, 255, 255, 0.54)',
+    paddingLeft: '5px',
+    color: 'white',
   },
 };
 
 class Main extends Component {
+
+  componentWillMount() {
+    this.props.fetchCars();
+  }
+
   renderCars = (classes) => this.props.cars.map(car => (
-      <GridListTile key={car._id} style={{width: '150px', height: '168px'}}>
-        <Link className="car" to={`/cars/${car._id}`}>
-          <img
-            src={car.kep ? car.kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
-            alt={`${car.marka}-${car.modell}`}/>
-          <GridListTileBar
-            title={car.marka}
-            subtitle={<span>{car.modell}</span>}
-            actionIcon={
-              <IconButton className={classes.icon}>
-                <InfoIcon/>
-              </IconButton>
-            }
-          />
-        </Link>
+      <GridListTile classes={{tile: classes.tileWrapper}} key={car._id}>
+        <img
+          src={car.kep ? car.kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
+          alt={`${car.marka}-${car.modell}`}/>
+        <GridListTileBar
+          classes={{actionIcon: classes.button}}
+          title={car.marka}
+          subtitle={<span>{car.modell} ({car.ev})</span>}
+          actionIcon={
+            <Button component={Link} to={`/cars/${car._id}`} color="primary" className={classes.button}>
+              Részletek
+              <InfoIcon className={classes.icon}/>
+            </Button>
+          }
+        />
       </GridListTile>
     ),
   );
@@ -52,7 +65,7 @@ class Main extends Component {
   render() {
     const {classes} = this.props;
 
-    if (this.props.cars) {
+    if (this.props.cars.length > 0) {
       return (
         <Grid container spacing={8}>
           <Grid item xs={2}>
@@ -61,8 +74,8 @@ class Main extends Component {
             </Paper>
           </Grid>
           <Grid item xs={10}>
-            <Paper>
-              <GridList className={classes.root}>
+            <Paper className={classes.search}>
+              <GridList spacing={10} cols={3} className={classes.cars}>
                 {this.renderCars(classes)}
               </GridList>
             </Paper>
@@ -85,4 +98,4 @@ function mapStateToProps({cars}) {
   };
 }
 
-export default connect(mapStateToProps)(withStyles(styles)(Main));
+export default connect(mapStateToProps, {fetchCars})(withStyles(styles)(Main));

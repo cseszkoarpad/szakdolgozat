@@ -4,7 +4,7 @@ import {addCar, deleteCar, updateCar} from '../actions/car';
 import '../styles/carDetails.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/es/Paper/Paper';
+import Paper from '@material-ui/core/Paper';
 
 class CarEditPage extends Component {
   state = {
@@ -228,7 +228,7 @@ class CarEditPage extends Component {
                 multiline={true}
                 onChange={this.onChange}/>
 
-              {isEditing
+              {isEditing && this.props.auth && this.props.auth.credits
                 ? <div>
                   <Button type="submit">Mentés</Button>
                   <Button onClick={this.handleCancelButton}>Mégse</Button>

@@ -2,27 +2,6 @@ body {
     background: #EFEBE9;
 }
 
-.search {
-    padding: 10px;
-}
-
-.cars {
-    display: flex;
-    flex-flow: row wrap;
-    align-content: center;
-    justify-content: space-evenly;
-    padding: 20px;
-}
-
-.car {
-    width: 200px;
-}
-
-.car img {
-    width: 150px;
-    height: 100px;
-}
-
 .field {
     margin-bottom: 15px;
 }

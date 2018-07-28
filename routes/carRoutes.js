@@ -10,6 +10,12 @@ module.exports = app => {
     .catch(error => console.error(error));
   });
 
+  app.get('/api/cars/:id', (req, res) => {
+    Car.findOne({_id: req.params.id})
+    .then(car => res.send(car))
+    .catch(error => console.error(error));
+  });
+
   app.get('/api/comments', (req, res) => {
     Comment.find()
     .then(comments => res.send(comments))
@@ -48,8 +54,8 @@ module.exports = app => {
       tomeg, uzemanyag,
       hengerUrtartalom,
       teljesitmeny, hajtas,
-      valto, leiras
-    } = req.body.car
+      valto, leiras,
+    } = req.body.car;
 
     const car = new Car();
     car.marka = marka;
@@ -76,8 +82,8 @@ module.exports = app => {
       req.user._cars.push(car._id);
       req.user.save();
 
-      res.send(car)
-    })
+      res.send(car);
+    });
   });
 
   app.put('/api/cars/likes', requireLogin, (req, res) => {
@@ -102,8 +108,8 @@ module.exports = app => {
       tomeg, uzemanyag,
       hengerUrtartalom,
       teljesitmeny, hajtas,
-      valto, leiras
-    } = req.body.car
+      valto, leiras,
+    } = req.body.car;
 
     car.marka = marka;
     car.modell = modell;
@@ -125,14 +131,14 @@ module.exports = app => {
     Car.findById({_id: id}, (err, car) => {
       if (err) return err;
 
-      car.save()
+      car.save();
     });
   });
 
   app.delete('/api/cars/:id', requireLogin, (req, res) => {
     const id = req.params.id;
-    console.log(req.params.id)
-    Car.remove({_id: id}).then(() => res.send({message: 'success'}))
+    Car.remove({_id: id})
+    .then(() => res.send({message: 'success'}))
     .catch(error => console.error(error));
   });
 };

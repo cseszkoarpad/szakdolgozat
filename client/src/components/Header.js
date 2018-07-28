@@ -8,9 +8,59 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Avatar from '@material-ui/core/Avatar';
+import Menu from '@material-ui/core/es/Menu/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import {setAuthToNull} from '../actions/user';
+import {history} from '../index';
+import {withStyles} from '@material-ui/core';
+
+const styles = {
+  header: {
+    marginBottom: '10px',
+  },
+  icon: {
+    width: '100px',
+  },
+  spaceFiller: {
+    flexGrow: 1,
+  },
+  flex: {
+    flexGrow: 1,
+  },
+  profile: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  name: {
+    textDecoration: 'none',
+    marginRight: '5px',
+  },
+};
 
 class Header extends Component {
-  renderMenu = () => {
+  state = {
+    anchorEl: null,
+  };
+
+  handleClick = event => {
+    this.setState({anchorEl: event.currentTarget});
+  };
+
+  handleClose = () => {
+    this.setState({anchorEl: null});
+  };
+
+  handleLogout = () => {
+    this.props.setAuthToNull();
+    history.push('/');
+  };
+
+  renderMenu = (classes) => {
+    const {anchorEl} = this.state;
+
     switch (this.props.auth) {
       case null:
         return;
@@ -18,24 +68,58 @@ class Header extends Component {
         return <Button href="/auth/google">Bejelentkezés</Button>;
       default:
         return [
-          <Button key="1" component={Link} to="/upload/new">Feltöltés</Button>,
-          <Button key="5" component={Link} to={`/my-cars/${this.props.auth._id}`}>Autóim</Button>,
-          <Payments key="2"/>,
-          <Typography key="3" color="inherit">Creditek: {this.props.auth.credits}</Typography>,
-          <Button key="4" href="/api/logout">Kijelentkezés</Button>
+          <Typography key="1" classes={{subheading: classes.name}} component={Link} to={'/'} variant='subheading'
+                      color="inherit">{this.props.auth.name}</Typography>,
+          <Avatar key="2" component={Link} to={'/'} alt={`${this.props.auth.name}-profile-picture`}
+                  src={this.props.auth.profilePic}/>,
+          <IconButton key="3"
+                      aria-owns={anchorEl ? 'simple-menu' : null}
+                      aria-haspopup="true"
+                      onClick={this.handleClick}
+                      color="inherit" aria-label="Menu">
+            <MenuIcon/>
+          </IconButton>,
+          <Menu
+            key="4"
+            id="simple-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={this.handleClose}
+            onKeyDown={this.handleClose}
+          >
+            <MenuItem component={Link} to="/upload/new">
+              Feltöltés
+            </MenuItem>
+            <MenuItem component={Link} to={`/my-cars/${this.props.auth._id}`}>
+              Autóim
+            </MenuItem>
+            <MenuItem>
+              <Payments/>
+            </MenuItem>
+            <MenuItem onClick={this.handleLogout}>
+              Kijelentkezés
+            </MenuItem>
+          </Menu>,
         ];
     }
   };
 
   render() {
+    const {classes} = this.props;
     return (
-      <AppBar className="add-margin-bottom" position="static" color="default">
+      <AppBar className={classes.header} position="static" color="default">
         <Toolbar>
-          <IconButton color="inherit" aria-label="Menu">
-            <MenuIcon/>
-          </IconButton>
-          <Button className="flex-grow" component={Link} to="/">Premium autó portál</Button>
-          {this.renderMenu()}
+          {/*
+          <Button className={classes.flex} component={Link} to="/">Premium autó portál</Button>
+*/}
+          <Link to={'/'}>
+            <img
+              className={classes.icon}
+              src="http://www.pngpix.com/wp-content/uploads/2016/06/PNGPIX-COM-Yellow-Ferrari-F12tdf-Car-Front-PNG-Image.png"
+              alt="auto-portal-icon"/>
+          </Link>
+          <Typography className={classes.spaceFiller}/>
+          {this.renderMenu(classes)}
         </Toolbar>
       </AppBar>
     );
@@ -44,8 +128,8 @@ class Header extends Component {
 
 function mapStateToProps({auth}) {
   return {
-    auth
+    auth,
   };
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, {setAuthToNull})(withStyles(styles)(Header));

@@ -9,12 +9,12 @@ import Footer from './components/Footer';
 import CarDetailsPage from './containers/CarDetailsPage';
 import CarEditPage from './containers/CarEditPage';
 import CarListPage from './containers/CarListPage';
+import CarUploadPage from './containers/CarUploadPage';
 import './styles/main.css';
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
-    this.props.fetchCars();
   }
 
   render() {
@@ -27,7 +27,7 @@ class App extends Component {
             <Route exact path="/my-cars/:id" component={CarListPage}/>
             <Route exact path="/cars/:id" component={CarDetailsPage}/>
             <Route exact path="/cars/:id/edit" component={CarEditPage}/>
-            <Route exact path="/upload/new" component={CarEditPage}/>
+            <Route exact path="/upload/new" component={CarUploadPage}/>
             <Redirect to="/"/>
           </Switch>
           <Footer/>

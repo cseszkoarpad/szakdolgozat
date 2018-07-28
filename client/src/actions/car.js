@@ -1,10 +1,16 @@
-import {FETCH_CARS, ADD_CAR, UPDATE_CAR, DELETE_CAR, INCREMENT_LIKES, SEARCH_CARS} from '../constants';
+import {ADD_CAR, FETCH_CAR_BY_ID, FETCH_CARS, INCREMENT_LIKES, SEARCH_CARS, UPDATE_CAR} from '../constants';
 import axios from 'axios';
 
 export const fetchCars = () => async dispatch => {
   const res = await axios.get('/api/cars');
 
   dispatch({type: FETCH_CARS, payload: res.data});
+};
+
+export const fetchCarById = (id) => async dispatch => {
+  const res = await axios.get(`/api/cars/${id}`);
+
+  dispatch({type: FETCH_CAR_BY_ID, payload: res.data});
 };
 
 export const search = (data) => async dispatch => {
@@ -26,8 +32,7 @@ export const updateCar = (car) => async dispatch => {
 };
 
 export const deleteCar = (id) => async dispatch => {
-  const res = await axios.delete(`/api/cars/${id}`);
-  dispatch({type: DELETE_CAR, id});
+  await axios.delete(`/api/cars/${id}`);
 };
 
 //TO TEST

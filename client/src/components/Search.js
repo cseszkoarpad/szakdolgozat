@@ -14,6 +14,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import 'react-select/dist/react-select.css';
+import {withStyles} from '@material-ui/core';
 
 class Option extends React.Component {
   handleClick = event => {
@@ -30,7 +31,7 @@ class Option extends React.Component {
         onClick={this.handleClick}
         component="div"
         style={{
-          fontWeight: isSelected ? 500 : 400
+          fontWeight: isSelected ? 500 : 400,
         }}
       >
         {children}
@@ -77,16 +78,122 @@ function SelectWrapped(props) {
   );
 }
 
+const ITEM_HEIGHT = 48;
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    height: 250,
+  },
+  chip: {
+    margin: theme.spacing.unit / 4,
+  },
+  '@global': {
+    '.Select-control': {
+      display: 'flex',
+      alignItems: 'center',
+      border: 0,
+      height: 'auto',
+      background: 'transparent',
+      '&:hover': {
+        boxShadow: 'none',
+      },
+    },
+    '.Select-multi-value-wrapper': {
+      flexGrow: 1,
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    '.Select--multi .Select-input': {
+      margin: 0,
+    },
+    '.Select.has-value.is-clearable.Select--single > .Select-control .Select-value': {
+      padding: 0,
+    },
+    '.Select-noresults': {
+      padding: theme.spacing.unit * 2,
+    },
+    '.Select-input': {
+      display: 'inline-flex !important',
+      padding: 0,
+      height: 'auto',
+    },
+    '.Select-input input': {
+      background: 'transparent',
+      border: 0,
+      padding: 0,
+      cursor: 'default',
+      display: 'inline-block',
+      fontFamily: 'inherit',
+      fontSize: 'inherit',
+      margin: 0,
+      outline: 0,
+    },
+    '.Select-placeholder, .Select--single .Select-value': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      display: 'flex',
+      alignItems: 'center',
+      fontFamily: theme.typography.fontFamily,
+      fontSize: theme.typography.pxToRem(16),
+      padding: 0,
+    },
+    '.Select-placeholder': {
+      opacity: 0.42,
+      color: theme.palette.common.black,
+    },
+    '.Select-menu-outer': {
+      backgroundColor: theme.palette.background.paper,
+      boxShadow: theme.shadows[2],
+      position: 'absolute',
+      left: 0,
+      top: `calc(100% + ${theme.spacing.unit}px)`,
+      width: '100%',
+      zIndex: 2,
+      maxHeight: ITEM_HEIGHT * 4.5,
+    },
+    '.Select.is-focused:not(.is-open) > .Select-control': {
+      boxShadow: 'none',
+    },
+    '.Select-menu': {
+      maxHeight: ITEM_HEIGHT * 4.5,
+      overflowY: 'auto',
+    },
+    '.Select-menu div': {
+      boxSizing: 'content-box',
+    },
+    '.Select-arrow-zone, .Select-clear-zone': {
+      color: theme.palette.action.active,
+      cursor: 'pointer',
+      height: 21,
+      width: 21,
+      zIndex: 1,
+    },
+    // Only for screen readers. We can't use display none.
+    '.Select-aria-only': {
+      position: 'absolute',
+      overflow: 'hidden',
+      clip: 'rect(0 0 0 0)',
+      height: 1,
+      width: 1,
+      margin: -1,
+    },
+  },
+});
+
 class Search extends Component {
   state = {
     marka: '',
     kivitel: null,
-    uzemanyag: null
+    uzemanyag: null,
   };
 
   onChange = (name) => (value) => {
     this.setState({[name]: value});
-    console.log(this.state.uzemanyag)
+    console.log(this.state.uzemanyag);
   };
 
   handleSearch = () => {
@@ -94,7 +201,7 @@ class Search extends Component {
     const data = {
       marka,
       kivitel,
-      uzemanyag
+      uzemanyag,
     };
     this.props.search(data);
   };
@@ -112,15 +219,15 @@ class Search extends Component {
             name="marka"
             label="Márka"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             InputProps={{
               inputComponent: SelectWrapped,
               inputProps: {
                 instanceId: 'marka',
                 simpleValue: true,
-                options: MARKAK
-              }
+                options: MARKAK,
+              },
             }}
           />
         </div>
@@ -133,7 +240,7 @@ class Search extends Component {
             name="kivitel"
             label="Kivitel"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             InputProps={{
               inputComponent: SelectWrapped,
@@ -141,8 +248,8 @@ class Search extends Component {
                 instanceId: 'kivitel',
                 multi: true,
                 simpleValue: true,
-                options: KIVITELEK
-              }
+                options: KIVITELEK,
+              },
             }}
           />
         </div>
@@ -154,7 +261,7 @@ class Search extends Component {
             name="uzemanyag"
             label="Üzemanyag"
             InputLabelProps={{
-              shrink: true
+              shrink: true,
             }}
             InputProps={{
               inputComponent: SelectWrapped,
@@ -162,8 +269,8 @@ class Search extends Component {
                 instanceId: 'uzemanyag',
                 multi: true,
                 simpleValue: true,
-                options: UZEMANYAG_TIPUSOK
-              }
+                options: UZEMANYAG_TIPUSOK,
+              },
             }}
           />
         </div>
@@ -177,14 +284,14 @@ class Search extends Component {
 
 function mapStateToProps({cars}) {
   return {
-    cars
+    cars,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    search
+    search,
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Search);
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Search));
