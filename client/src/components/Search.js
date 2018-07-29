@@ -195,13 +195,14 @@ class Search extends Component {
     this.setState({[name]: value});
   };
 
-  handleSearch = () => {
+  handleSearch = (event) => {
+    event.preventDefault();
     const {marka, kivitel, uzemanyag} = this.state;
-    const data = {
-      marka,
-      kivitel,
-      uzemanyag,
-    };
+    const data = Object.assign({},
+      marka && {marka},
+      kivitel && {kivitel},
+      uzemanyag && {uzemanyag},
+    );
     this.props.search(data);
   };
 

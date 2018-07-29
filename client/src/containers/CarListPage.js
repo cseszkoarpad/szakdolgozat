@@ -16,7 +16,7 @@ class CarListPage extends Component {
       return (
         <Grid container spacing={8}>
           <Grid item xs={2}>
-            <Paper className="search">
+            <Paper style={{padding: '15px'}}>
               <Search/>
             </Paper>
           </Grid>

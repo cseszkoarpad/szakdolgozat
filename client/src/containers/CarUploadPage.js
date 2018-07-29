@@ -110,7 +110,7 @@ class CarUploadPage extends Component {
         <form onSubmit={(e) => this.handleAddCar(e)}>
           {activeStep === 0 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -530,7 +530,7 @@ class CarUploadPage extends Component {
               <Button onClick={this.handleCancelButton}>Mégse</Button>
             </div>
           ) : (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '80px'}}>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '80px', paddingBottom: '50px'}}>
               <Button
                 disabled={activeStep === 0}
                 onClick={this.handleBack}
