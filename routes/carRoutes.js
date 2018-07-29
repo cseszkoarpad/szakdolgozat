@@ -16,6 +16,16 @@ module.exports = app => {
     .catch(error => console.error(error));
   });
 
+  app.get('/api/cars/search', (req, res) => {
+    Car.find({
+      marka: req.body.data.marka,
+      kivitel: req.body.data.kivitel,
+      uzemanyag: req.body.data.uzemanyag,
+    })
+    .then(autos => res.send(autos))
+    .catch(error => console.error(error));
+  });
+
   app.get('/api/comments', (req, res) => {
     Comment.find()
     .then(comments => res.send(comments))
