@@ -7,10 +7,16 @@ const passport = require('passport');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 const config = require('./config/keys');
+const mysql = require('mysql');
 
 require('./services/passport');
 
-mongoose.connect(config.mongoDB);
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'luxusautoportal',
+}).connect();
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
@@ -18,18 +24,11 @@ app.use(bodyParser.json());
 app.use(session({
   secret: config.secret,
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
-
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function () {
-  console.log('connected to the database');
-});
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 require('./routes/authRoutes')(app);
 require('./routes/carRoutes')(app);

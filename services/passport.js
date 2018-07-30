@@ -1,18 +1,24 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongoose = require('mongoose');
 const keys = require('../config/keys');
-const User = require('../models/User');
+const mysql = require('mysql');
 
-mongoose.Promise = Promise;
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'luxusautoportal',
+});
+
+connection.connect();
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
-    done(null, user);
+  connection.query('select * from users where id = ' + id, function (err, rows) {
+    done(err, rows[0]);
   });
 });
 
@@ -22,21 +28,22 @@ passport.use(
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
       callbackURL: '/auth/google/callback',
-      proxy: true
+      proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
-      User.findOne({googleId: profile.id}, (err, user) => {
-        if (user)
-          return done(err, user);
+      connection.query(`select * from users where googleId = ${profile.id}`, function (err, rows) {
+        if (rows.length) {
+          return done(err, rows[0]);
+        } else {
+          let newUser = {};
+          newUser.googleId = profile.id;
+          newUser.name = profile.displayName;
+          newUser.profilePic = profile.photos[0].value;
+          connection.query('INSERT INTO users ( googleId, name, profilePic ) values (?, ?, ?)', [profile.id, profile.displayName, profile.photos[0].value], function (err, rows) {
+            newUser.id = rows.insertId;
 
-        const newUser = new User();
-        newUser.googleId = profile.id;
-        newUser.name = profile.displayName;
-        newUser.profilePic = profile.photos[0].value;
-        newUser.save((err, user) => {
-          return done(err, user);
-        });
+            return done(null, newUser);
+          });
+        }
       });
-    }
-  )
-);
+    }));
