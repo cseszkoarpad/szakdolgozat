@@ -1,5 +1,4 @@
 const passport = require('passport');
-const User = require('../models/User');
 
 module.exports = app => {
   app.get(
@@ -24,20 +23,5 @@ module.exports = app => {
 
   app.get('/api/current_user', (req, res) => {
     res.send(req.user);
-  });
-
-  app.get('/api/users', (req, res) => {
-    User.find()
-    .then(users => res.send(users))
-    .catch(error => console.error(error));
-  });
-
-  //tesztelni kell
-  app.delete('/api/users/:id', (req, res) => {
-    const id = req.params.id;
-
-    User.findByIdAndRemove({_id: id})
-    .then((user) => res.send({'message': `${user} felhasznalo torolve`}))
-    .catch(error => console.error(error));
   });
 };

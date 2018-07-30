@@ -90,7 +90,7 @@ class CarDetailsPage extends Component {
     if (car._comments.length) {
       this.props.comments.map(comment => {
         return car._comments.forEach(thisCarComment => {
-          if (thisCarComment === comment._id) {
+          if (thisCarComment === comment.id) {
             let commentObject = Object.assign({}, comment);
             comments.unshift(commentObject);
             commentsNum++;
@@ -122,7 +122,7 @@ class CarDetailsPage extends Component {
 
   submitComment = (carId) => {
     if (this.props.auth) {
-      this.props.submitComment(this.props.auth._id, carId, this.props.auth.name, this.state.text);
+      this.props.submitComment(this.props.auth.id, carId, this.props.auth.name, this.state.text);
     } else {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       document.documentElement.scrollTop = 0;
@@ -133,7 +133,7 @@ class CarDetailsPage extends Component {
     const {classes, cars} = this.props;
 
     if (Object.keys(cars).length > 0) {
-      let {_id, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
+      let {id, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
       return (
         <Grid container spacing={8}>
           <Grid item xs={2}>
@@ -177,9 +177,9 @@ class CarDetailsPage extends Component {
                     <li className="text"><span>Váltó:</span>{valto}</li>
                     <li className="desc"><span>Leírás:</span>{leiras}</li>
 
-                    <Button onClick={() => this.incrementLikes(_id)}>Kedvelés</Button>
-                    <Button onClick={() => this.goToEditCarPage(_id)}>Szerkesztés</Button>
-                    <Button onClick={() => this.deleteCar(_id)}>Törlés</Button>
+                    <Button onClick={() => this.incrementLikes(id)}>Kedvelés</Button>
+                    <Button onClick={() => this.goToEditCarPage(id)}>Szerkesztés</Button>
+                    <Button onClick={() => this.deleteCar(id)}>Törlés</Button>
                   </ul>
                 </Grid>
                 <Grid item xs={12}>

@@ -5,11 +5,11 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const morgan = require('morgan');
-const mongoose = require('mongoose');
 const config = require('./config/keys');
 const mysql = require('mysql');
 
 require('./services/passport');
+
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -17,6 +17,7 @@ const connection = mysql.createConnection({
   password: '',
   database: 'luxusautoportal',
 }).connect();
+
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));

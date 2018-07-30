@@ -5,9 +5,9 @@ import GridListTileBar from '@material-ui/core/es/GridListTileBar/GridListTileBa
 import IconButton from '@material-ui/core/es/IconButton/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
-const Car = ({kep, marka, modell, _id}) => (
-  <GridListTile key={_id}>
-    <Link className="car" to={`/cars/${_id}`}>
+const Car = ({kep, marka, modell, id}) => (
+  <GridListTile key={id}>
+    <Link className="car" to={`/cars/${id}`}>
       <img src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
            alt={`${marka}-${modell}`}/>
       <GridListTileBar

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import Select from 'react-select';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {search} from '../actions/car';
+import {searchCars} from '../actions/car';
 import {MARKAK, KIVITELEK, UZEMANYAG_TIPUSOK} from '../constants';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -203,7 +202,7 @@ class Search extends Component {
       kivitel && {kivitel},
       uzemanyag && {uzemanyag},
     );
-    this.props.search(data);
+    this.props.searchCars(data);
   };
 
   render() {
@@ -289,10 +288,4 @@ function mapStateToProps({cars}) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    search,
-  }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Search));
+export default connect(mapStateToProps, {searchCars})(withStyles(styles)(Search));

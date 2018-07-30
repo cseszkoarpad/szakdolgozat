@@ -14,7 +14,7 @@ export default function (state = [], action) {
         action.payload,
       ];
     case UPDATE_CAR:
-      const updatedCarIndex = state.findIndex(car => car._id === action.payload.id);
+      const updatedCarIndex = state.findIndex(car => car.id === action.payload.id);
       return [
         ...state.slice(0, updatedCarIndex),
         action.payload,

@@ -91,7 +91,7 @@ class Header extends Component {
             <MenuItem component={Link} to="/upload/new">
               Feltöltés
             </MenuItem>
-            <MenuItem component={Link} to={`/my-cars/${this.props.auth._id}`}>
+            <MenuItem component={Link} to={`/my-cars/${this.props.auth.id}`}>
               Autóim
             </MenuItem>
             <MenuItem>

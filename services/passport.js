@@ -17,7 +17,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  connection.query('select * from users where id = ' + id, function (err, rows) {
+  connection.query(`select * from users where id = ${id}`, function (err, rows) {
     done(err, rows[0]);
   });
 });

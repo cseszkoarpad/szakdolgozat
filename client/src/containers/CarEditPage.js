@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 
 class CarEditPage extends Component {
   state = {
-    _id: '',
+    id: '',
     marka: '',
     modell: '',
     kep: '',
@@ -37,7 +37,7 @@ class CarEditPage extends Component {
     }
     if (this.state.isEditing) {
       const id = this.props.match.params.id;
-      const originalCar = Object.assign({}, this.props.cars.find(car => car._id === id));
+      const originalCar = Object.assign({}, this.props.cars.find(car => car.id === id));
       this.setState({...originalCar, originalCar});
     }
   }
@@ -49,11 +49,11 @@ class CarEditPage extends Component {
   handleUpdateCar = (event) => {
     event.preventDefault();
     const {
-      _id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras
     } = this.state;
     const car = {
-      _id,
+      id,
       marka,
       modell,
       kep,
@@ -72,7 +72,7 @@ class CarEditPage extends Component {
       leiras
     };
     this.props.updateCar(car);
-    this.props.history.push(`/cars/${_id}`);
+    this.props.history.push(`/cars/${id}`);
   };
 
   handleAddCar = (event) => {
@@ -107,12 +107,12 @@ class CarEditPage extends Component {
     this.props.history.goBack();
   };
 
-  handleDeleteCar = (_id) => {
-    this.props.deleteCar(_id);
+  handleDeleteCar = (id) => {
+    this.props.deleteCar(id);
   };
 
   render() {
-    let {_id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
+    let {id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
     return (
       <Paper>
         {(marka && modell && kep) &&
@@ -232,7 +232,7 @@ class CarEditPage extends Component {
                 ? <div>
                   <Button type="submit">Mentés</Button>
                   <Button onClick={this.handleCancelButton}>Mégse</Button>
-                  <Button onClick={() => this.handleDeleteCar(_id)}>Törlés</Button>
+                  <Button onClick={() => this.handleDeleteCar(id)}>Törlés</Button>
                 </div>
                 : <div><p className="info">A feltöltés 1 creditbe kerül.</p>
                   <p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>

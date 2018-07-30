@@ -13,8 +13,8 @@ export const fetchCarById = (id) => async dispatch => {
   dispatch({type: FETCH_CAR_BY_ID, payload: res.data});
 };
 
-export const search = (data) => async dispatch => {
-  const res = await axios.get('/api/cars/search', data);
+export const searchCars = (data) => async dispatch => {
+  const res = await axios.post('/api/cars/search', {data});
 
   dispatch({type: SEARCH_CARS, payload: res.data});
 };

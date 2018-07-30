@@ -43,7 +43,7 @@ class Main extends Component {
   }
 
   renderCars = (classes) => this.props.cars.map(car => (
-      <GridListTile classes={{tile: classes.tileWrapper}} key={car._id}>
+      <GridListTile classes={{tile: classes.tileWrapper}} key={car.id}>
         <img
           src={car.kep ? car.kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
           alt={`${car.marka}-${car.modell}`}/>
@@ -52,7 +52,7 @@ class Main extends Component {
           title={car.marka}
           subtitle={<span>{car.modell} ({car.ev})</span>}
           actionIcon={
-            <Button component={Link} to={`/cars/${car._id}`} color="primary" className={classes.button}>
+            <Button component={Link} to={`/cars/${car.id}`} color="primary" className={classes.button}>
               Részletek
               <InfoIcon className={classes.icon}/>
             </Button>
