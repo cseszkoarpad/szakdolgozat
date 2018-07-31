@@ -25,11 +25,28 @@ module.exports = app => {
   });
 
   app.post('/api/cars/search', (req, res) => {
-    connection.query(`select * from cars where marka = '${req.body.data.marka}'`, (err, cars) => {
-      console.log(cars)
-      /*if(cars.length) {
+    let queryString = `select * from cars where`
+
+    if(req.body.data.marka) {
+      queryString += ` marka LIKE '%${req.body.data.marka}%'`
+    }
+
+    if(req.body.data.kivitel && !req.body.data.marka) {
+      queryString += ` kivitel = '${req.body.data.kivitel}'`
+    } else if(req.body.data.kivitel) {
+      queryString += ` AND kivitel = '${req.body.data.kivitel}'`
+    }
+
+    if(req.body.data.uzemanyag && !req.body.data.marka && !req.body.data.kivitel) {
+      queryString += ` uzemanyag = '${req.body.data.uzemanyag}'`
+    } else if(req.body.data.uzemanyag) {
+      queryString += ` AND uzemanyag = '${req.body.data.uzemanyag}'`
+    }
+
+    connection.query(queryString, (err, cars) => {
+      if(cars.length) {
         res.send(cars);
-      }*/
+      }
     });
   });
 };
