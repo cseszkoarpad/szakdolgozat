@@ -18,6 +18,9 @@ const styles = {
   container: {
     padding: '0px 20px',
   },
+  commentImg: {
+    borderRadius: '50%',
+  },
 };
 
 class CarDetailsPage extends Component {
@@ -26,10 +29,12 @@ class CarDetailsPage extends Component {
     error: null,
   };
 
+  componentWillMount() {
+    this.props.fetchCarById(this.props.match.params.id);
+  }
 
   componentDidMount() {
-    this.props.fetchCarById(this.props.match.params.id);
-    this.props.fetchComments();
+    this.props.fetchComments(this.props.match.params.id);
   }
 
   //TODO: handleerrorból kiszedni és azzal lekezelni ezt
@@ -84,28 +89,19 @@ class CarDetailsPage extends Component {
     this.setState({error: null});
   }
 
-  renderComments = (car) => {
-    let comments = [];
-    let commentsNum = 0;
-    if (car._comments.length) {
-      this.props.comments.map(comment => {
-        return car._comments.forEach(thisCarComment => {
-          if (thisCarComment === comment.id) {
-            let commentObject = Object.assign({}, comment);
-            comments.unshift(commentObject);
-            commentsNum++;
-          }
-        });
-      });
-    }
+  renderComments = () => {
+    const {classes} = this.props;
+    let commentsNum = this.props.comments.length;
+
     return (
       <div className="comments">
         <h5>{commentsNum} hozzászólás</h5>
-        {comments.map((comment, i) => {
+        {commentsNum > 0 && this.props.comments.map((comment, i) => {
           return (
             <div className="comment" key={i} style={{margin: '20px'}}>
-              <img src={comment.picture} alt={`${comment.name} profile`} style={{width: '50px'}}/>
+              <img className={classes.commentImg} src={comment.profilePic} alt={`${comment.name} profile`}/>
               <strong>{comment.name}</strong> - {comment.text}
+              <span className="date">{this.convertUploadTime(comment.feltoltve)}</span>
             </div>
           );
         })}
@@ -117,12 +113,13 @@ class CarDetailsPage extends Component {
     this.setState({
       [name]: event.target.value,
     });
-    console.log(this.state.text);
   };
 
-  submitComment = (carId) => {
+  submitComment = (event) => {
+    event.preventDefault();
     if (this.props.auth) {
-      this.props.submitComment(this.props.auth.id, carId, this.props.auth.name, this.state.text);
+      this.props.submitComment(this.props.auth.id, this.props.match.params.id, this.state.text, this.props.auth.name, this.props.auth.profilePic);
+      this.setState({text: ''});
     } else {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       document.documentElement.scrollTop = 0;
@@ -155,13 +152,15 @@ class CarDetailsPage extends Component {
                        src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
                        alt={`${marka}-${modell}`}/>
                   <ul className="points">
-                    <li className="uploaded"><span>Feltöltve:</span>{feltoltve && this.convertUploadTime(feltoltve)}</li>
+                    <li className="uploaded"><span>Feltöltve:</span>{feltoltve && this.convertUploadTime(feltoltve)}
+                    </li>
                     <li className="text"><span>Kedvelések:</span>{likes}</li>
                   </ul>
                 </Grid>
                 <Grid item xs={8}>
                   <ul className="points">
-                    <li className="text"><span>Ár:</span>{ar && this.convertPrice(ar)}<span className="unit">Ft</span></li>
+                    <li className="text"><span>Ár:</span>{ar && this.convertPrice(ar)}<span className="unit">Ft</span>
+                    </li>
                     <li className="text"><span>Évjárat:</span>{ev}</li>
                     <li className="text"><span>Állapot:</span>{allapot}</li>
                     <li className="text"><span>Kivitel:</span>{kivitel}</li>
@@ -184,7 +183,6 @@ class CarDetailsPage extends Component {
                 </Grid>
                 <Grid item xs={12}>
                   <div className="comment-container">
-                    {cars._comments && this.renderComments(cars)}
                     <form onSubmit={this.submitComment}>
                       <TextField
                         label="Hozzászólás"
@@ -192,8 +190,9 @@ class CarDetailsPage extends Component {
                         onChange={this.handleChange('text')}
                         margin="normal"
                       />
-                      <Button>Hozzászólok</Button>
+                      <Button type="submit">Hozzászólok</Button>
                     </form>
+                    {this.renderComments()}
                   </div>
                 </Grid>
               </Grid>

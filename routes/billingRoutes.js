@@ -12,8 +12,5 @@ module.exports = app => {
     });
 
     req.user.credits += 10;
-    req.user.save()
-    .then(user => res.send(user))
-    .catch(error => console.error(error))
   });
 };

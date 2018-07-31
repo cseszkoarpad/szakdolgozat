@@ -6,8 +6,8 @@ export default function (state = [], action) {
       return action.payload;
     case SUBMIT_COMMENT:
       return [
-        ...state,
-        action.payload
+        action.payload,
+        ...state
       ];
     default:
       return state;
