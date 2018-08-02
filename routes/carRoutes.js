@@ -18,31 +18,36 @@ module.exports = app => {
   });
 
   app.get('/api/cars/:id', (req, res) => {
-    connection.query(`SELECT * FROM cars WHERE id = ${req.params.id} LIMIT 1`, (err, car) => {
+    connection.query(`SELECT * FROM cars WHERE id = ? LIMIT 1`, [req.params.id], (err, car) => {
       res.send(car[0]);
     });
   });
 
   app.post('/api/cars/search', (req, res) => {
     let queryString = `SELECT * FROM cars WHERE`;
-
+    let parameters = []
     if (req.body.data.marka) {
-      queryString += ` marka LIKE '%${req.body.data.marka}%'`;
+      queryString += ` marka LIKE ?`;
+      parameters.push(req.body.data.marka)
     }
 
     if (req.body.data.kivitel && !req.body.data.marka) {
-      queryString += ` kivitel = '${req.body.data.kivitel}'`;
+      queryString += ` kivitel = ?`;
+      parameters.push(req.body.data.kivitel)
     } else if (req.body.data.kivitel) {
-      queryString += ` AND kivitel = '${req.body.data.kivitel}'`;
+      queryString += ` AND kivitel = ?`;
+      parameters.push(req.body.data.kivitel)
     }
 
     if (req.body.data.uzemanyag && !req.body.data.marka && !req.body.data.kivitel) {
-      queryString += ` uzemanyag = '${req.body.data.uzemanyag}'`;
+      queryString += ` uzemanyag = ?`;
+      parameters.push(req.body.data.uzemanyag)
     } else if (req.body.data.uzemanyag) {
-      queryString += ` AND uzemanyag = '${req.body.data.uzemanyag}'`;
+      queryString += ` AND uzemanyag = ?`;
+      parameters.push(req.body.data.uzemanyag)
     }
 
-    connection.query(queryString, (err, cars) => {
+    connection.query(queryString, [...parameters], (err, cars) => {
       if (cars && cars.length > 0) {
         res.send(cars);
       }
@@ -50,8 +55,8 @@ module.exports = app => {
   });
 
   app.get('/api/comments/:carId', (req, res) => {
-    connection.query(`SELECT name, profilePic, text, feltoltve FROM users, comments WHERE carId = ${req.params.carId} AND users.id = comments.userId
-     ORDER BY feltoltve DESC`, (err, comments) => {
+    connection.query(`SELECT name, profilePic, text, feltoltve FROM users, comments WHERE carId = ? AND users.id = comments.userId
+     ORDER BY feltoltve DESC`, [req.params.carId], (err, comments) => {
       if (comments && comments.length > 0) {
         res.send(comments);
       }
@@ -152,7 +157,6 @@ module.exports = app => {
   });
 
   app.delete('/api/cars/:id', requireLogin, (req, res) => {
-    const id = req.params.id;
-    connection.query(`DELETE FROM cars WHERE id = ${id}`);
+    connection.query(`DELETE FROM cars WHERE id = ?`, [req.params.id]);
   });
 };
