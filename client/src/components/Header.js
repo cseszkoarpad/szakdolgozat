@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
-import Payments from './Payments';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -93,9 +92,6 @@ class Header extends Component {
             </MenuItem>
             <MenuItem component={Link} to={`/my-cars/${this.props.auth.id}`}>
               Autóim
-            </MenuItem>
-            <MenuItem>
-              <Payments/>
             </MenuItem>
             <MenuItem onClick={this.handleLogout}>
               Kijelentkezés

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {deleteCar, fetchCarById, fetchCars, incrementLikes} from '../actions/car';
+import {deleteCar, fetchCarById, fetchCars} from '../actions/car';
 import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
 import '../styles/carDetails.css';
@@ -170,7 +170,6 @@ class CarDetailsPage extends Component {
                     <li className="text"><span>Váltó:</span>{valto}</li>
                     <li className="desc"><span>Leírás:</span>{leiras}</li>
 
-                    <Button onClick={() => this.incrementLikes(id)}>Kedvelés</Button>
                     <Button onClick={() => this.goToEditCarPage(id)}>Szerkesztés</Button>
                     <Button onClick={() => this.deleteCar(id)}>Törlés</Button>
                   </ul>

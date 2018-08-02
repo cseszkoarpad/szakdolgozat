@@ -68,12 +68,12 @@ class Main extends Component {
     if (this.props.cars.length > 0) {
       return (
         <Grid container spacing={8}>
-          <Grid item xs={2}>
+          <Grid item xs={12} sm={4} md={3} lg={2}>
             <Paper className={classes.search}>
               <Search/>
             </Paper>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12} sm={8} md={9} lg={10}>
             <Paper className={classes.search}>
               <GridList spacing={10} cols={3} className={classes.cars}>
                 {this.renderCars(classes)}

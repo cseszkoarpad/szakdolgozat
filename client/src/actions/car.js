@@ -1,4 +1,4 @@
-import {ADD_CAR, FETCH_CAR_BY_ID, FETCH_CARS, INCREMENT_LIKES, SEARCH_CARS, UPDATE_CAR} from '../constants';
+import {ADD_CAR, FETCH_CAR_BY_ID, FETCH_CARS, SEARCH_CARS, UPDATE_CAR} from '../constants';
 import axios from 'axios';
 
 export const fetchCars = () => async dispatch => {
