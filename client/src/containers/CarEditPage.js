@@ -35,11 +35,8 @@ class CarEditPage extends Component {
     if (!this.props.auth) {
       this.props.history.push('/');
     }
-    if (this.state.isEditing) {
-      const id = this.props.match.params.id;
-      const originalCar = Object.assign({}, this.props.cars.find(car => car.id === id));
-      this.setState({...originalCar, originalCar});
-    }
+    const originalCar = Object.assign({}, this.props.cars);
+    this.setState({...originalCar, originalCar});
   }
 
   onChange = (event) => {
@@ -107,12 +104,14 @@ class CarEditPage extends Component {
     this.props.history.goBack();
   };
 
-  handleDeleteCar = (id) => {
-    this.props.deleteCar(id);
+  handleDeleteCar = () => {
+    const carId = this.state.id;
+    const userId = this.props.auth.id;
+    this.props.deleteCar(carId, userId);
   };
 
   render() {
-    let {id, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
+    let {kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
     return (
       <Paper>
         {(marka && modell && kep) &&
@@ -228,18 +227,11 @@ class CarEditPage extends Component {
                 multiline={true}
                 onChange={this.onChange}/>
 
-              {isEditing && this.props.auth
-                ?
-                <div>
-                  <Button type="submit">Mentés</Button>
-                  <Button onClick={this.handleCancelButton}>Mégse</Button>
-                  <Button onClick={() => this.handleDeleteCar(id)}>Törlés</Button>
-                </div>
-                :
-                <div>
-                  <Button type="submit">Létrehozás</Button>
-                  <Button onClick={this.handleCancelButton}>Mégse</Button>
-                </div>}
+              <div>
+                <Button type="submit">Mentés</Button>
+                <Button onClick={this.handleCancelButton}>Mégse</Button>
+                <Button onClick={this.handleDeleteCar}>Törlés</Button>
+              </div>
             </ul>
           </div>
         </form>

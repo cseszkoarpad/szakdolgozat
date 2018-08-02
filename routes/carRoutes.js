@@ -158,7 +158,7 @@ module.exports = app => {
 
   app.post('/api/isCarFromUser', requireLogin, (req, res) => {
     connection.query(`SELECT marka FROM cars WHERE id = ? AND userId = ?`, [req.body.carId, req.body.userId], (err, result) => {
-      if (result !== undefined && result.length !== 0) {
+      if (Array.isArray(result) && result.length) {
         res.send({isCarFromUser: true});
       }
     });
