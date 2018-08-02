@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {deleteCar, fetchCars, fetchCarById, incrementLikes} from '../actions/car';
+import {deleteCar, fetchCarById, fetchCars, incrementLikes} from '../actions/car';
 import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
 import '../styles/carDetails.css';
@@ -17,6 +17,9 @@ const styles = {
   },
   container: {
     padding: '0px 20px',
+  },
+  carImg: {
+    maxWidth: '100%',
   },
   commentImg: {
     borderRadius: '50%',
@@ -35,15 +38,6 @@ class CarDetailsPage extends Component {
 
   componentDidMount() {
     this.props.fetchComments(this.props.match.params.id);
-  }
-
-  //TODO: handleerrorból kiszedni és azzal lekezelni ezt
-  async incrementLikes(id) {
-    if (!this.props.auth) {
-      this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
-      return;
-    }
-    this.props.incrementLikes(id);
   }
 
   goToEditCarPage(id) {
@@ -147,14 +141,14 @@ class CarDetailsPage extends Component {
                   </div>
                 </Grid>
                 <Grid item xs={4}>
-                  <h6 className="title">{marka} - {modell}</h6>
-                  <img className="img"
+                  <h1 className="title">{marka} - {modell}</h1>
+                  <img className={classes.carImg}
                        src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
                        alt={`${marka}-${modell}`}/>
                   <ul className="points">
                     <li className="uploaded"><span>Feltöltve:</span>{feltoltve && this.convertUploadTime(feltoltve)}
                     </li>
-                    <li className="text"><span>Kedvelések:</span>{likes}</li>
+                    {likes > 0 && <li className="text"><span>Kedvelések:</span>{likes}</li>}
                   </ul>
                 </Grid>
                 <Grid item xs={8}>
@@ -217,7 +211,6 @@ const mapStateToProps = ({cars, auth, comments}) => {
 export default connect(mapStateToProps, {
   fetchCars,
   fetchCarById,
-  incrementLikes,
   deleteCar,
   fetchComments,
   submitComment,

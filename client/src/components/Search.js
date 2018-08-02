@@ -188,10 +188,14 @@ class Search extends Component {
     marka: '',
     kivitel: null,
     uzemanyag: null,
+    error: null
   };
 
   onChange = (name) => (value) => {
     this.setState({[name]: value});
+    if(this.state.error) {
+      this.setState({error: null});
+    }
   };
 
   handleSearch = (event) => {
@@ -202,15 +206,19 @@ class Search extends Component {
       kivitel && {kivitel},
       uzemanyag && {uzemanyag},
     );
+    if(Object.keys(data).length === 0 && data.constructor === Object) {
+      return this.setState({error: 'Nincs kitöltve!'})
+    }
     this.props.searchCars(data);
   };
 
   render() {
-    const {marka, kivitel, uzemanyag} = this.state;
+    const {marka, kivitel, uzemanyag, error} = this.state;
     return (
       <form onSubmit={this.handleSearch}>
         <div className="field">
           <TextField
+            error={!!error}
             fullWidth
             value={marka}
             onChange={this.onChange('marka')}
@@ -232,6 +240,7 @@ class Search extends Component {
         </div>
         <div className="field">
           <TextField
+            error={!!error}
             fullWidth
             value={kivitel}
             onChange={this.onChange('kivitel')}
@@ -254,12 +263,14 @@ class Search extends Component {
         </div>
         <div className="field">
           <TextField
+            error={!!error}
             fullWidth
             value={uzemanyag}
             onChange={this.onChange('uzemanyag')}
             placeholder="Üzemanyag típusa"
             name="uzemanyag"
             label="Üzemanyag"
+            helperText={error && error}
             InputLabelProps={{
               shrink: true,
             }}

@@ -1,5 +1,4 @@
 const requireLogin = require('..//middlewares/requireLogin');
-const requireCredits = require('..//middlewares/requireCredits');
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
@@ -13,19 +12,19 @@ connection.connect();
 
 module.exports = app => {
   app.get('/api/cars', (req, res) => {
-    connection.query('SELECT * FROM cars LIMIT 1', (err, cars) => {
+    connection.query('SELECT * FROM cars LIMIT 10', (err, cars) => {
       res.send(cars);
     });
   });
 
   app.get('/api/cars/:id', (req, res) => {
-    connection.query(`select * from cars where id = ${req.params.id} LIMIT 1`, (err, car) => {
+    connection.query(`SELECT * FROM cars WHERE id = ${req.params.id} LIMIT 1`, (err, car) => {
       res.send(car[0]);
     });
   });
 
   app.post('/api/cars/search', (req, res) => {
-    let queryString = `select * from cars where`;
+    let queryString = `SELECT * FROM cars WHERE`;
 
     if (req.body.data.marka) {
       queryString += ` marka LIKE '%${req.body.data.marka}%'`;
@@ -44,7 +43,7 @@ module.exports = app => {
     }
 
     connection.query(queryString, (err, cars) => {
-      if (cars.length) {
+      if (cars && cars.length > 0) {
         res.send(cars);
       }
     });
@@ -53,7 +52,7 @@ module.exports = app => {
   app.get('/api/comments/:carId', (req, res) => {
     connection.query(`SELECT name, profilePic, text, feltoltve FROM users, comments WHERE carId = ${req.params.carId} AND users.id = comments.userId
      ORDER BY feltoltve DESC`, (err, comments) => {
-      if (comments.length) {
+      if (comments && comments.length > 0) {
         res.send(comments);
       }
     });
@@ -75,8 +74,7 @@ module.exports = app => {
     });
   });
 
-  //requireLogin, requireCredits,
-  app.post('/api/cars', (req, res) => {
+  app.post('/api/cars', requireLogin, (req, res) => {
     const {
       marka,
       modell,
@@ -106,27 +104,14 @@ module.exports = app => {
     car.hajtas = hajtas;
     car.valto = valto;
     car.leiras = leiras;
-    console.log(req.user);
     car.userId = req.user.id;
-    console.log([{...car}]);
     connection.query(`INSERT INTO cars (marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg,
      uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [{...car}], (err, car) => {
-        req.user.credits -= 1;
+      [marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
+        hajtas, valto, leiras, req.user.id], (err, result) => {
+        car.id = result.inserId;
         res.send(car);
       });
-  });
-
-  app.put('/api/cars/likes', requireLogin, (req, res) => {
-    const id = req.body.id;
-    Car.findById({_id: id}, (err, car) => {
-      if (err) return err;
-
-      car.likes = car.likes + 1;
-      car.save()
-      .then(car => res.send(car))
-      .catch(error => console.error(error));
-    });
   });
 
   app.put('/api/cars/edit', requireLogin, (req, res) => {

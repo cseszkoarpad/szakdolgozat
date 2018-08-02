@@ -28,7 +28,7 @@ class CarEditPage extends Component {
     likes: 0,
     feltoltve: '',
     isEditing: false,
-    originalCar: {}
+    originalCar: {},
   };
 
   componentWillMount() {
@@ -50,7 +50,7 @@ class CarEditPage extends Component {
     event.preventDefault();
     const {
       id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
-      teljesitmeny, hajtas, valto, leiras
+      teljesitmeny, hajtas, valto, leiras,
     } = this.state;
     const car = {
       id,
@@ -69,7 +69,7 @@ class CarEditPage extends Component {
       teljesitmeny,
       hajtas,
       valto,
-      leiras
+      leiras,
     };
     this.props.updateCar(car);
     this.props.history.push(`/cars/${id}`);
@@ -79,7 +79,7 @@ class CarEditPage extends Component {
     event.preventDefault();
     const {
       marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
-      teljesitmeny, hajtas, valto, leiras
+      teljesitmeny, hajtas, valto, leiras,
     } = this.state;
     const car = {
       marka,
@@ -97,7 +97,7 @@ class CarEditPage extends Component {
       teljesitmeny,
       hajtas,
       valto,
-      leiras
+      leiras,
     };
     this.props.addCar(car);
     this.props.history.push(`/`);
@@ -228,14 +228,15 @@ class CarEditPage extends Component {
                 multiline={true}
                 onChange={this.onChange}/>
 
-              {isEditing && this.props.auth && this.props.auth.credits
-                ? <div>
+              {isEditing && this.props.auth
+                ?
+                <div>
                   <Button type="submit">Mentés</Button>
                   <Button onClick={this.handleCancelButton}>Mégse</Button>
                   <Button onClick={() => this.handleDeleteCar(id)}>Törlés</Button>
                 </div>
-                : <div><p className="info">A feltöltés 1 creditbe kerül.</p>
-                  <p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>
+                :
+                <div>
                   <Button type="submit">Létrehozás</Button>
                   <Button onClick={this.handleCancelButton}>Mégse</Button>
                 </div>}
@@ -250,7 +251,7 @@ class CarEditPage extends Component {
 const mapStateToProps = ({auth, cars}) => {
   return {
     auth,
-    cars
+    cars,
   };
 };
 

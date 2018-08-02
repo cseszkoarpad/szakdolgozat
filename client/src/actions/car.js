@@ -34,10 +34,3 @@ export const updateCar = (car) => async dispatch => {
 export const deleteCar = (id) => async dispatch => {
   await axios.delete(`/api/cars/${id}`);
 };
-
-//TO TEST
-export const incrementLikes = (carId, userId) => async dispatch => {
-  await axios.patch('/api/cars/likes', {carId, userId});
-
-  dispatch({type: INCREMENT_LIKES, payload: carId});
-};

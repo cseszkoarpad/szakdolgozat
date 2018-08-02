@@ -88,7 +88,6 @@ class CarUploadPage extends Component {
       valto,
       leiras,
     };
-    console.log(car);
     this.props.addCar(car);
     this.props.history.push(`/`);
   };
@@ -524,8 +523,6 @@ class CarUploadPage extends Component {
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
-              <p className="info">A feltöltés 1 creditbe kerül.</p>
-              <p className="info">Crediteinek száma: {this.props.auth.credits ? this.props.auth.credits : '0'}</p>
               <Button type="submit">Létrehozás</Button>
               <Button onClick={this.handleCancelButton}>Mégse</Button>
             </div>
