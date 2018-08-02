@@ -60,44 +60,42 @@ class Header extends Component {
   renderMenu = (classes) => {
     const {anchorEl} = this.state;
 
-    switch (this.props.auth) {
-      case null:
-        return;
-      case false:
-        return <Button href="/auth/google">Bejelentkezés</Button>;
-      default:
-        return [
-          <Typography key="1" classes={{subheading: classes.name}} component={Link} to={'/'} variant='subheading'
-                      color="inherit">{this.props.auth.name}</Typography>,
-          <Avatar key="2" classes={{root: classes.img}} component={Link} to={'/'}
-                  alt={`${this.props.auth.name}-profile-picture`}
-                  src={this.props.auth.profilePic}/>,
-          <IconButton key="3"
-                      aria-owns={anchorEl ? 'simple-menu' : null}
-                      aria-haspopup="true"
-                      onClick={this.handleClick}
-                      color="inherit" aria-label="Menu">
-            <MenuIcon/>
-          </IconButton>,
-          <Menu
-            key="4"
-            id="simple-menu"
-            anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
-            onClose={this.handleClose}
-            onKeyDown={this.handleClose}
-          >
-            <MenuItem component={Link} to="/upload/new">
-              Feltöltés
-            </MenuItem>
-            <MenuItem component={Link} to={`/my-cars/${this.props.auth.id}`}>
-              Autóim
-            </MenuItem>
-            <MenuItem onClick={this.handleLogout}>
-              Kijelentkezés
-            </MenuItem>
-          </Menu>,
-        ];
+    if (!this.props.auth) {
+      return <Button href="/auth/google">Bejelentkezés</Button>;
+    }
+    else {
+      return [
+        <Typography key="1" classes={{subheading: classes.name}} component={Link} to={'/'} variant='subheading'
+                    color="inherit">{this.props.auth.name}</Typography>,
+        <Avatar key="2" classes={{root: classes.img}} component={Link} to={'/'}
+                alt={`${this.props.auth.name}-profile-picture`}
+                src={this.props.auth.profilePic}/>,
+        <IconButton key="3"
+                    aria-owns={anchorEl ? 'simple-menu' : null}
+                    aria-haspopup="true"
+                    onClick={this.handleClick}
+                    color="inherit" aria-label="Menu">
+          <MenuIcon/>
+        </IconButton>,
+        <Menu
+          key="4"
+          id="simple-menu"
+          anchorEl={anchorEl}
+          open={Boolean(anchorEl)}
+          onClose={this.handleClose}
+          onKeyDown={this.handleClose}
+        >
+          <MenuItem component={Link} to="/upload/new">
+            Feltöltés
+          </MenuItem>
+          <MenuItem component={Link} to={`/my-cars/${this.props.auth.id}`}>
+            Autóim
+          </MenuItem>
+          <MenuItem onClick={this.handleLogout}>
+            Kijelentkezés
+          </MenuItem>
+        </Menu>,
+      ];
     }
   };
 

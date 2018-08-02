@@ -31,6 +31,6 @@ export const updateCar = (car) => async dispatch => {
   dispatch({type: UPDATE_CAR, payload: res.data});
 };
 
-export const deleteCar = (id) => async dispatch => {
-  await axios.delete(`/api/cars/${id}`);
+export const deleteCar = (carId, userId) => async dispatch => {
+  await axios.delete(`/api/cars/delete/${carId}/${userId}`);
 };

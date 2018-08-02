@@ -10,6 +10,7 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Search from '../components/Search';
 import {withStyles} from '@material-ui/core';
+import {isCarFromUser} from '../actions/user';
 
 const styles = {
   search: {
@@ -38,6 +39,9 @@ class CarDetailsPage extends Component {
 
   componentDidMount() {
     this.props.fetchComments(this.props.match.params.id);
+    if (this.props.auth) {
+      this.props.isCarFromUser(this.props.match.params.id, this.props.auth.id);
+    }
   }
 
   goToEditCarPage(id) {
@@ -50,12 +54,13 @@ class CarDetailsPage extends Component {
   }
 
 
-  deleteCar(id) {
-    if (!this.props.auth) {
+  deleteCar(carId) {
+    const {auth} = this.props;
+    if (!auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       return;
     }
-    this.props.deleteCar(id);
+    this.props.deleteCar(carId, auth.id);
     this.props.history.push('/');
   }
 
@@ -121,7 +126,7 @@ class CarDetailsPage extends Component {
   };
 
   render() {
-    const {classes, cars} = this.props;
+    const {classes, cars, auth} = this.props;
 
     if (Object.keys(cars).length > 0) {
       let {id, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
@@ -169,9 +174,9 @@ class CarDetailsPage extends Component {
                     <li className="text"><span>Hajtás:</span>{hajtas}</li>
                     <li className="text"><span>Váltó:</span>{valto}</li>
                     <li className="desc"><span>Leírás:</span>{leiras}</li>
-
-                    <Button onClick={() => this.goToEditCarPage(id)}>Szerkesztés</Button>
-                    <Button onClick={() => this.deleteCar(id)}>Törlés</Button>
+                    {auth.isCarFromUser && [
+                      <Button onClick={() => this.goToEditCarPage(id)}>Szerkesztés</Button>,
+                      <Button onClick={() => this.deleteCar(id)}>Törlés</Button>]}
                   </ul>
                 </Grid>
                 <Grid item xs={12}>
@@ -211,6 +216,7 @@ export default connect(mapStateToProps, {
   fetchCars,
   fetchCarById,
   deleteCar,
+  isCarFromUser,
   fetchComments,
   submitComment,
 })(withStyles(styles)(CarDetailsPage));

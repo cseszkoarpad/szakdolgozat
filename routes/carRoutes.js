@@ -25,26 +25,26 @@ module.exports = app => {
 
   app.post('/api/cars/search', (req, res) => {
     let queryString = `SELECT * FROM cars WHERE`;
-    let parameters = []
+    let parameters = [];
     if (req.body.data.marka) {
       queryString += ` marka LIKE ?`;
-      parameters.push(req.body.data.marka)
+      parameters.push(req.body.data.marka);
     }
 
     if (req.body.data.kivitel && !req.body.data.marka) {
       queryString += ` kivitel = ?`;
-      parameters.push(req.body.data.kivitel)
+      parameters.push(req.body.data.kivitel);
     } else if (req.body.data.kivitel) {
       queryString += ` AND kivitel = ?`;
-      parameters.push(req.body.data.kivitel)
+      parameters.push(req.body.data.kivitel);
     }
 
     if (req.body.data.uzemanyag && !req.body.data.marka && !req.body.data.kivitel) {
       queryString += ` uzemanyag = ?`;
-      parameters.push(req.body.data.uzemanyag)
+      parameters.push(req.body.data.uzemanyag);
     } else if (req.body.data.uzemanyag) {
       queryString += ` AND uzemanyag = ?`;
-      parameters.push(req.body.data.uzemanyag)
+      parameters.push(req.body.data.uzemanyag);
     }
 
     connection.query(queryString, [...parameters], (err, cars) => {
@@ -156,7 +156,19 @@ module.exports = app => {
     });
   });
 
-  app.delete('/api/cars/:id', requireLogin, (req, res) => {
-    connection.query(`DELETE FROM cars WHERE id = ?`, [req.params.id]);
+  app.post('/api/isCarFromUser', requireLogin, (req, res) => {
+    connection.query(`SELECT marka FROM cars WHERE id = ? AND userId = ?`, [req.body.carId, req.body.userId], (err, result) => {
+      if (result !== undefined && result.length !== 0) {
+        res.send({isCarFromUser: true});
+      }
+    });
+  });
+
+  app.delete('/api/cars/delete/:carId/:userId', requireLogin, (req, res) => {
+    connection.query(`DELETE FROM cars WHERE id = ? AND cars.userId = ?`, [req.params.carId, req.params.userId], (err, result) => {
+      if (err) {
+        res.send(err);
+      }
+    });
   });
 };
