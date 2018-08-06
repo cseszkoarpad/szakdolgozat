@@ -23,6 +23,22 @@ module.exports = app => {
     });
   });
 
+  //to test
+  app.get('/api/car/:carId/likes', (req, res) => {
+    connection.query(`SELECT * FROM likes WHERE carId = ?`, [req.params.carId], (err, result) => {
+      res.send(result[0]);
+    });
+  });
+
+  //to test
+  app.post('/api/car/like', (req, res) => {
+    connection.query(`INSERT INTO likes (carId, userId) VALUES (?, ?)`, [req.body.data.carId, req.body.data.userId], (err, car) => {
+      if (err) res.send(err);
+
+      res.send({success: true});
+    });
+  });
+
   app.post('/api/cars/search', (req, res) => {
     let queryString = `SELECT * FROM cars WHERE`;
     let parameters = [];

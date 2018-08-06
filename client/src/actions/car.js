@@ -1,4 +1,4 @@
-import {ADD_CAR, FETCH_CAR_BY_ID, FETCH_CARS, SEARCH_CARS, UPDATE_CAR} from '../constants';
+import {ADD_CAR, FETCH_CAR_BY_ID, FETCH_CARS, INCREMENT_LIKES, SEARCH_CARS, UPDATE_CAR} from '../constants';
 import axios from 'axios';
 
 export const fetchCars = () => async dispatch => {
@@ -29,6 +29,18 @@ export const updateCar = (car) => async dispatch => {
   const res = await axios.put('/api/cars/edit', {car});
 
   dispatch({type: UPDATE_CAR, payload: res.data});
+};
+
+export const getLikesCount = () => async dispatch => {
+  const res = await axios.get('/api/car/:carId/likes')
+
+  dispatch({type: GET_LIKES_COUNT, payload: res.data})
+}
+
+export const incrementLikes = (data) => async dispatch => {
+  const res = await axios.post('/api/car/like', {data});
+
+  dispatch({type: INCREMENT_LIKES, payload: res.data});
 };
 
 export const deleteCar = (carId, userId) => async dispatch => {

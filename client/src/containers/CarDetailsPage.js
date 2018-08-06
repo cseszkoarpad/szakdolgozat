@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {deleteCar, fetchCarById, fetchCars} from '../actions/car';
+import {deleteCar, fetchCarById, fetchCars, incrementLikes} from '../actions/car';
 import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
 import '../styles/carDetails.css';
@@ -53,6 +53,14 @@ class CarDetailsPage extends Component {
     this.props.history.push(`/cars/${id}/edit`);
   }
 
+  incrementLikes() {
+    const data = {
+      carId: this.props.match.params.id,
+      userId: this.props.auth.id,
+    };
+
+    this.props.incrementLikes(data);
+  }
 
   deleteCar(carId) {
     const {auth} = this.props;
@@ -215,6 +223,7 @@ const mapStateToProps = ({cars, auth, comments}) => {
 export default connect(mapStateToProps, {
   fetchCars,
   fetchCarById,
+  incrementLikes,
   deleteCar,
   isCarFromUser,
   fetchComments,

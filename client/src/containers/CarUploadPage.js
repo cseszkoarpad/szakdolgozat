@@ -141,7 +141,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 1 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -161,7 +161,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 2 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -181,7 +181,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 3 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -201,7 +201,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 4 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -233,7 +233,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 5 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -265,7 +265,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 6 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -297,7 +297,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 7 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -318,7 +318,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 8 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -338,7 +338,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 9 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -359,7 +359,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 10 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -391,7 +391,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 11 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -412,7 +412,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 12 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -433,7 +433,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 13 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -465,7 +465,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 14 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -497,7 +497,7 @@ class CarUploadPage extends Component {
 
           {activeStep === 15 &&
           <div style={{
-            paddingTop: '100px',
+            paddingTop: '150px',
             paddingBottom: '40px',
             display: 'flex',
             flexDirection: 'row',
@@ -517,7 +517,7 @@ class CarUploadPage extends Component {
 
           {this.state.activeStep === steps.length ? (
             <div style={{
-              paddingTop: '100px',
+              paddingTop: '150px',
               paddingBottom: '40px',
               display: 'flex',
               flexDirection: 'row',
