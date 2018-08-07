@@ -23,19 +23,23 @@ module.exports = app => {
     });
   });
 
-  //to test
   app.get('/api/car/:carId/likes', (req, res) => {
-    connection.query(`SELECT * FROM likes WHERE carId = ?`, [req.params.carId], (err, result) => {
-      res.send(result[0]);
+    connection.query(`SELECT COUNT(*) as likeCount FROM likes WHERE carId = ?`, [req.params.carId], (err, result) => {
+      res.send({likes: result[0].likeCount});
     });
   });
 
-  //to test
   app.post('/api/car/like', (req, res) => {
-    connection.query(`INSERT INTO likes (carId, userId) VALUES (?, ?)`, [req.body.data.carId, req.body.data.userId], (err, car) => {
-      if (err) res.send(err);
+    connection.query('SELECT * FROM likes WHERE carId = ? AND userId = ? LIMIT 1', [req.body.data.carId, req.body.data.userId], (err, result) => {
+      if (result.length) {
+        res.send({error: 'Már kedvelte ezt az autót!'});
+      } else {
+        connection.query(`INSERT INTO likes (carId, userId) VALUES (?, ?)`, [req.body.data.carId, req.body.data.userId], (err, car) => {
+          if (err) res.send(err);
 
-      res.send({success: true});
+          res.send({success: true});
+        });
+      }
     });
   });
 

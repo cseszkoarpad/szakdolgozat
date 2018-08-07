@@ -1,4 +1,12 @@
-import {ADD_CAR, FETCH_CAR_BY_ID, FETCH_CARS, SEARCH_CARS, UPDATE_CAR} from '../constants';
+import {
+  ADD_CAR,
+  FETCH_CAR_BY_ID,
+  FETCH_CARS,
+  GET_LIKES_COUNT,
+  INCREMENT_LIKES,
+  SEARCH_CARS,
+  UPDATE_CAR,
+} from '../constants';
 
 export default function (state = [], action) {
   switch (action.type) {
@@ -20,6 +28,17 @@ export default function (state = [], action) {
         action.payload,
         ...state.slice(updatedCarIndex + 1),
       ];
+    case INCREMENT_LIKES:
+      if(action.payload.error) return {...state}
+      return {
+        ...state,
+        likes: state.likes + 1,
+      };
+    case GET_LIKES_COUNT:
+      return {
+        ...state,
+        likes: action.payload,
+      };
     default:
       return state;
   }

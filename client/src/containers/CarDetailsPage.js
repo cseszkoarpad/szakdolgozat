@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {deleteCar, fetchCarById, fetchCars, incrementLikes} from '../actions/car';
+import {deleteCar, fetchCarById, fetchCars, getLikesCount, incrementLikes} from '../actions/car';
 import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
 import '../styles/carDetails.css';
@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Search from '../components/Search';
+import LikeIcon from '@material-ui/icons/ThumbUp';
 import {withStyles} from '@material-ui/core';
 import {isCarFromUser} from '../actions/user';
 
@@ -42,27 +43,23 @@ class CarDetailsPage extends Component {
     if (this.props.auth) {
       this.props.isCarFromUser(this.props.match.params.id, this.props.auth.id);
     }
+    this.props.getLikesCount(this.props.match.params.id)
   }
 
-  goToEditCarPage(id) {
+  incrementLikes = () => {
     if (!this.props.auth) {
-      this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
-      return;
+      return this.setState({error: 'A kedveléshez be kell jelentkezni!'});
     }
 
-    this.props.history.push(`/cars/${id}/edit`);
-  }
-
-  incrementLikes() {
     const data = {
       carId: this.props.match.params.id,
       userId: this.props.auth.id,
     };
 
     this.props.incrementLikes(data);
-  }
+  };
 
-  deleteCar(carId) {
+  deleteCar = (carId) => {
     const {auth} = this.props;
     if (!auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
@@ -70,7 +67,7 @@ class CarDetailsPage extends Component {
     }
     this.props.deleteCar(carId, auth.id);
     this.props.history.push('/');
-  }
+  };
 
   convertPrice = (ar) => {
     if (ar) {
@@ -124,13 +121,14 @@ class CarDetailsPage extends Component {
 
   submitComment = (event) => {
     event.preventDefault();
-    if (this.props.auth) {
-      this.props.submitComment(this.props.auth.id, this.props.match.params.id, this.state.text, this.props.auth.name, this.props.auth.profilePic);
-      this.setState({text: ''});
-    } else {
+    if (!this.props.auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       document.documentElement.scrollTop = 0;
+      return;
     }
+
+    this.props.submitComment(this.props.auth.id, this.props.match.params.id, this.state.text, this.props.auth.name, this.props.auth.profilePic);
+    this.setState({text: ''});
   };
 
   render() {
@@ -158,11 +156,10 @@ class CarDetailsPage extends Component {
                   <img className={classes.carImg}
                        src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
                        alt={`${marka}-${modell}`}/>
-                  <ul className="points">
-                    <li className="uploaded"><span>Feltöltve:</span>{feltoltve && this.convertUploadTime(feltoltve)}
-                    </li>
-                    {likes > 0 && <li className="text"><span>Kedvelések:</span>{likes}</li>}
-                  </ul>
+                  <span>Feltöltve:</span>{feltoltve && this.convertUploadTime(feltoltve)}
+                  <Button variant="contained" color="primary" onClick={this.incrementLikes}>
+                    {likes}<LikeIcon/>
+                  </Button>
                 </Grid>
                 <Grid item xs={8}>
                   <ul className="points">
@@ -183,7 +180,7 @@ class CarDetailsPage extends Component {
                     <li className="text"><span>Váltó:</span>{valto}</li>
                     <li className="desc"><span>Leírás:</span>{leiras}</li>
                     {auth.isCarFromUser && [
-                      <Button onClick={() => this.goToEditCarPage(id)}>Szerkesztés</Button>,
+                      <Button onClick={() => this.props.history.push(`/cars/${id}/edit`)}>Szerkesztés</Button>,
                       <Button onClick={() => this.deleteCar(id)}>Törlés</Button>]}
                   </ul>
                 </Grid>
@@ -224,6 +221,7 @@ export default connect(mapStateToProps, {
   fetchCars,
   fetchCarById,
   incrementLikes,
+  getLikesCount,
   deleteCar,
   isCarFromUser,
   fetchComments,
