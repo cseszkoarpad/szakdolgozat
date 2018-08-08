@@ -40,10 +40,10 @@ export const updateCar = (car) => async dispatch => {
 };
 
 export const getLikesCount = (carId) => async dispatch => {
-  const res = await axios.get(`/api/car/${carId}/likes`)
-  console.log(res.data.likes)
-  dispatch({type: GET_LIKES_COUNT, payload: res.data.likes})
-}
+  const res = await axios.get(`/api/car/${carId}/likes`);
+
+  dispatch({type: GET_LIKES_COUNT, payload: res.data.likes});
+};
 
 export const incrementLikes = (data) => async dispatch => {
   const res = await axios.post('/api/car/like', {data});

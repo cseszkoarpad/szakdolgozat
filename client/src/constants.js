@@ -9,7 +9,6 @@ export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
 export const SEARCH_CARS = 'SEARCH_CARS';
 export const ADD_CAR = 'ADD_CAR';
 export const UPDATE_CAR = 'UPDATE_CAR';
-export const DELETE_CAR = 'DELETE_CAR';
 export const GET_LIKES_COUNT = 'GET_LIKES_COUNT';
 export const INCREMENT_LIKES = 'INCREMENT_LIKES';
 export const MARKAK = [

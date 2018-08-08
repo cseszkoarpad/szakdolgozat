@@ -79,6 +79,8 @@ module.exports = app => {
      ORDER BY feltoltve DESC`, [req.params.carId], (err, comments) => {
       if (comments && comments.length > 0) {
         res.send(comments);
+      } else {
+        res.send({success: false});
       }
     });
   });
@@ -180,6 +182,8 @@ module.exports = app => {
     connection.query(`SELECT marka FROM cars WHERE id = ? AND userId = ?`, [req.body.carId, req.body.userId], (err, result) => {
       if (Array.isArray(result) && result.length) {
         res.send({isCarFromUser: true});
+      } else {
+        res.send({isCarFromUser: false});
       }
     });
   });
@@ -188,6 +192,8 @@ module.exports = app => {
     connection.query(`DELETE FROM cars WHERE id = ? AND cars.userId = ?`, [req.params.carId, req.params.userId], (err, result) => {
       if (err) {
         res.send(err);
+      } else {
+        res.send({success: true});
       }
     });
   });

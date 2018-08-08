@@ -106,7 +106,7 @@ class CarUploadPage extends Component {
 
     return (
       <Paper>
-        <form onSubmit={(e) => this.handleAddCar(e)}>
+        <form onSubmit={this.handleAddCar}>
           {activeStep === 0 &&
           <div style={{
             paddingTop: '150px',
@@ -515,16 +515,10 @@ class CarUploadPage extends Component {
           </div>
           }
 
-          {this.state.activeStep === steps.length ? (
-            <div style={{
-              paddingTop: '150px',
-              paddingBottom: '40px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-            }}>
-              <Button type="submit">Létrehozás</Button>
+          {this.state.activeStep === steps.length - 1 ? (
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '80px', paddingBottom: '50px'}}>
               <Button onClick={this.handleCancelButton}>Mégse</Button>
+              <Button type="submit">Létrehozás</Button>
             </div>
           ) : (
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '80px', paddingBottom: '50px'}}>
@@ -536,7 +530,7 @@ class CarUploadPage extends Component {
                 Vissza
               </Button>
               <Button variant="contained" color="primary" onClick={this.handleNext}>
-                {activeStep === steps.length - 1 ? 'Kész' : 'Következő'}
+                Következő
               </Button>
             </div>
           )}

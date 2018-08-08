@@ -12,6 +12,9 @@ import Search from '../components/Search';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 import {withStyles} from '@material-ui/core';
 import {isCarFromUser} from '../actions/user';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const styles = {
   search: {
@@ -28,6 +31,12 @@ const styles = {
   },
 };
 
+const settings = {
+  dots: true,
+  autoPlay: true,
+  pauseOnFocus: true,
+};
+
 class CarDetailsPage extends Component {
   state = {
     text: '',
@@ -40,10 +49,10 @@ class CarDetailsPage extends Component {
 
   componentDidMount() {
     this.props.fetchComments(this.props.match.params.id);
-    if (this.props.auth) {
+    if (this.props.auth.id) {
       this.props.isCarFromUser(this.props.match.params.id, this.props.auth.id);
     }
-    this.props.getLikesCount(this.props.match.params.id)
+    this.props.getLikesCount(this.props.match.params.id);
   }
 
   incrementLikes = () => {
@@ -59,7 +68,7 @@ class CarDetailsPage extends Component {
     this.props.incrementLikes(data);
   };
 
-  deleteCar = (carId) => {
+  handleDeleteCar = (carId) => {
     const {auth} = this.props;
     if (!auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
@@ -153,9 +162,25 @@ class CarDetailsPage extends Component {
                 </Grid>
                 <Grid item xs={4}>
                   <h1 className="title">{marka} - {modell}</h1>
-                  <img className={classes.carImg}
+                  <div style={{width: '500px', height: '500px', overflow: 'hidden'}}>
+                    <Slider {...settings}>
+                      <div>
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/2011_Ferrari_458_Italia_DCT_S-A_4.5_Front.jpg/1200px-2011_Ferrari_458_Italia_DCT_S-A_4.5_Front.jpg"/>
+                      </div>
+                      <div>
+                        <img
+                          src="https://st.motortrend.com/uploads/sites/10/2015/09/2013-Ferrari-458-Italia-Front-Three-Quarters-View.jpg"/>
+                      </div>
+                      <div>
+                        <img
+                          src="https://www.hiroboy.com/thumbnail/1200x1200/userfiles/images/sys/products/124_LB_Performance_Ferrari_458_Detail_up_Transkit__16196.jpeg"/>
+                      </div>
+                    </Slider>
+                  </div>
+                  {/*<img className={classes.carImg}
                        src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
-                       alt={`${marka}-${modell}`}/>
+                       alt={`${marka}-${modell}`}/>*/}
                   <span>Feltöltve:</span>{feltoltve && this.convertUploadTime(feltoltve)}
                   <Button variant="contained" color="primary" onClick={this.incrementLikes}>
                     {likes}<LikeIcon/>
@@ -180,8 +205,8 @@ class CarDetailsPage extends Component {
                     <li className="text"><span>Váltó:</span>{valto}</li>
                     <li className="desc"><span>Leírás:</span>{leiras}</li>
                     {auth.isCarFromUser && [
-                      <Button onClick={() => this.props.history.push(`/cars/${id}/edit`)}>Szerkesztés</Button>,
-                      <Button onClick={() => this.deleteCar(id)}>Törlés</Button>]}
+                      <Button key="1" onClick={() => this.props.history.push(`/cars/${id}/edit`)}>Szerkesztés</Button>,
+                      <Button key="2" onClick={() => this.handleDeleteCar(id)}>Törlés</Button>]}
                   </ul>
                 </Grid>
                 <Grid item xs={12}>
