@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {hot} from 'react-hot-loader';
 import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {fetchUser} from './actions/user';
@@ -37,4 +38,4 @@ class App extends Component {
   }
 }
 
-export default connect(null, {fetchUser, fetchCars})(App);
+export default connect(null, {fetchUser, fetchCars})(hot(module)(App));
