@@ -1,3 +1,8 @@
+.slick-slider {
+    width: 500px;
+    height: 500px;
+}
+
 /* error alert section */
 /* The alert message box */
 .alert {

@@ -162,7 +162,6 @@ class CarDetailsPage extends Component {
                 </Grid>
                 <Grid item xs={4}>
                   <h1 className="title">{marka} - {modell}</h1>
-                  <div style={{width: '500px', height: '500px', overflow: 'hidden'}}>
                     <Slider {...settings}>
                       <div>
                         <img
@@ -177,7 +176,6 @@ class CarDetailsPage extends Component {
                           src="https://www.hiroboy.com/thumbnail/1200x1200/userfiles/images/sys/products/124_LB_Performance_Ferrari_458_Detail_up_Transkit__16196.jpeg"/>
                       </div>
                     </Slider>
-                  </div>
                   {/*<img className={classes.carImg}
                        src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
                        alt={`${marka}-${modell}`}/>*/}
