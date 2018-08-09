@@ -1,7 +1,17 @@
 .slick-slider {
-    width: 500px;
-    height: 500px;
+    display: block;
+    width: auto;
+    height: 400px;
     overflow: hidden;
+}
+
+.slick-arrow {
+    z-index: 10;
+    margin: 0 40px;
+}
+
+.slick-arrow::before {
+    font-size: 30px !important;
 }
 
 /* error alert section */

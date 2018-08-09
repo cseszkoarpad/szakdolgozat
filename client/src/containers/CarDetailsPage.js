@@ -160,22 +160,25 @@ class CarDetailsPage extends Component {
                     {this.state.error ? this.errorShowUp(this.state.error) : null}
                   </div>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12}>
                   <h1 className="title">{marka} - {modell}</h1>
-                    <Slider {...settings}>
-                      <div>
-                        <img
-                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/2011_Ferrari_458_Italia_DCT_S-A_4.5_Front.jpg/1200px-2011_Ferrari_458_Italia_DCT_S-A_4.5_Front.jpg"/>
-                      </div>
-                      <div>
-                        <img
-                          src="https://st.motortrend.com/uploads/sites/10/2015/09/2013-Ferrari-458-Italia-Front-Three-Quarters-View.jpg"/>
-                      </div>
-                      <div>
-                        <img
-                          src="https://www.hiroboy.com/thumbnail/1200x1200/userfiles/images/sys/products/124_LB_Performance_Ferrari_458_Detail_up_Transkit__16196.jpeg"/>
-                      </div>
-                    </Slider>
+                </Grid>
+                <Grid item xs={6}>
+                  <Slider {...settings}>
+                    <div>
+                      <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c6/2011_Ferrari_458_Italia_DCT_S-A_4.5_Front.jpg/1200px-2011_Ferrari_458_Italia_DCT_S-A_4.5_Front.jpg"/>
+                    </div>
+                    <div>
+                      <img
+                        src="https://st.motortrend.com/uploads/sites/10/2015/09/2013-Ferrari-458-Italia-Front-Three-Quarters-View.jpg"/>
+                    </div>
+                    <div>
+                      <img
+                        src="https://www.hiroboy.com/thumbnail/1200x1200/userfiles/images/sys/products/124_LB_Performance_Ferrari_458_Detail_up_Transkit__16196.jpeg"/>
+                    </div>
+                  </Slider>
+                  ide kis slidert amin sok kép van
                   {/*<img className={classes.carImg}
                        src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
                        alt={`${marka}-${modell}`}/>*/}
@@ -184,7 +187,7 @@ class CarDetailsPage extends Component {
                     {likes}<LikeIcon/>
                   </Button>
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={6}>
                   <ul className="points">
                     <li className="text"><span>Ár:</span>{ar && this.convertPrice(ar)}<span className="unit">Ft</span>
                     </li>
