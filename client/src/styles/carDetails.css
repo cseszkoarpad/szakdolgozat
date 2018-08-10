@@ -1,17 +1,31 @@
 .slick-slider {
-    display: block;
-    width: auto;
-    height: 400px;
     overflow: hidden;
+    border-radius: 1%;
 }
 
-.slick-arrow {
+.slick-slider img {
+    min-width: 100%;
+    max-height: 100%;
+}
+
+.slider-big {
+    width: auto;
+    height: 400px;
+    margin-bottom: 5px;
+}
+
+.slick-slider .slick-arrow {
     z-index: 10;
     margin: 0 40px;
 }
 
-.slick-arrow::before {
+.slider-big .slick-arrow::before {
     font-size: 30px !important;
+}
+
+.slider-small {
+    height: 100px;
+    margin-bottom: 10px;
 }
 
 /* error alert section */
