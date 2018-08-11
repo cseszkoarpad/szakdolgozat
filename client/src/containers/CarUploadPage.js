@@ -11,6 +11,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import {withStyles} from '@material-ui/core';
 import {ALLAPOTOK, EVJARATOK, HAJTAS_TIPUSOK, KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK, VALTO_TIPUSOK} from '../constants';
 import {SelectWrapped, styles} from '../components/Search';
+import axios from 'axios';
 
 function getSteps() {
   return ['Márka', 'Modell', 'Kép',
@@ -40,6 +41,7 @@ class CarUploadPage extends Component {
     hajtas: '',
     valto: '',
     leiras: '',
+    selectedFile: null,
   };
 
   handleNext = () => {
@@ -62,6 +64,20 @@ class CarUploadPage extends Component {
 
   onSelectChange = (name) => (value) => {
     this.setState({[name]: value});
+  };
+
+  fileChangedHandler = (event) => {
+    this.setState({selectedFile: event.target.files[0]});
+  };
+
+  uploadHandler = () => {
+    const formData = new FormData()
+    formData.append('carImage', this.state.selectedFile, this.state.selectedFile.name)
+    axios.post('/api/car/image/upload', formData, {
+      onUploadProgress: progressEvent => {
+        console.log(progressEvent.loaded / progressEvent.total);
+      },
+    });
   };
 
   handleAddCar = (event) => {
@@ -167,15 +183,8 @@ class CarUploadPage extends Component {
             flexDirection: 'row',
             justifyContent: 'center',
           }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              fullWidth
-              required
-              name="kep"
-              label="Kép url"
-              value={kep}
-              onChange={this.onChange}/>
+            <input type="file" onChange={this.fileChangedHandler}/>
+            <button onClick={this.uploadHandler}>Upload!</button>
           </div>
           }
 
@@ -516,12 +525,24 @@ class CarUploadPage extends Component {
           }
 
           {this.state.activeStep === steps.length - 1 ? (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '80px', paddingBottom: '50px'}}>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginBottom: '80px',
+              paddingBottom: '50px',
+            }}>
               <Button onClick={this.handleCancelButton}>Mégse</Button>
               <Button type="submit">Létrehozás</Button>
             </div>
           ) : (
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginBottom: '80px', paddingBottom: '50px'}}>
+            <div style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              marginBottom: '80px',
+              paddingBottom: '50px',
+            }}>
               <Button
                 disabled={activeStep === 0}
                 onClick={this.handleBack}

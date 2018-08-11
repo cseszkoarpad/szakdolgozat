@@ -1,5 +1,31 @@
 const requireLogin = require('..//middlewares/requireLogin');
 const mysql = require('mysql');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter,
+});
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -27,6 +53,10 @@ module.exports = app => {
     connection.query(`SELECT COUNT(*) as likeCount FROM likes WHERE carId = ?`, [req.params.carId], (err, result) => {
       res.send({likes: result[0].likeCount});
     });
+  });
+
+  app.post('/api/car/image/upload', upload.single('carImage'), (req, res, next) => {
+    congole.log(req.file);
   });
 
   app.post('/api/car/like', (req, res) => {

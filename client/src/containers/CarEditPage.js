@@ -44,6 +44,14 @@ class CarEditPage extends Component {
   };
 
   handleUpdateCar = (event) => {
+
+    /*
+    //így kéne
+    const updateOps = {};
+    for (const ops of req.body) {
+      updateOps[ops.propName] = ops.value;
+    }*/
+
     event.preventDefault();
     const {
       id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
