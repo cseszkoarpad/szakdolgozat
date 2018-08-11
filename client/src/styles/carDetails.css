@@ -19,13 +19,17 @@
     margin: 0 40px;
 }
 
+
 .slider-big .slick-arrow::before {
     font-size: 30px !important;
 }
 
 .slider-small {
-    height: 100px;
+    height: 80px;
     margin-bottom: 10px;
+}
+
+.slider-small .slick-slide img {
 }
 
 /* error alert section */
