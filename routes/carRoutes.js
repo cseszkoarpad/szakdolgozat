@@ -2,12 +2,13 @@ const requireLogin = require('..//middlewares/requireLogin');
 const mysql = require('mysql');
 const multer = require('multer');
 
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/');
+    cb(null, 'uploads/');
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname);
+    cb(null, file.originalname);
   },
 });
 
@@ -55,8 +56,8 @@ module.exports = app => {
     });
   });
 
-  app.post('/api/car/image/upload', upload.single('carImage'), (req, res, next) => {
-    congole.log(req.file);
+  app.post('/api/car/image/upload', upload.array('carImages', 10), (req, res, next) => {
+    res.send(req.files);
   });
 
   app.post('/api/car/like', (req, res) => {

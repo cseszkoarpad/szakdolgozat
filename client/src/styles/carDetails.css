@@ -10,7 +10,7 @@
 
 .slider-big {
     width: auto;
-    height: 400px;
+    height: 300px;
     margin-bottom: 5px;
 }
 
@@ -27,9 +27,6 @@
 .slider-small {
     height: 80px;
     margin-bottom: 10px;
-}
-
-.slider-small .slick-slide img {
 }
 
 /* error alert section */

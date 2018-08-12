@@ -71,8 +71,10 @@ class CarUploadPage extends Component {
   };
 
   uploadHandler = () => {
-    const formData = new FormData()
-    formData.append('carImage', this.state.selectedFile, this.state.selectedFile.name)
+    console.log(this.state.selectedFile);
+    const formData = new FormData();
+    formData.append('carImages', this.state.selectedFile);
+    console.log(formData);
     axios.post('/api/car/image/upload', formData, {
       onUploadProgress: progressEvent => {
         console.log(progressEvent.loaded / progressEvent.total);

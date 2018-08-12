@@ -190,7 +190,7 @@ class CarDetailsPage extends Component {
               <Search/>
             </Paper>
           </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={8}>
             <Paper className={classes.container}>
               <Grid container>
                 <Grid item xs={12}>
@@ -266,6 +266,10 @@ class CarDetailsPage extends Component {
                   </div>
                 </Grid>
               </Grid>
+            </Paper>
+          </Grid>
+          <Grid item xs={2}>
+            <Paper className={classes.search}>
             </Paper>
           </Grid>
           <WarningModal title={"Biztosan törli?"} desc={"A törlés nem vonható vissza!"} submitButton={"Törlés"} cancelButton={"Mégse"} isOpen={isDeleteModalOpen} deleteCar={() => this.handleDeleteCar(id)} cancelDelete={this.closeDeleteModal}/>
