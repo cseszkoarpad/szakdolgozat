@@ -111,7 +111,7 @@ module.exports = app => {
       if (comments && comments.length > 0) {
         res.send(comments);
       } else {
-        res.send({success: false});
+        res.send([]);
       }
     });
   });

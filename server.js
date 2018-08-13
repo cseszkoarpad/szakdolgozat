@@ -35,8 +35,6 @@ require('./routes/authRoutes')(app);
 require('./routes/carRoutes')(app);
 require('./routes/billingRoutes')(app);
 
-app.use(express.static(__dirname + '/uploads/'));
-
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 

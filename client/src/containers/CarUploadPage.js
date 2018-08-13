@@ -521,7 +521,7 @@ class CarUploadPage extends Component {
               name="leiras"
               label="Leírás"
               value={leiras}
-              multiline={true}
+              multiline
               onChange={this.onChange}/>
           </div>
           }

@@ -10,12 +10,17 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Search from '../components/Search';
 import LikeIcon from '@material-ui/icons/ThumbUp';
+import SendIcon from '@material-ui/icons/Send';
 import {withStyles} from '@material-ui/core';
 import {isCarFromUser} from '../actions/user';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import '../styles/carDetails.css';
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const images = [
   {
@@ -47,11 +52,29 @@ const styles = {
   container: {
     padding: '0px 20px',
   },
+  title: {
+    margin: '20px 0',
+  },
   carImg: {
     maxWidth: '100%',
   },
   commentImg: {
     borderRadius: '50%',
+  },
+  commentBox: {
+    display: 'flex',
+    margin: '20px 0',
+  },
+  button: {
+    margin: '0 15px',
+  },
+  icon: {
+    marginLeft: '10px',
+  },
+  list: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
   },
 };
 
@@ -97,7 +120,7 @@ class CarDetailsPage extends Component {
   };
 
   handleDeleteCar = (carId) => {
-    this.setState({isDeleteModalOpen: false})
+    this.setState({isDeleteModalOpen: false});
     this.props.deleteCar(carId, this.props.auth.id);
     this.props.history.push('/');
   };
@@ -135,10 +158,21 @@ class CarDetailsPage extends Component {
         <h5>{commentsNum} hozzászólás</h5>
         {commentsNum > 0 && this.props.comments.map((comment, i) => {
           return (
-            <div className="comment" key={i} style={{margin: '20px'}}>
-              <img className={classes.commentImg} src={comment.profilePic} alt={`${comment.name} profile`}/>
-              <strong>{comment.name}</strong> - {comment.text}
-              <span className="date">{this.convertUploadTime(comment.feltoltve)}</span>
+            <div className={classes.commentBox} key={i}>
+              <div>
+                <img className={classes.commentImg} src={comment.profilePic} alt={`${comment.name} profile`}/>
+                <Typography variant="caption">
+                  {this.convertUploadTime(comment.feltoltve)}
+                </Typography>
+              </div>
+              <div>
+                <Typography variant="body2">
+                  {comment.name}
+                </Typography>
+                <Typography variant="body1">
+                  {comment.text}
+                </Typography>
+              </div>
             </div>
           );
         })}
@@ -199,7 +233,9 @@ class CarDetailsPage extends Component {
                   </div>
                 </Grid>
                 <Grid item xs={12}>
-                  <h1 className="title">{marka} - {modell}</h1>
+                  <Typography className={classes.title} variant="headline" gutterBottom>
+                    {marka} - {modell}
+                  </Typography>
                 </Grid>
                 <Grid item xs={5}>
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
@@ -220,36 +256,87 @@ class CarDetailsPage extends Component {
                       );
                     })}
                   </Slider>
-                  {/*<img className={classes.carImg}
-                       src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
-                       alt={`${marka}-${modell}`}/>*/}
-                  <span>Feltöltve:</span>{feltoltve && this.convertUploadTime(feltoltve)}
+                  <Typography variant="caption" gutterBottom>
+                    Feltöltve
+                  </Typography>
+                  <Typography variant="caption" gutterBottom>
+                    {feltoltve && this.convertUploadTime(feltoltve)}
+                  </Typography>
                   <Button variant="contained" color="primary" onClick={this.incrementLikes}>
-                    {likes}<LikeIcon/>
+                    {likes}<LikeIcon className={classes.icon}/>
                   </Button>
                 </Grid>
                 <Grid item xs={6}>
-                  <ul className="points">
-                    <li className="text"><span>Ár:</span>{ar && this.convertPrice(ar)}<span className="unit">Ft</span>
-                    </li>
-                    <li className="text"><span>Évjárat:</span>{ev}</li>
-                    <li className="text"><span>Állapot:</span>{allapot}</li>
-                    <li className="text"><span>Kivitel:</span>{kivitel}</li>
-                    <li className="text"><span>Km:</span>{km}</li>
-                    <li className="text"><span>Szín:</span>{szin}</li>
-                    <li className="text"><span>Tömeg:</span>{tomeg}<span className="unit">kg</span></li>
-                    <li className="text"><span>Üzemanyag:</span>{uzemanyag}</li>
-                    <li className="text"><span>Hengerűrtartalom:</span>{hengerUrtartalom}<span
-                      className="unit">cc</span></li>
-                    <li className="text"><span>Teljesítmény:</span>{teljesitmeny}<span
-                      className="unit">le</span></li>
-                    <li className="text"><span>Hajtás:</span>{hajtas}</li>
-                    <li className="text"><span>Váltó:</span>{valto}</li>
-                    <li className="desc"><span>Leírás:</span>{leiras}</li>
-                    {auth.isCarFromUser && [
-                      <Button key="1" onClick={() => this.props.history.push(`/cars/${id}/edit`)}>Szerkesztés</Button>,
-                      <Button key="2" onClick={this.openDeleteModal}>Törlés</Button>]}
-                  </ul>
+                  <List className={classes.list} subheader={<li/>}>
+                    <ListItem>
+                      <ListItemText>
+                        Ár {ar && this.convertPrice(ar)} Ft
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Évjárat {ev}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Állapot {allapot}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Kivitel {kivitel}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Km {km}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Szín {szin}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Tömeg {tomeg} kg
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Üzemanyag {uzemanyag}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Hengerűrtartalom {hengerUrtartalom} cc
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Teljesítmény {teljesitmeny} le
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Hajtás {hajtas}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Váltó {valto}
+                      </ListItemText>
+                    </ListItem>
+                    <ListItem>
+                      <ListItemText>
+                        Leírás {leiras}
+                      </ListItemText>
+                    </ListItem>
+                  </List>
+                  {auth.isCarFromUser && [
+                    <Button key="1" onClick={() => this.props.history.push(`/cars/${id}/edit`)}>Szerkesztés</Button>,
+                    <Button key="2" onClick={this.openDeleteModal}>Törlés</Button>]}
                 </Grid>
                 <Grid item xs={12}>
                   <div className="comment-container">
@@ -257,10 +344,13 @@ class CarDetailsPage extends Component {
                       <TextField
                         label="Hozzászólás"
                         value={text}
+                        multiline
                         onChange={this.handleChange('text')}
                         margin="normal"
                       />
-                      <Button type="submit">Hozzászólok</Button>
+                      <Button type="submit" variant="outlined" color="primary" className={classes.button}>
+                        Küldés <SendIcon className={classes.icon}/>
+                      </Button>
                     </form>
                     {this.renderComments()}
                   </div>
@@ -272,7 +362,9 @@ class CarDetailsPage extends Component {
             <Paper className={classes.search}>
             </Paper>
           </Grid>
-          <WarningModal title={"Biztosan törli?"} desc={"A törlés nem vonható vissza!"} submitButton={"Törlés"} cancelButton={"Mégse"} isOpen={isDeleteModalOpen} deleteCar={() => this.handleDeleteCar(id)} cancelDelete={this.closeDeleteModal}/>
+          <WarningModal title={'Biztosan törli?'} desc={'A törlés nem vonható vissza!'} submitButton={'Törlés'}
+                        cancelButton={'Mégse'} isOpen={isDeleteModalOpen} deleteCar={() => this.handleDeleteCar(id)}
+                        cancelDelete={this.closeDeleteModal}/>
         </Grid>
       );
     } else {
