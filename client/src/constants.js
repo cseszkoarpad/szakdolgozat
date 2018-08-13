@@ -1,3 +1,5 @@
+export const CLOUD_NAME='dcjedk0md'
+export const UNSIGNED_UPLOAD_PRESET='agsijpty'
 export const FETCH_USER = 'FETCH_USER';
 export const SET_AUTH_TO_NULL = 'SET_AUTH_TO_NULL';
 export const SET_IS_CAR_FROM_USER = 'SET_IS_CAR_FROM_USER';

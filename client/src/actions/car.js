@@ -1,5 +1,5 @@
 import {
-  ADD_CAR,
+  ADD_CAR, CLOUD_NAME,
   FETCH_CAR_BY_ID,
   FETCH_CARS,
   GET_LIKES_COUNT,
@@ -53,4 +53,10 @@ export const incrementLikes = (data) => async dispatch => {
 
 export const deleteCar = (carId, userId) => async dispatch => {
   await axios.delete(`/api/cars/delete/${carId}/${userId}`);
+};
+
+export const uploadCarImage = (image) => async dispatch => {
+  const res = await axios.post(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, image);
+
+  console.log(res);
 };

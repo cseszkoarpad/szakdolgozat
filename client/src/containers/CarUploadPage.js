@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addCar, deleteCar, updateCar} from '../actions/car';
+import {addCar, deleteCar, updateCar, uploadCarImage} from '../actions/car';
 import '../styles/carDetails.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -9,7 +9,16 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import {withStyles} from '@material-ui/core';
-import {ALLAPOTOK, EVJARATOK, HAJTAS_TIPUSOK, KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK, VALTO_TIPUSOK} from '../constants';
+import {
+  ALLAPOTOK,
+  EVJARATOK,
+  HAJTAS_TIPUSOK,
+  KIVITELEK,
+  MARKAK,
+  UNSIGNED_UPLOAD_PRESET,
+  UZEMANYAG_TIPUSOK,
+  VALTO_TIPUSOK,
+} from '../constants';
 import {SelectWrapped, styles} from '../components/Search';
 import axios from 'axios';
 
@@ -71,15 +80,10 @@ class CarUploadPage extends Component {
   };
 
   uploadHandler = () => {
-    console.log(this.state.selectedFile);
     const formData = new FormData();
-    formData.append('carImages', this.state.selectedFile);
-    console.log(formData);
-    axios.post('/api/car/image/upload', formData, {
-      onUploadProgress: progressEvent => {
-        console.log(progressEvent.loaded / progressEvent.total);
-      },
-    });
+    formData.append('upload_preset', UNSIGNED_UPLOAD_PRESET);
+    formData.append('file', this.state.selectedFile);
+    this.props.uploadCarImage(formData);
   };
 
   handleAddCar = (event) => {
@@ -580,4 +584,9 @@ const mapStateToProps = ({auth, cars}) => {
   };
 };
 
-export default connect(mapStateToProps, {updateCar, deleteCar, addCar})(withStyles(styles)(CarUploadPage));
+export default connect(mapStateToProps, {
+  updateCar,
+  deleteCar,
+  addCar,
+  uploadCarImage,
+})(withStyles(styles)(CarUploadPage));
