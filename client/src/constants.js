@@ -1,9 +1,8 @@
-export const CLOUD_NAME='dcjedk0md'
-export const UNSIGNED_UPLOAD_PRESET='agsijpty'
+export const CLOUD_NAME = 'dcjedk0md';
+export const UNSIGNED_UPLOAD_PRESET = 'agsijpty';
 export const FETCH_USER = 'FETCH_USER';
 export const SET_AUTH_TO_NULL = 'SET_AUTH_TO_NULL';
-export const SET_IS_CAR_FROM_USER = 'SET_IS_CAR_FROM_USER';
-export const ADD_CREDIT = 'ADD_CREDIT';
+export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const FETCH_CARS = 'FETCH_CARS';
 export const FETCH_CAR_BY_ID = 'FETCH_CAR_BY_ID';
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';

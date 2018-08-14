@@ -1,32 +1,6 @@
 const requireLogin = require('..//middlewares/requireLogin');
 const mysql = require('mysql');
-const multer = require('multer');
-
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/');
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
-const upload = multer({
-  storage,
-  limits: {
-    fileSize: 1024 * 1024 * 5,
-  },
-  fileFilter,
-});
+const uniqid = require('uniqid');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -54,10 +28,6 @@ module.exports = app => {
     connection.query(`SELECT COUNT(*) as likeCount FROM likes WHERE carId = ?`, [req.params.carId], (err, result) => {
       res.send({likes: result[0].likeCount});
     });
-  });
-
-  app.post('/api/car/image/upload', upload.array('carImages', 10), (req, res, next) => {
-    res.send(req.files);
   });
 
   app.post('/api/car/like', (req, res) => {
@@ -144,31 +114,13 @@ module.exports = app => {
       teljesitmeny, hajtas,
       valto, leiras,
     } = req.body.car;
+    connection.query(`INSERT INTO cars (id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg,
+     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [uniqid(), marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
+        hajtas, valto, leiras, req.user.googleId], (err, result) => {
+        if (err) console.log(err);
 
-    const car = {};
-    car.marka = marka;
-    car.modell = modell;
-    car.kep = kep;
-    car.ar = ar;
-    car.ev = ev;
-    car.allapot = allapot;
-    car.kivitel = kivitel;
-    car.km = km;
-    car.szin = szin;
-    car.tomeg = tomeg;
-    car.uzemanyag = uzemanyag;
-    car.hengerUrtartalom = hengerUrtartalom;
-    car.teljesitmeny = teljesitmeny;
-    car.hajtas = hajtas;
-    car.valto = valto;
-    car.leiras = leiras;
-    car.userId = req.user.id;
-    connection.query(`INSERT INTO cars (marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg,
-     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
-        hajtas, valto, leiras, req.user.id], (err, result) => {
-        car.id = result.inserId;
-        res.send(car);
+        res.send(result);
       });
   });
 
@@ -202,21 +154,6 @@ module.exports = app => {
     car.valto = valto;
     car.leiras = leiras;
 
-    Car.findById({_id: id}, (err, car) => {
-      if (err) return err;
-
-      car.save();
-    });
-  });
-
-  app.post('/api/isCarFromUser', requireLogin, (req, res) => {
-    connection.query(`SELECT marka FROM cars WHERE id = ? AND userId = ?`, [req.body.carId, req.body.userId], (err, result) => {
-      if (Array.isArray(result) && result.length) {
-        res.send({isCarFromUser: true});
-      } else {
-        res.send({isCarFromUser: false});
-      }
-    });
   });
 
   app.delete('/api/cars/delete/:carId/:userId', requireLogin, (req, res) => {

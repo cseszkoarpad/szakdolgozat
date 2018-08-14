@@ -20,7 +20,8 @@
     "pg-promise": "^8.4.5",
     "prop-types": "^15.6.2",
     "react-select": "^1.2.1",
-    "stripe": "^5.10.0"
+    "stripe": "^5.10.0",
+    "uniqid": "^5.0.3"
   },
   "scripts": {
     "start": "node server.js",

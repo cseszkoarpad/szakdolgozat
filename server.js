@@ -10,14 +10,12 @@ const mysql = require('mysql');
 
 require('./services/passport');
 
-
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: '',
   database: 'luxusautoportal',
 }).connect();
-
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));

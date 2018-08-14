@@ -12,7 +12,6 @@ import Search from '../components/Search';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 import SendIcon from '@material-ui/icons/Send';
 import {withStyles} from '@material-ui/core';
-import {isCarFromUser} from '../actions/user';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -92,9 +91,6 @@ class CarDetailsPage extends Component {
 
   componentDidMount() {
     this.props.fetchComments(this.props.match.params.id);
-    if (this.props.auth.id) {
-      this.props.isCarFromUser(this.props.match.params.id, this.props.auth.id);
-    }
     this.props.getLikesCount(this.props.match.params.id);
   }
 
@@ -215,7 +211,7 @@ class CarDetailsPage extends Component {
     };
 
     if (Object.keys(cars).length > 0) {
-      let {id, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
+      let {id, userId, feltoltve, kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
       const {text, isDeleteModalOpen, error} = this.state;
       return (
         <Grid container spacing={8}>
@@ -334,7 +330,7 @@ class CarDetailsPage extends Component {
                       </ListItemText>
                     </ListItem>
                   </List>
-                  {auth.isCarFromUser && [
+                  {this.props.auth.googleId === userId && [
                     <Button key="1" onClick={() => this.props.history.push(`/cars/${id}/edit`)}>Szerkesztés</Button>,
                     <Button key="2" onClick={this.openDeleteModal}>Törlés</Button>]}
                 </Grid>
@@ -387,7 +383,6 @@ export default connect(mapStateToProps, {
   incrementLikes,
   getLikesCount,
   deleteCar,
-  isCarFromUser,
   fetchComments,
   submitComment,
 })(withStyles(styles)(CarDetailsPage));

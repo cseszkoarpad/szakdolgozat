@@ -6,6 +6,7 @@ import {
   INCREMENT_LIKES,
   SEARCH_CARS,
   UPDATE_CAR,
+  UPLOAD_IMAGE,
 } from '../constants';
 import axios from 'axios';
 
@@ -58,5 +59,5 @@ export const deleteCar = (carId, userId) => async dispatch => {
 export const uploadCarImage = (image) => async dispatch => {
   const res = await axios.post(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, image);
 
-  console.log(res);
+  dispatch({type: UPLOAD_IMAGE, payload: res.data.secure_url});
 };

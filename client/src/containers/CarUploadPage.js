@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addCar, deleteCar, updateCar, uploadCarImage} from '../actions/car';
+import {addCar, uploadCarImage} from '../actions/car';
 import '../styles/carDetails.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -20,7 +20,6 @@ import {
   VALTO_TIPUSOK,
 } from '../constants';
 import {SelectWrapped, styles} from '../components/Search';
-import axios from 'axios';
 
 function getSteps() {
   return ['Márka', 'Modell', 'Kép',
@@ -50,7 +49,7 @@ class CarUploadPage extends Component {
     hajtas: '',
     valto: '',
     leiras: '',
-    selectedFile: null,
+    selectedFiles: [],
   };
 
   handleNext = () => {
@@ -76,14 +75,16 @@ class CarUploadPage extends Component {
   };
 
   fileChangedHandler = (event) => {
-    this.setState({selectedFile: event.target.files[0]});
+    this.setState({selectedFiles: [...this.state.selectedFiles, event.target.files[0]]});
   };
 
   uploadHandler = () => {
-    const formData = new FormData();
-    formData.append('upload_preset', UNSIGNED_UPLOAD_PRESET);
-    formData.append('file', this.state.selectedFile);
-    this.props.uploadCarImage(formData);
+    for(const image of this.state.selectedFiles) {
+      const formData = new FormData();
+      formData.append('upload_preset', UNSIGNED_UPLOAD_PRESET);
+      formData.append('file', image);
+      this.props.uploadCarImage(formData);
+    }
   };
 
   handleAddCar = (event) => {
@@ -577,16 +578,13 @@ class CarUploadPage extends Component {
   }
 }
 
-const mapStateToProps = ({auth, cars}) => {
+const mapStateToProps = ({cars}) => {
   return {
-    auth,
     cars,
   };
 };
 
 export default connect(mapStateToProps, {
-  updateCar,
-  deleteCar,
   addCar,
   uploadCarImage,
 })(withStyles(styles)(CarUploadPage));
