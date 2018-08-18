@@ -46,8 +46,8 @@ export const getLikesCount = (carId) => async dispatch => {
   dispatch({type: GET_LIKES_COUNT, payload: res.data.likes});
 };
 
-export const incrementLikes = (data) => async dispatch => {
-  const res = await axios.post('/api/car/like', {data});
+export const incrementLikes = (carId) => async dispatch => {
+  const res = await axios.put('/api/car/like', {carId});
 
   dispatch({type: INCREMENT_LIKES, payload: res.data});
 };

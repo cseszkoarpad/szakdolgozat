@@ -42,21 +42,8 @@ const images = [
 ];
 
 const styles = {
-  container: {
-    padding: '0px 20px',
-  },
-  title: {
-    margin: '20px 0',
-  },
   carImg: {
     maxWidth: '100%',
-  },
-  commentImg: {
-    borderRadius: '50%',
-  },
-  commentBox: {
-    display: 'flex',
-    margin: '20px 0',
   },
 };
 
@@ -82,12 +69,7 @@ class CarDetailsPage extends Component {
       return this.setState({error: 'A kedveléshez be kell jelentkezni!'});
     }
 
-    const data = {
-      carId: this.props.match.params.id,
-      userId: this.props.auth.id,
-    };
-
-    this.props.incrementLikes(data);
+    this.props.incrementLikes(this.props.match.params.id);
   };
 
   openDeleteModal = () => {
@@ -133,24 +115,19 @@ class CarDetailsPage extends Component {
     let commentsNum = this.props.comments.length;
 
     return (
-      <div className="comments">
+      <div>
         <h5>{commentsNum} hozzászólás</h5>
         {commentsNum > 0 && this.props.comments.map((comment, i) => {
           return (
-            <div className={classes.commentBox} key={i}>
-              <div>
-                <img className={classes.commentImg} src={comment.profilePic} alt={`${comment.name} profile`}/>
-                <Typography variant="caption">
-                  {this.convertUploadTime(comment.feltoltve)}
-                </Typography>
-              </div>
-              <div>
-                <Typography variant="body2">
-                  {comment.name}
-                </Typography>
-                <Typography variant="body1">
-                  {comment.text}
-                </Typography>
+            <div className="flex margin-big vertical--center" key={i}>
+              <img className="circle margin-side-medium flex-start" src={comment.profilePic}
+                   alt={`${comment.name} profile`}/>
+              <div className="flex vertical full-width">
+                <div className="flex horizontal--space-between">
+                  <span className="font-size-big">{comment.name}</span>
+                  <span className="font-size-small">{this.convertUploadTime(comment.feltoltve)}</span>
+                </div>
+                <p className="font-size-medium">{comment.text}</p>
               </div>
             </div>
           );
@@ -173,7 +150,7 @@ class CarDetailsPage extends Component {
       return;
     }
 
-    this.props.submitComment(this.props.auth.id, this.props.match.params.id, this.state.text, this.props.auth.name, this.props.auth.profilePic);
+    this.props.submitComment(this.props.match.params.id, this.state.text);
     this.setState({text: ''});
   };
 
@@ -209,20 +186,22 @@ class CarDetailsPage extends Component {
                     {error ? this.errorShowUp(error) : null}
                   </div>
                 </Grid>
-                {this.props.auth.googleId === userId &&
-                <div className="block float-right">
-                  <button className="btn btn--secondary margin-side-medium"
-                          onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
-                    <span>Szerkesztés</span>
-                    <EditIcon/>
-                  </button>
-                  <button className="btn btn--danger margin-side-medium" onClick={this.openDeleteModal}>
-                    <span>Törlés</span>
-                    <DeleteIcon/>
-                  </button>
+                <div className="flex horizontal--space-between full-width">
+                  <h1>{marka} - {modell}</h1>
+                  {this.props.auth.userId === userId &&
+                  <div className="block align-center">
+                    <button className="btn btn--secondary margin-side-medium"
+                            onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
+                      <span className="margin-side-medium">Szerkesztés</span>
+                      <EditIcon/>
+                    </button>
+                    <button className="btn btn--danger margin-side-medium" onClick={this.openDeleteModal}>
+                      <span className="margin-side-medium">Törlés</span>
+                      <DeleteIcon/>
+                    </button>
+                  </div>
+                  }
                 </div>
-                }
-                <h1 className="block">{marka} - {modell}</h1>
                 <Grid item xs={6}>
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
                     {images.map(img => {
@@ -242,15 +221,15 @@ class CarDetailsPage extends Component {
                       );
                     })}
                   </Slider>
-                  <Typography variant="caption" gutterBottom>
-                    Feltöltve
-                  </Typography>
-                  <Typography variant="caption" gutterBottom>
-                    {feltoltve && this.convertUploadTime(feltoltve)}
-                  </Typography>
-                  <button className="btn btn--primary" onClick={this.incrementLikes}>
-                    <span className="margin-side-small">{likes}</span><LikeIcon/>
-                  </button>
+                  <div className="flex horizontal--space-between">
+                    <div className="font-size-small">
+                      <span className="block">Feltöltve</span>
+                      {feltoltve && this.convertUploadTime(feltoltve)}
+                    </div>
+                    <button className="btn btn--primary" onClick={this.incrementLikes}>
+                      <span className="margin-side-small">{likes}</span><LikeIcon/>
+                    </button>
+                  </div>
                 </Grid>
                 <Grid item xs={6}>
                   <ul className="list">
@@ -304,13 +283,7 @@ class CarDetailsPage extends Component {
                     </li>
                     <li className="margin-top-big">
                       <span>Leírás</span>
-                      <p className="text--long font-size-medium">gaoogpas jadpggdsgdsgds dwq ewqe afsa
-                        ssssssssssssssssssssssssssssss
-                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssss
-                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssssgaoogpas jadpggdsgdsgds dwq
-                        ewqe afsa sssssssssssssssssssssssssssss
-                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssss
-                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssss{leiras}</p>
+                      <p className="text--long font-size-medium">{leiras}</p>
                     </li>
                   </ul>
                 </Grid>

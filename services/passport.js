@@ -13,11 +13,11 @@ const connection = mysql.createConnection({
 connection.connect();
 
 passport.serializeUser((user, done) => {
-  done(null, user.googleId);
+  done(null, user.userId);
 });
 
-passport.deserializeUser((googleId, done) => {
-  connection.query(`select * from users where googleId = ${googleId}`, function (err, rows) {
+passport.deserializeUser((userId, done) => {
+  connection.query(`select * from users where userId = ${userId}`, function (err, rows) {
     done(err, rows[0]);
   });
 });
@@ -31,15 +31,15 @@ passport.use(
       proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
-      connection.query(`select * from users where googleId = ${profile.id}`, function (err, rows) {
+      connection.query(`select * from users where userId = ${profile.id}`, function (err, rows) {
         if (rows.length) {
           return done(err, rows[0]);
         } else {
           let newUser = {};
-          newUser.googleId = profile.id;
+          newUser.userId = profile.id;
           newUser.name = profile.displayName;
           newUser.profilePic = profile.photos[0].value;
-          connection.query('INSERT INTO users ( googleId, name, profilePic ) values (?, ?, ?)', [profile.id, profile.displayName, profile.photos[0].value], function (err, rows) {
+          connection.query('INSERT INTO users ( userId, name, profilePic ) values (?, ?, ?)', [profile.id, profile.displayName, profile.photos[0].value], function (err, rows) {
             newUser.id = rows.insertId;
 
             return done(null, newUser);

@@ -30,15 +30,17 @@ module.exports = app => {
     });
   });
 
-  app.post('/api/car/like', (req, res) => {
-    connection.query('SELECT * FROM likes WHERE carId = ? AND userId = ? LIMIT 1', [req.body.data.carId, req.body.data.userId], (err, result) => {
+  app.put('/api/car/like', requireLogin, (req, res) => {
+    connection.query('SELECT * FROM likes WHERE carId = ? AND userId = ? LIMIT 1', [req.body.carId, req.user.userId], (err, result) => {
       if (result.length) {
         res.send({error: 'Már kedvelte ezt az autót!'});
       } else {
-        connection.query(`INSERT INTO likes (carId, userId) VALUES (?, ?)`, [req.body.data.carId, req.body.data.userId], (err, car) => {
-          if (err) res.send(err);
-
-          res.send({success: true});
+        connection.query(`INSERT INTO likes (carId, userId) VALUES (?, ?)`, [req.body.carId, req.user.userId], (err, result) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send({success: true});
+          }
         });
       }
     });
@@ -76,7 +78,7 @@ module.exports = app => {
   });
 
   app.get('/api/comments/:carId', (req, res) => {
-    connection.query(`SELECT name, profilePic, text, feltoltve FROM users, comments WHERE carId = ? AND users.id = comments.userId
+    connection.query(`SELECT name, profilePic, text, feltoltve FROM users, comments WHERE carId = ? AND users.userId = comments.userId
      ORDER BY feltoltve DESC`, [req.params.carId], (err, comments) => {
       if (comments && comments.length > 0) {
         res.send(comments);
@@ -87,14 +89,14 @@ module.exports = app => {
   });
 
   app.post('/api/comments', requireLogin, async (req, res) => {
-    const userId = req.body.data.userId;
-    const carId = Number(req.body.data.carId);
+    const userId = req.user.userId;
+    const carId = req.body.data.carId;
     const text = req.body.data.userText;
-    const name = req.body.data.name;
-    const profilePic = req.body.data.profilePic;
+    const name = req.user.name;
+    const profilePic = req.user.profilePic;
     const newComment = {userId, carId, text, name, profilePic};
     connection.query(`INSERT INTO comments (userId, carId, text) VALUES (?, ?, ?)`, [userId, carId, text], (err, result) => {
-      if (result.affectedRows === 1) {
+      if (result && result.affectedRows === 1) {
         newComment.feltoltve = new Date();
         newComment.id = result.insertId;
         res.send(newComment);
@@ -117,7 +119,7 @@ module.exports = app => {
     connection.query(`INSERT INTO cars (id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg,
      uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [uniqid(), marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
-        hajtas, valto, leiras, req.user.googleId], (err, result) => {
+        hajtas, valto, leiras, req.user.userId], (err, result) => {
         if (err) console.log(err);
 
         res.send(result);

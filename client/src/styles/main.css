@@ -4,18 +4,56 @@ html, body {
     box-sizing: border-box;
 }
 
+.circle {
+    border-radius: 50%;
+}
+
 .block {
-    width: 100%;
     display: block;
 }
 
-.block--center {
+.inline-block {
+    display: inline-block;
+}
+
+.flex {
     display: flex;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.horizontal--space-around {
+    justify-content: space-around;
+}
+
+.horizontal--space-between {
+    justify-content: space-between;
+}
+
+.horizontal--center {
     justify-content: center;
 }
 
-.block--padding {
-    padding: 10px 0;
+.vertical {
+    flex-direction: column;
+}
+
+.vertical--center {
+    align-items: center;
+}
+
+.flex-start {
+    align-self: flex-start;
+}
+
+.align-center {
+    align-self: center;
+}
+
+.full-width {
+    width: 100%;
 }
 
 .list {
@@ -37,9 +75,10 @@ html, body {
 }
 
 .btn {
+    color: white;
     display: inline-flex;
     align-items: center;
-    padding: 10px;
+    padding: 5px 10px;
     border-radius: 5px;
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
     font-weight: 500;
@@ -114,6 +153,8 @@ html, body {
 
 .font-size-small {
     font-size: 12px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.54)
 }
 
 form {
@@ -145,6 +186,18 @@ form {
 
 .padding-small {
     padding: 5px;
+}
+
+.padding-side-big {
+    padding: 0 30px;
+}
+
+.padding-side-medium {
+    padding: 0 10px;
+}
+
+.padding-side-small {
+    padding: 0 5px;
 }
 
 .margin-extra {

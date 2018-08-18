@@ -78,7 +78,7 @@ class CarUploadPage extends Component {
   };
 
   uploadHandler = () => {
-    for(const image of this.state.selectedFiles) {
+    for (const image of this.state.selectedFiles) {
       const formData = new FormData();
       formData.append('upload_preset', UNSIGNED_UPLOAD_PRESET);
       formData.append('file', image);
@@ -111,7 +111,7 @@ class CarUploadPage extends Component {
       leiras,
     };
     this.props.addCar(car);
-  //  this.props.history.push(`/`);
+    //  this.props.history.push(`/`);
   };
 
   handleCancelButton = () => {
@@ -127,442 +127,302 @@ class CarUploadPage extends Component {
     const steps = getSteps();
 
     return (
-      <div className="test">
       <Paper>
         <form onSubmit={this.handleAddCar}>
           {activeStep === 0 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              name="marka"
-              label="Márka"
-              value={marka}
-              placeholder="Márka kiválasztása"
-              onChange={this.onSelectChange('marka')}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'marka',
-                  simpleValue: true,
-                  options: MARKAK,
-                },
-              }}
-            />
-          </div>}
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            name="marka"
+            label="Márka"
+            value={marka}
+            placeholder="Márka kiválasztása"
+            onChange={this.onSelectChange('marka')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'marka',
+                simpleValue: true,
+                options: MARKAK,
+              },
+            }}
+          />
+          }
 
           {activeStep === 1 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              fullWidth
-              required
-              name="modell"
-              label="Modell"
-              value={modell}
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            required
+            name="modell"
+            label="Modell"
+            value={modell}
+            onChange={this.onChange}/>
           }
 
           {activeStep === 2 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
+          <div>
             <input type="file" onChange={this.fileChangedHandler}/>
             <button onClick={this.uploadHandler}>Upload!</button>
           </div>
           }
 
           {activeStep === 3 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              fullWidth
-              type="number"
-              name="ar"
-              label="Ár"
-              value={ar}
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            type="number"
+            name="ar"
+            label="Ár"
+            value={ar}
+            onChange={this.onChange}/>
           }
 
           {activeStep === 4 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              fullWidth
-              required
-              name="ev"
-              label="Évjárat"
-              value={ev}
-              onChange={this.onSelectChange('ev')}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'ev',
-                  simpleValue: true,
-                  options: EVJARATOK,
-                },
-              }}
-            />
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            required
+            name="ev"
+            label="Évjárat"
+            value={ev}
+            onChange={this.onSelectChange('ev')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'ev',
+                simpleValue: true,
+                options: EVJARATOK,
+              },
+            }}
+          />
           }
 
           {activeStep === 5 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              fullWidth
-              required
-              name="allapot"
-              label="Állapot"
-              value={allapot}
-              onChange={this.onSelectChange('allapot')}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'allapot',
-                  simpleValue: true,
-                  options: ALLAPOTOK,
-                },
-              }}
-            />
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            required
+            name="allapot"
+            label="Állapot"
+            value={allapot}
+            onChange={this.onSelectChange('allapot')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'allapot',
+                simpleValue: true,
+                options: ALLAPOTOK,
+              },
+            }}
+          />
           }
 
           {activeStep === 6 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              name="kivitel"
-              label="Kivitel"
-              value={kivitel}
-              onChange={this.onSelectChange('kivitel')}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'kivitel',
-                  simpleValue: true,
-                  options: KIVITELEK,
-                },
-              }}
-            />
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            name="kivitel"
+            label="Kivitel"
+            value={kivitel}
+            onChange={this.onSelectChange('kivitel')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'kivitel',
+                simpleValue: true,
+                options: KIVITELEK,
+              },
+            }}
+          />
           }
 
           {activeStep === 7 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              type="number"
-              name="km"
-              label="Km óra állása"
-              value={km}
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="km"
+            label="Km óra állása"
+            value={km}
+            onChange={this.onChange}/>
           }
 
           {activeStep === 8 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              name="szin"
-              label="Szín"
-              value={szin}
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            name="szin"
+            label="Szín"
+            value={szin}
+            onChange={this.onChange}/>
           }
 
           {activeStep === 9 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              type="number"
-              name="tomeg"
-              label="Tömeg"
-              value={tomeg}
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="tomeg"
+            label="Tömeg"
+            value={tomeg}
+            onChange={this.onChange}/>
           }
 
           {activeStep === 10 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              name="uzemanyag"
-              label="Üzemanyag"
-              value={uzemanyag}
-              onChange={this.onSelectChange('uzemanyag')}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'uzemanyag',
-                  simpleValue: true,
-                  options: UZEMANYAG_TIPUSOK,
-                },
-              }}
-            />
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            name="uzemanyag"
+            label="Üzemanyag"
+            value={uzemanyag}
+            onChange={this.onSelectChange('uzemanyag')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'uzemanyag',
+                simpleValue: true,
+                options: UZEMANYAG_TIPUSOK,
+              },
+            }}
+          />
           }
 
           {activeStep === 11 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              type="number"
-              name="hengerUrtartalom"
-              label="Hengerűrtartalom"
-              value={hengerUrtartalom}
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="hengerUrtartalom"
+            label="Hengerűrtartalom"
+            value={hengerUrtartalom}
+            onChange={this.onChange}/>
           }
 
           {activeStep === 12 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              required
-              fullWidth
-              type="number"
-              name="teljesitmeny"
-              label="Teljesítmény"
-              value={teljesitmeny}
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="teljesitmeny"
+            label="Teljesítmény"
+            value={teljesitmeny}
+            onChange={this.onChange}/>
           }
 
           {activeStep === 13 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              name="hajtas"
-              label="Hajtás"
-              value={hajtas}
-              onChange={this.onSelectChange('hajtas')}
-              required
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'hajtas',
-                  simpleValue: true,
-                  options: HAJTAS_TIPUSOK,
-                },
-              }}
-            />
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            name="hajtas"
+            label="Hajtás"
+            value={hajtas}
+            onChange={this.onSelectChange('hajtas')}
+            required
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'hajtas',
+                simpleValue: true,
+                options: HAJTAS_TIPUSOK,
+              },
+            }}
+          />
           }
 
           {activeStep === 14 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              name="valto"
-              label="Váltó"
-              value={valto}
-              onChange={this.onSelectChange('valto')}
-              required
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'valto',
-                  simpleValue: true,
-                  options: VALTO_TIPUSOK,
-                },
-              }}
-            />
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            name="valto"
+            label="Váltó"
+            value={valto}
+            onChange={this.onSelectChange('valto')}
+            required
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'valto',
+                simpleValue: true,
+                options: VALTO_TIPUSOK,
+              },
+            }}
+          />
           }
 
           {activeStep === 15 &&
-          <div style={{
-            paddingTop: '150px',
-            paddingBottom: '40px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'center',
-          }}>
-            <TextField
-              style={{width: '300px'}}
-              autoFocus
-              fullWidth
-              name="leiras"
-              label="Leírás"
-              value={leiras}
-              multiline
-              onChange={this.onChange}/>
-          </div>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            name="leiras"
+            label="Leírás"
+            value={leiras}
+            multiline
+            onChange={this.onChange}/>
           }
 
-          {this.state.activeStep === steps.length - 1 ? (
-            <div style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginBottom: '80px',
-              paddingBottom: '50px',
-            }}>
+          {activeStep === steps.length - 1 ? (
+            <div>
               <Button onClick={this.handleCancelButton}>Mégse</Button>
               <Button type="submit">Létrehozás</Button>
             </div>
           ) : (
-            <div style={{
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginBottom: '80px',
-              paddingBottom: '50px',
-            }}>
-              <Button
-                disabled={activeStep === 0}
-                onClick={this.handleBack}
-                style={{marginRight: '20px'}}
-              >
+            <div>
+              {activeStep > 0 &&
+              <button className="btn btn--secondary" onClick={this.handleBack}>
                 Vissza
-              </Button>
-              <Button variant="contained" color="primary" onClick={this.handleNext}>
+              </button>
+              }
+              <button className="btn btn--primary" onClick={this.handleNext}>
                 Következő
-              </Button>
+              </button>
             </div>
           )}
-          {window.innerWidth > 1350 && this.state.activeStep !== steps.length &&
+          {window.innerWidth > 1350 && activeStep !== steps.length &&
           <Stepper activeStep={activeStep} alternativeLabel>
             {steps.map(label => {
               return (
@@ -574,7 +434,6 @@ class CarUploadPage extends Component {
           </Stepper>}
         </form>
       </Paper>
-      </div>
     );
   }
 }
