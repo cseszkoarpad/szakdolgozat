@@ -15,10 +15,6 @@ import {fetchCars} from '../actions/car';
 import Button from '@material-ui/core/Button';
 
 const styles = {
-
-  search: {
-    padding: '15px',
-  },
   cars: {
     display: 'flex',
     flexDirection: 'row',
@@ -68,11 +64,9 @@ class Main extends Component {
 
     if (this.props.cars.length > 0) {
       return (
-        <Grid className={classes.container} container spacing={8}>
+        <Grid container spacing={8}>
           <Grid item xs={12} sm={4} md={3} lg={2}>
-            <Paper className={classes.search}>
               <Search/>
-            </Paper>
           </Grid>
           <Grid item xs={12} sm={8} md={9} lg={10}>
             <Paper className={classes.search}>

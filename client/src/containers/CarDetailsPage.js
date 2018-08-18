@@ -4,7 +4,6 @@ import {deleteCar, fetchCarById, fetchCars, getLikesCount, incrementLikes} from 
 import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
 import WarningModal from '../components/WarningModal';
-import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -15,11 +14,9 @@ import {withStyles} from '@material-ui/core';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import '../styles/carDetails.css';
 import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const images = [
   {
@@ -45,9 +42,6 @@ const images = [
 ];
 
 const styles = {
-  search: {
-    padding: '10px',
-  },
   container: {
     padding: '0px 20px',
   },
@@ -63,17 +57,6 @@ const styles = {
   commentBox: {
     display: 'flex',
     margin: '20px 0',
-  },
-  button: {
-    margin: '0 15px',
-  },
-  icon: {
-    marginLeft: '10px',
-  },
-  list: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
   },
 };
 
@@ -216,24 +199,31 @@ class CarDetailsPage extends Component {
       return (
         <Grid container spacing={8}>
           <Grid item xs={2}>
-            <Paper className={classes.search}>
-              <Search/>
-            </Paper>
+            <Search/>
           </Grid>
           <Grid item xs={8}>
-            <Paper className={classes.container}>
+            <Paper className="padding-extra">
               <Grid container>
                 <Grid item xs={12}>
                   <div className="error">
                     {error ? this.errorShowUp(error) : null}
                   </div>
                 </Grid>
-                <Grid item xs={12}>
-                  <Typography className={classes.title} variant="headline" gutterBottom>
-                    {marka} - {modell}
-                  </Typography>
-                </Grid>
-                <Grid item xs={5}>
+                {this.props.auth.googleId === userId &&
+                <div className="block float-right">
+                  <button className="btn btn--secondary margin-side-medium"
+                          onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
+                    <span>Szerkesztés</span>
+                    <EditIcon/>
+                  </button>
+                  <button className="btn btn--danger margin-side-medium" onClick={this.openDeleteModal}>
+                    <span>Törlés</span>
+                    <DeleteIcon/>
+                  </button>
+                </div>
+                }
+                <h1 className="block">{marka} - {modell}</h1>
+                <Grid item xs={6}>
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
                     {images.map(img => {
                       return (
@@ -258,81 +248,71 @@ class CarDetailsPage extends Component {
                   <Typography variant="caption" gutterBottom>
                     {feltoltve && this.convertUploadTime(feltoltve)}
                   </Typography>
-                  <Button variant="contained" color="primary" onClick={this.incrementLikes}>
-                    {likes}<LikeIcon className={classes.icon}/>
-                  </Button>
+                  <button className="btn btn--primary" onClick={this.incrementLikes}>
+                    <span className="margin-side-small">{likes}</span><LikeIcon/>
+                  </button>
                 </Grid>
                 <Grid item xs={6}>
-                  <List className={classes.list} subheader={<li/>}>
-                    <ListItem>
-                      <ListItemText>
-                        Ár {ar && this.convertPrice(ar)} Ft
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Évjárat {ev}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Állapot {allapot}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Kivitel {kivitel}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Km {km}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Szín {szin}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Tömeg {tomeg} kg
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Üzemanyag {uzemanyag}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Hengerűrtartalom {hengerUrtartalom} cc
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Teljesítmény {teljesitmeny} le
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Hajtás {hajtas}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Váltó {valto}
-                      </ListItemText>
-                    </ListItem>
-                    <ListItem>
-                      <ListItemText>
-                        Leírás {leiras}
-                      </ListItemText>
-                    </ListItem>
-                  </List>
-                  {this.props.auth.googleId === userId && [
-                    <Button key="1" onClick={() => this.props.history.push(`/cars/${id}/edit`)}>Szerkesztés</Button>,
-                    <Button key="2" onClick={this.openDeleteModal}>Törlés</Button>]}
+                  <ul className="list">
+                    <li className="list__item">
+                      <span>Ár </span>
+                      <div><b>{ar && this.convertPrice(ar)}</b><span className="text--italic"> Ft</span></div>
+                    </li>
+                    <li className="list__item">
+                      <span>Évjárat</span>
+                      <b>{ev}</b>
+                    </li>
+                    <li className="list__item">
+                      <span>Állapot</span>
+                      <b>{allapot}</b>
+                    </li>
+                    <li className="list__item">
+                      <span>Kivitel</span>
+                      <b>{kivitel}</b>
+                    </li>
+                    <li className="list__item">
+                      <span>Km óra állása</span>
+                      <div><b>{km}</b><span className="text--italic"> km</span></div>
+                    </li>
+                    <li className="list__item">
+                      <span>Szín</span>
+                      <b>{szin}</b>
+                    </li>
+                    <li className="list__item">
+                      <span>Tömeg</span>
+                      <div><b>{tomeg}</b><span className="text--italic"> kg</span></div>
+                    </li>
+                    <li className="list__item">
+                      <span>Üzemanyag</span>
+                      <b>{uzemanyag}</b>
+                    </li>
+                    <li className="list__item">
+                      <span>Hengerűrtartalom</span>
+                      <div><b>{hengerUrtartalom}</b><span className="text--italic"> cc</span></div>
+                    </li>
+                    <li className="list__item">
+                      <span>Teljesítmény</span>
+                      <div><b>{teljesitmeny}</b><span className="text--italic"> le</span></div>
+                    </li>
+                    <li className="list__item">
+                      <span>Hajtás</span>
+                      <b>{hajtas}</b>
+                    </li>
+                    <li className="list__item">
+                      <span>Váltó típusa</span>
+                      <b>{valto}</b>
+                    </li>
+                    <li className="margin-top-big">
+                      <span>Leírás</span>
+                      <p className="text--long font-size-medium">gaoogpas jadpggdsgdsgds dwq ewqe afsa
+                        ssssssssssssssssssssssssssssss
+                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssss
+                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssssgaoogpas jadpggdsgdsgds dwq
+                        ewqe afsa sssssssssssssssssssssssssssss
+                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssss
+                        gaoogpas jadpggdsgdsgds dwq ewqe afsa sssssssssssssssssssssssssssss{leiras}</p>
+                    </li>
+                  </ul>
                 </Grid>
                 <Grid item xs={12}>
                   <div className="comment-container">
@@ -344,9 +324,10 @@ class CarDetailsPage extends Component {
                         onChange={this.handleChange('text')}
                         margin="normal"
                       />
-                      <Button type="submit" variant="outlined" color="primary" className={classes.button}>
-                        Küldés <SendIcon className={classes.icon}/>
-                      </Button>
+                      <button type="submit" className="btn btn--outlined margin-side-big">
+                        <span className="margin-side-small">Küldés</span>
+                        <SendIcon/>
+                      </button>
                     </form>
                     {this.renderComments()}
                   </div>

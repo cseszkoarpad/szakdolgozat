@@ -13,11 +13,11 @@ const connection = mysql.createConnection({
 connection.connect();
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.googleId);
 });
 
-passport.deserializeUser((id, done) => {
-  connection.query(`select * from users where id = ${id}`, function (err, rows) {
+passport.deserializeUser((googleId, done) => {
+  connection.query(`select * from users where googleId = ${googleId}`, function (err, rows) {
     done(err, rows[0]);
   });
 });

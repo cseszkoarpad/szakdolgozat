@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {addCar, uploadCarImage} from '../actions/car';
-import '../styles/carDetails.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
@@ -112,7 +111,7 @@ class CarUploadPage extends Component {
       leiras,
     };
     this.props.addCar(car);
-    this.props.history.push(`/`);
+  //  this.props.history.push(`/`);
   };
 
   handleCancelButton = () => {
@@ -128,6 +127,7 @@ class CarUploadPage extends Component {
     const steps = getSteps();
 
     return (
+      <div className="test">
       <Paper>
         <form onSubmit={this.handleAddCar}>
           {activeStep === 0 &&
@@ -574,6 +574,7 @@ class CarUploadPage extends Component {
           </Stepper>}
         </form>
       </Paper>
+      </div>
     );
   }
 }

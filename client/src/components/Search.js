@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Select from 'react-select';
 import {connect} from 'react-redux';
 import {searchCars} from '../actions/car';
-import {MARKAK, KIVITELEK, UZEMANYAG_TIPUSOK} from '../constants';
+import {KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK} from '../constants';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -11,9 +11,9 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import ClearIcon from '@material-ui/icons/Clear';
 import Chip from '@material-ui/core/Chip';
-import Button from '@material-ui/core/Button';
 import 'react-select/dist/react-select.css';
 import {withStyles} from '@material-ui/core';
+import Paper from '@material-ui/core/Paper';
 
 class Option extends React.Component {
   handleClick = event => {
@@ -188,12 +188,12 @@ class Search extends Component {
     marka: '',
     kivitel: null,
     uzemanyag: null,
-    error: null
+    error: null,
   };
 
   onChange = (name) => (value) => {
     this.setState({[name]: value});
-    if(this.state.error) {
+    if (this.state.error) {
       this.setState({error: null});
     }
   };
@@ -206,8 +206,8 @@ class Search extends Component {
       kivitel && {kivitel},
       uzemanyag && {uzemanyag},
     );
-    if(Object.keys(data).length === 0 && data.constructor === Object) {
-      return this.setState({error: 'Nincs kitöltve!'})
+    if (Object.keys(data).length === 0 && data.constructor === Object) {
+      return this.setState({error: 'Nincs kitöltve!'});
     }
     this.props.searchCars(data);
   };
@@ -215,80 +215,82 @@ class Search extends Component {
   render() {
     const {marka, kivitel, uzemanyag, error} = this.state;
     return (
-      <form onSubmit={this.handleSearch}>
-        <div className="field">
-          <TextField
-            error={!!error}
-            fullWidth
-            value={marka}
-            onChange={this.onChange('marka')}
-            placeholder="Válasszon márkát."
-            name="marka"
-            label="Márka"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'marka',
-                simpleValue: true,
-                options: MARKAK,
-              },
-            }}
-          />
-        </div>
-        <div className="field">
-          <TextField
-            error={!!error}
-            fullWidth
-            value={kivitel}
-            onChange={this.onChange('kivitel')}
-            placeholder="Válasszon kivitelt."
-            name="kivitel"
-            label="Kivitel"
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'kivitel',
-                multi: true,
-                simpleValue: true,
-                options: KIVITELEK,
-              },
-            }}
-          />
-        </div>
-        <div className="field">
-          <TextField
-            error={!!error}
-            fullWidth
-            value={uzemanyag}
-            onChange={this.onChange('uzemanyag')}
-            placeholder="Üzemanyag típusa"
-            name="uzemanyag"
-            label="Üzemanyag"
-            helperText={error && error}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'uzemanyag',
-                multi: true,
-                simpleValue: true,
-                options: UZEMANYAG_TIPUSOK,
-              },
-            }}
-          />
-        </div>
-        <div className="submit-button">
-          <Button type="submit" variant="contained" color="primary">Keresés</Button>
-        </div>
-      </form>
+      <Paper>
+        <form onSubmit={this.handleSearch}>
+          <div className="block block--padding">
+            <TextField
+              error={!!error}
+              fullWidth
+              value={marka}
+              onChange={this.onChange('marka')}
+              placeholder="Válasszon márkát."
+              name="marka"
+              label="Márka"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'marka',
+                  simpleValue: true,
+                  options: MARKAK,
+                },
+              }}
+            />
+          </div>
+          <div className="block block--padding">
+            <TextField
+              error={!!error}
+              fullWidth
+              value={kivitel}
+              onChange={this.onChange('kivitel')}
+              placeholder="Válasszon kivitelt."
+              name="kivitel"
+              label="Kivitel"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'kivitel',
+                  multi: true,
+                  simpleValue: true,
+                  options: KIVITELEK,
+                },
+              }}
+            />
+          </div>
+          <div className="block block--padding">
+            <TextField
+              error={!!error}
+              fullWidth
+              value={uzemanyag}
+              onChange={this.onChange('uzemanyag')}
+              placeholder="Üzemanyag típusa"
+              name="uzemanyag"
+              label="Üzemanyag"
+              helperText={error && error}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'uzemanyag',
+                  multi: true,
+                  simpleValue: true,
+                  options: UZEMANYAG_TIPUSOK,
+                },
+              }}
+            />
+          </div>
+          <div className="block block--center block--padding">
+            <button className="btn btn--primary" type="submit">Keresés</button>
+          </div>
+        </form>
+      </Paper>
     );
   }
 }
