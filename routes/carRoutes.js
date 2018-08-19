@@ -127,9 +127,12 @@ module.exports = app => {
      uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [id, marka, modell, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
         hajtas, valto, leiras, req.user.userId], (err, result) => {
-        if (err) console.log(err);
-
-        res.send(id);
+        if (err) {
+          console.log(err);
+        }
+        else {
+          res.send(id);
+        }
       });
   });
 

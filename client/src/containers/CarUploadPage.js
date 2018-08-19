@@ -21,24 +21,6 @@ import {
 } from '../constants';
 import {SelectWrapped, styles} from '../components/Search';
 
-/*const steps = [
-  {label: 'Márka', value: 'marka'},
-  {label: 'Modell', value: 'modell'},
-  {label: 'Kép', value: 'kep'},
-  {label: 'Ár', value: 'ar'},
-  {label: 'Év', value: 'ev'},
-  {label: 'Állapot', value: 'allapot'},
-  {label: 'Kivitel', value: 'kivitel'},
-  {label: 'Futásteljesítmény', value: 'futasteljesitmeny'},
-  {label: 'Szín', value: 'szin'},
-  {label: 'Tömeg', value: 'tomeg'},
-  {label: 'Üzemanyag', value: 'uzemanyag'},
-  {label: 'Hengerűrtartalom', value: 'hengerurtartalom'},
-  {label: 'Teljesítmény', value: 'teljesitmeny'},
-  {label: 'Hajtás', value: 'hajtas'},
-  {label: 'Váltó', value: 'valto'},
-  {label: 'Leírás', value: 'leiras'},
-];*/
 const steps = ['Márka', 'Modell', 'Kép',
   'Ár', 'Év', 'Állapot', 'Kivitel',
   'Futásteljesítmény', 'Szín',
@@ -96,9 +78,10 @@ class CarUploadPage extends Component {
 
   uploadHandler = () => {
     for (const image of this.state.selectedFiles) {
+      console.log(image[0]);
       const formData = new FormData();
       formData.append('upload_preset', UNSIGNED_UPLOAD_PRESET);
-      formData.append('file', image);
+      formData.append('file', image[0]);
       this.props.uploadCarImage(formData);
     }
   };
@@ -143,7 +126,7 @@ class CarUploadPage extends Component {
 
     return (
       <Paper classes={{root: 'padding-side-small padding-big flex'}}>
-        <form onSubmit={this.handleAddCar} className="flex full-width vertical horizontal--center">
+        <form onSubmit={(e) => this.handleAddCar(e)} className="flex full-width vertical horizontal--center">
           {activeStep === 0 &&
           <TextField
             style={{width: '300px'}}
@@ -437,13 +420,13 @@ class CarUploadPage extends Component {
           ) : (
             <div className="margin-big flex horizontal--center">
               {activeStep > 0 &&
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+              <a className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
                 Vissza
-              </button>
+              </a>
               }
-              <button className="btn btn--primary margin-side-medium" onClick={this.handleNext}>
+              <a className="btn btn--primary margin-side-medium" onClick={this.handleNext}>
                 Következő
-              </button>
+              </a>
             </div>
           )}
 
