@@ -1,14 +1,16 @@
 import {
-  ADD_CAR, CLOUD_NAME,
-  FETCH_CAR_BY_ID, FETCH_CAR_IMAGES_BY_ID,
+  ADD_CAR,
+  CLOUD_NAME,
+  FETCH_CAR_BY_ID,
+  FETCH_CAR_IMAGES_BY_ID,
   FETCH_CARS,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
   SEARCH_CARS,
   UPDATE_CAR,
-  UPLOAD_IMAGE,
 } from '../constants';
 import axios from 'axios';
+import {history} from '../index';
 
 export const fetchCars = () => async dispatch => {
   const res = await axios.get('/api/cars');
@@ -37,7 +39,7 @@ export const searchCars = (data) => async dispatch => {
 export const addCar = (car) => async dispatch => {
   const res = await axios.post('/api/cars', {car});
 
-  dispatch({type: ADD_CAR, payload: res.data});
+  history.push(`/cars/${res.data}`);
 };
 
 export const updateCar = (car) => async dispatch => {

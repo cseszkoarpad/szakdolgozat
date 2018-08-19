@@ -342,3 +342,18 @@ h1 {
     left: 48%;
     top: 50%;
 }
+
+/******** IMAGE UPLOAD ****************/
+.uploadPictureContainer {
+    margin: 2% !important;
+}
+
+.uploadPictureContainer img {
+    max-width: 300px;
+    max-height: 250px;
+}
+
+.uploadPictureContainer .deleteImage {
+    background: red;
+    font-size: 15px;
+}

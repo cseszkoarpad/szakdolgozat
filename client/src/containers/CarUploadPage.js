@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import MediaQuery from 'react-responsive';
 import {connect} from 'react-redux';
 import {addCar, uploadCarImage} from '../actions/car';
-import Button from '@material-ui/core/Button';
+import ImageUploader from 'react-images-upload';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
@@ -40,11 +40,11 @@ import {SelectWrapped, styles} from '../components/Search';
   {label: 'Leírás', value: 'leiras'},
 ];*/
 const steps = ['Márka', 'Modell', 'Kép',
-    'Ár', 'Év', 'Állapot', 'Kivitel',
-    'Futásteljesítmény', 'Szín',
-    'Tömeg', 'Üzemanyag',
-    'Hengerűrtartalom', 'Teljesítmény',
-    'Hajtás', 'Váltó', 'Leírás'];
+  'Ár', 'Év', 'Állapot', 'Kivitel',
+  'Futásteljesítmény', 'Szín',
+  'Tömeg', 'Üzemanyag',
+  'Hengerűrtartalom', 'Teljesítmény',
+  'Hajtás', 'Váltó', 'Leírás'];
 
 class CarUploadPage extends Component {
   state = {
@@ -90,8 +90,8 @@ class CarUploadPage extends Component {
     this.setState({[name]: value});
   };
 
-  fileChangedHandler = (event) => {
-    this.setState({selectedFiles: [...this.state.selectedFiles, event.target.files[0]]});
+  fileChangedHandler = (image) => {
+    this.setState({selectedFiles: [...this.state.selectedFiles, image]});
   };
 
   uploadHandler = () => {
@@ -106,13 +106,12 @@ class CarUploadPage extends Component {
   handleAddCar = (event) => {
     event.preventDefault();
     const {
-      marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      marka, modell, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras,
     } = this.state;
     const car = {
       marka,
       modell,
-      kep,
       ar,
       ev,
       allapot,
@@ -128,6 +127,7 @@ class CarUploadPage extends Component {
       leiras,
     };
     this.props.addCar(car);
+    this.uploadHandler();
   };
 
   handleCancelButton = () => {
@@ -136,7 +136,7 @@ class CarUploadPage extends Component {
 
   render() {
     const {
-      activeStep, kep, modell, marka, ar, ev,
+      activeStep, modell, marka, ar, ev,
       allapot, kivitel, km, szin, tomeg, uzemanyag,
       hengerUrtartalom, teljesitmeny, hajtas, valto, leiras,
     } = this.state;
@@ -182,10 +182,19 @@ class CarUploadPage extends Component {
           }
 
           {activeStep === 2 &&
-          <div>
-            <input type="file" onChange={this.fileChangedHandler}/>
-            <button onClick={this.uploadHandler}>Upload!</button>
-          </div>
+          <ImageUploader
+            withIcon={true}
+            buttonText='Válasszon ki képeket'
+            onChange={this.fileChangedHandler}
+            imgExtension={['.jpg', '.gif', '.png', '.gif']}
+            maxFileSize={5242880}
+            buttonClassName='btn btn--primary'
+            label='Minimum 4 kép és maximum 10 képet tölthet fel'
+            labelClass='font-size-big'
+            fileSizeError='Túl nagy a kép mérete! 5MB a maximum.'
+            fileTypeError='Nem támogatott fájl formátum!'
+            withPreview
+          />
           }
 
           {activeStep === 3 &&
@@ -421,22 +430,23 @@ class CarUploadPage extends Component {
           }
 
           {activeStep === steps.length - 1 ? (
-            <div>
-              <Button onClick={this.handleCancelButton}>Mégse</Button>
-              <Button type="submit">Létrehozás</Button>
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleCancelButton}>Mégse</button>
+              <button className="btn btn--secondary margin-side-medium" type="submit">Létrehozás</button>
             </div>
           ) : (
-            <div>
+            <div className="margin-big flex horizontal--center">
               {activeStep > 0 &&
-              <button className="btn btn--secondary" onClick={this.handleBack}>
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
                 Vissza
               </button>
               }
-              <button className="btn btn--primary" onClick={this.handleNext}>
+              <button className="btn btn--primary margin-side-medium" onClick={this.handleNext}>
                 Következő
               </button>
             </div>
           )}
+
           <MediaQuery minWidth={1000}>
             {activeStep !== steps.length &&
             <Stepper classes={{root: 'full-width'}} activeStep={activeStep} alternativeLabel>

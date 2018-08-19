@@ -114,7 +114,6 @@ module.exports = app => {
     const {
       marka,
       modell,
-      kep,
       ar, ev, allapot,
       kivitel, km, szin,
       tomeg, uzemanyag,
@@ -122,13 +121,15 @@ module.exports = app => {
       teljesitmeny, hajtas,
       valto, leiras,
     } = req.body.car;
-    connection.query(`INSERT INTO cars (id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg,
-     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [uniqid(), marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
+    const id = uniqid();
+
+    connection.query(`INSERT INTO cars (id, marka, modell, ar, ev, allapot, kivitel, km, szin, tomeg,
+     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, marka, modell, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
         hajtas, valto, leiras, req.user.userId], (err, result) => {
         if (err) console.log(err);
 
-        res.send(result);
+        res.send(id);
       });
   });
 
