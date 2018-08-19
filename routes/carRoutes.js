@@ -19,8 +19,14 @@ module.exports = app => {
   });
 
   app.get('/api/cars/:id', (req, res) => {
-    connection.query(`SELECT * FROM cars WHERE id = ? LIMIT 1`, [req.params.id], (err, car) => {
-      res.send(car[0]);
+    connection.query(`SELECT * FROM cars WHERE id = ? LIMIT 1`, [req.params.id], (err, result) => {
+      res.send(result[0]);
+    });
+  });
+
+  app.get('/api/cars/:id/images', (req, res) => {
+    connection.query(`SELECT secure_url FROM images WHERE carId = ?`, [req.params.id], (err, result) => {
+      res.send(result);
     });
   });
 

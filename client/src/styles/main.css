@@ -2,6 +2,7 @@ html, body {
     background: #EFEBE9;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .circle {
@@ -40,8 +41,12 @@ html, body {
     flex-direction: column;
 }
 
-.vertical--center {
+.horizontal--center {
     align-items: center;
+}
+
+.horizontal--baseline {
+    align-items: baseline;
 }
 
 .flex-start {
@@ -173,59 +178,83 @@ form {
 }
 
 .padding-extra {
-    padding: 25px;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
 .padding-big {
-    padding: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .padding-medium {
-    padding: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .padding-small {
-    padding: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .padding-side-big {
-    padding: 0 30px;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 .padding-side-medium {
-    padding: 0 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .padding-side-small {
-    padding: 0 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 .margin-extra {
-    margin: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
 }
 
 .margin-big {
-    margin: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.margin-big--important {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
 }
 
 .margin-medium {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.margin-medium--important {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
 }
 
 .margin-small {
-    margin: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .margin-side-big {
-    margin: 0 20px;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 .margin-side-medium {
-    margin: 0 10px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .margin-side-small {
-    margin: 0 5px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .margin-top-big {
@@ -248,10 +277,14 @@ h1 {
     font-size: 1.5em;
 }
 
+.cursor--pointer {
+    cursor: pointer;
+}
+
 /*************** SLIDER ************* */
 .slick-slider {
     overflow: hidden;
-    border-radius: 1%;
+    border-radius: 4px;
 }
 
 .slick-slider img {

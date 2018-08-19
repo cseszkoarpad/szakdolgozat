@@ -217,76 +217,73 @@ class Search extends Component {
     return (
       <Paper>
         <form onSubmit={this.handleSearch}>
-          <div className="block block--padding">
-            <TextField
-              error={!!error}
-              fullWidth
-              value={marka}
-              onChange={this.onChange('marka')}
-              placeholder="Válasszon márkát."
-              name="marka"
-              label="Márka"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'marka',
-                  simpleValue: true,
-                  options: MARKAK,
-                },
-              }}
-            />
-          </div>
-          <div className="block block--padding">
-            <TextField
-              error={!!error}
-              fullWidth
-              value={kivitel}
-              onChange={this.onChange('kivitel')}
-              placeholder="Válasszon kivitelt."
-              name="kivitel"
-              label="Kivitel"
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'kivitel',
-                  multi: true,
-                  simpleValue: true,
-                  options: KIVITELEK,
-                },
-              }}
-            />
-          </div>
-          <div className="block block--padding">
-            <TextField
-              error={!!error}
-              fullWidth
-              value={uzemanyag}
-              onChange={this.onChange('uzemanyag')}
-              placeholder="Üzemanyag típusa"
-              name="uzemanyag"
-              label="Üzemanyag"
-              helperText={error && error}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                inputComponent: SelectWrapped,
-                inputProps: {
-                  instanceId: 'uzemanyag',
-                  multi: true,
-                  simpleValue: true,
-                  options: UZEMANYAG_TIPUSOK,
-                },
-              }}
-            />
-          </div>
-          <div className="block block--center block--padding">
+          <TextField
+            classes={{root: 'margin-medium--important'}}
+            error={!!error}
+            fullWidth
+            value={marka}
+            onChange={this.onChange('marka')}
+            placeholder="Válasszon márkát."
+            name="marka"
+            label="Márka"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'marka',
+                simpleValue: true,
+                options: MARKAK,
+              },
+            }}
+          />
+          <TextField
+            classes={{root: 'margin-medium--important'}}
+            error={!!error}
+            fullWidth
+            value={kivitel}
+            onChange={this.onChange('kivitel')}
+            placeholder="Válasszon kivitelt."
+            name="kivitel"
+            label="Kivitel"
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'kivitel',
+                multi: true,
+                simpleValue: true,
+                options: KIVITELEK,
+              },
+            }}
+          />
+          <TextField
+            classes={{root: 'margin-medium--important'}}
+            error={!!error}
+            fullWidth
+            value={uzemanyag}
+            onChange={this.onChange('uzemanyag')}
+            placeholder="Üzemanyag típusa"
+            name="uzemanyag"
+            label="Üzemanyag"
+            helperText={error && error}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'uzemanyag',
+                multi: true,
+                simpleValue: true,
+                options: UZEMANYAG_TIPUSOK,
+              },
+            }}
+          />
+          <div className="full-width flex horizontal--center margin-top-medium">
             <button className="btn btn--primary" type="submit">Keresés</button>
           </div>
         </form>

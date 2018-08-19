@@ -11,7 +11,7 @@ import CarDetailsPage from './containers/CarDetailsPage';
 import CarEditPage from './containers/CarEditPage';
 import CarListPage from './containers/CarListPage';
 import CarUploadPage from './containers/CarUploadPage';
-import 'normalize.css'
+import 'normalize.css';
 import './styles/main.css';
 
 class App extends Component {
@@ -19,19 +19,35 @@ class App extends Component {
     this.props.fetchUser();
   }
 
+  renderPublicRoutes() {
+    return (
+      <Switch>
+        <Route exact path="/" component={Main}/>
+        <Route exact path="/cars/:id" component={CarDetailsPage}/>
+        <Redirect to="/"/>
+      </Switch>
+    );
+  };
+
+  renderPrivateRoutes() {
+    return (
+      <Switch>
+        <Route exact path="/" component={Main}/>
+        <Route exact path="/my-cars/:id" component={CarListPage}/>
+        <Route exact path="/cars/:id" component={CarDetailsPage}/>
+        <Route exact path="/cars/:id/edit" component={CarEditPage}/>
+        <Route exact path="/upload/new" component={CarUploadPage}/>
+        <Redirect to="/"/>
+      </Switch>
+    );
+  };
+
   render() {
     return (
       <BrowserRouter>
         <div>
           <Header/>
-          <Switch>
-            <Route exact path="/" component={Main}/>
-            <Route exact path="/my-cars/:id" component={CarListPage}/>
-            <Route exact path="/cars/:id" component={CarDetailsPage}/>
-            <Route exact path="/cars/:id/edit" component={CarEditPage}/>
-            <Route exact path="/upload/new" component={CarUploadPage}/>
-            <Redirect to="/"/>
-          </Switch>
+          {this.props.auth ? this.renderPrivateRoutes() : this.renderPublicRoutes()}
           <Footer/>
         </div>
       </BrowserRouter>
@@ -39,4 +55,8 @@ class App extends Component {
   }
 }
 
-export default connect(null, {fetchUser, fetchCars})(hot(module)(App));
+function mapStateToProps({auth}) {
+  return {auth};
+}
+
+export default connect(mapStateToProps, {fetchUser, fetchCars})(hot(module)(App));

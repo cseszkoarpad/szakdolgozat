@@ -5,6 +5,7 @@ export const SET_AUTH_TO_NULL = 'SET_AUTH_TO_NULL';
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export const FETCH_CARS = 'FETCH_CARS';
 export const FETCH_CAR_BY_ID = 'FETCH_CAR_BY_ID';
+export const FETCH_CAR_IMAGES_BY_ID = 'FETCH_CAR_IMAGES_BY_ID';
 export const FETCH_COMMENTS = 'FETCH_COMMENTS';
 export const SUBMIT_COMMENT = 'SUBMIT_COMMENT';
 export const SEARCH_CARS = 'SEARCH_CARS';

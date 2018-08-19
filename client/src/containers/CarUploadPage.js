@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import MediaQuery from 'react-responsive';
 import {connect} from 'react-redux';
 import {addCar, uploadCarImage} from '../actions/car';
 import Button from '@material-ui/core/Button';
@@ -20,14 +21,30 @@ import {
 } from '../constants';
 import {SelectWrapped, styles} from '../components/Search';
 
-function getSteps() {
-  return ['Márka', 'Modell', 'Kép',
+/*const steps = [
+  {label: 'Márka', value: 'marka'},
+  {label: 'Modell', value: 'modell'},
+  {label: 'Kép', value: 'kep'},
+  {label: 'Ár', value: 'ar'},
+  {label: 'Év', value: 'ev'},
+  {label: 'Állapot', value: 'allapot'},
+  {label: 'Kivitel', value: 'kivitel'},
+  {label: 'Futásteljesítmény', value: 'futasteljesitmeny'},
+  {label: 'Szín', value: 'szin'},
+  {label: 'Tömeg', value: 'tomeg'},
+  {label: 'Üzemanyag', value: 'uzemanyag'},
+  {label: 'Hengerűrtartalom', value: 'hengerurtartalom'},
+  {label: 'Teljesítmény', value: 'teljesitmeny'},
+  {label: 'Hajtás', value: 'hajtas'},
+  {label: 'Váltó', value: 'valto'},
+  {label: 'Leírás', value: 'leiras'},
+];*/
+const steps = ['Márka', 'Modell', 'Kép',
     'Ár', 'Év', 'Állapot', 'Kivitel',
     'Futásteljesítmény', 'Szín',
     'Tömeg', 'Üzemanyag',
     'Hengerűrtartalom', 'Teljesítmény',
     'Hajtás', 'Váltó', 'Leírás'];
-}
 
 class CarUploadPage extends Component {
   state = {
@@ -111,7 +128,6 @@ class CarUploadPage extends Component {
       leiras,
     };
     this.props.addCar(car);
-    //  this.props.history.push(`/`);
   };
 
   handleCancelButton = () => {
@@ -124,11 +140,10 @@ class CarUploadPage extends Component {
       allapot, kivitel, km, szin, tomeg, uzemanyag,
       hengerUrtartalom, teljesitmeny, hajtas, valto, leiras,
     } = this.state;
-    const steps = getSteps();
 
     return (
-      <Paper>
-        <form onSubmit={this.handleAddCar}>
+      <Paper classes={{root: 'padding-side-small padding-big flex'}}>
+        <form onSubmit={this.handleAddCar} className="flex full-width vertical horizontal--center">
           {activeStep === 0 &&
           <TextField
             style={{width: '300px'}}
@@ -422,16 +437,23 @@ class CarUploadPage extends Component {
               </button>
             </div>
           )}
-          {window.innerWidth > 1350 && activeStep !== steps.length &&
-          <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map(label => {
-              return (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>}
+          <MediaQuery minWidth={1000}>
+            {activeStep !== steps.length &&
+            <Stepper classes={{root: 'full-width'}} activeStep={activeStep} alternativeLabel>
+              {steps.map(label => {
+                return (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>}
+          </MediaQuery>
+          <MediaQuery maxWidth={1000}>
+            <div>
+              {activeStep + 1} / {steps.length}
+            </div>
+          </MediaQuery>
         </form>
       </Paper>
     );

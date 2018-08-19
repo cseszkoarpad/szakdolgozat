@@ -1,6 +1,6 @@
 import {
   ADD_CAR,
-  FETCH_CAR_BY_ID,
+  FETCH_CAR_BY_ID, FETCH_CAR_IMAGES_BY_ID,
   FETCH_CARS,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
@@ -14,6 +14,13 @@ export default function (state = [], action) {
       return action.payload;
     case FETCH_CAR_BY_ID:
       return action.payload;
+    case FETCH_CAR_IMAGES_BY_ID:
+      return {
+        ...state,
+        images: [
+          ...action.payload,
+        ],
+      };
     case SEARCH_CARS:
       return action.payload;
     case ADD_CAR:
@@ -29,7 +36,7 @@ export default function (state = [], action) {
         ...state.slice(updatedCarIndex + 1),
       ];
     case INCREMENT_LIKES:
-      if(action.payload.error) return {...state}
+      if (action.payload.error) return {...state};
       return {
         ...state,
         likes: state.likes + 1,

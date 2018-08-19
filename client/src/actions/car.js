@@ -1,6 +1,6 @@
 import {
   ADD_CAR, CLOUD_NAME,
-  FETCH_CAR_BY_ID,
+  FETCH_CAR_BY_ID, FETCH_CAR_IMAGES_BY_ID,
   FETCH_CARS,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
@@ -20,6 +20,12 @@ export const fetchCarById = (id) => async dispatch => {
   const res = await axios.get(`/api/cars/${id}`);
 
   dispatch({type: FETCH_CAR_BY_ID, payload: res.data});
+};
+
+export const fetchCarImagesById = (id) => async dispatch => {
+  const res = await axios.get(`/api/cars/${id}/images`);
+
+  dispatch({type: FETCH_CAR_IMAGES_BY_ID, payload: res.data});
 };
 
 export const searchCars = (data) => async dispatch => {
@@ -57,7 +63,5 @@ export const deleteCar = (carId, userId) => async dispatch => {
 };
 
 export const uploadCarImage = (image) => async dispatch => {
-  const res = await axios.post(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, image);
-
-  dispatch({type: UPLOAD_IMAGE, payload: res.data.secure_url});
+  await axios.post(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, image);
 };
