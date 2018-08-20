@@ -1,6 +1,5 @@
 const requireLogin = require('..//middlewares/requireLogin');
 const mysql = require('mysql');
-const uniqid = require('uniqid');
 
 const connection = mysql.createConnection({
   host: 'localhost',
@@ -13,8 +12,11 @@ connection.connect();
 
 module.exports = app => {
   app.get('/api/cars', (req, res) => {
-    connection.query('SELECT * FROM cars LIMIT 10', (err, cars) => {
-      res.send(cars);
+    connection.query(`SELECT * FROM cars`, (err, cars) => {
+      if (err) console.log(err);
+      else {
+        res.send(cars);
+      }
     });
   });
 
@@ -24,8 +26,8 @@ module.exports = app => {
     });
   });
 
-  app.get('/api/cars/:id/images', (req, res) => {
-    connection.query(`SELECT secure_url FROM images WHERE carId = ?`, [req.params.id], (err, result) => {
+  app.get('/api/cars/:carId/images', (req, res) => {
+    connection.query(`SELECT secure_url FROM images WHERE carId = ?`, [req.params.carId], (err, result) => {
       res.send(result);
     });
   });
@@ -110,22 +112,37 @@ module.exports = app => {
     });
   });
 
+  app.post('/api/cars/images', requireLogin, (req, res) => {
+    connection.query(`INSERT INTO images (secure_url, carId) VALUES (?, ?)`,
+      [req.body.data.url, req.body.data.carId], (err, result) => {
+        if (err) console.log(err);
+        else {
+          connection.query(`UPDATE cars SET preview_url = ? WHERE cars.id = ? AND preview_url = '' LIMIT 1`,
+            [req.body.data.url, req.body.data.carId], (err, result) => {
+              if (err) console.log(err);
+              else {
+                res.send(result);
+              }
+            });
+        }
+      });
+  });
+
   app.post('/api/cars', requireLogin, (req, res) => {
     const {
-      marka,
+      id, marka,
       modell,
-      ar, ev, allapot,
+      ar, ev,
       kivitel, km, szin,
       tomeg, uzemanyag,
       hengerUrtartalom,
       teljesitmeny, hajtas,
       valto, leiras,
     } = req.body.car;
-    const id = uniqid();
 
-    connection.query(`INSERT INTO cars (id, marka, modell, ar, ev, allapot, kivitel, km, szin, tomeg,
-     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, marka, modell, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
+    connection.query(`INSERT INTO cars (id, marka, modell, ar, ev, kivitel, km, szin, tomeg,
+     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, marka, modell, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
         hajtas, valto, leiras, req.user.userId], (err, result) => {
         if (err) {
           console.log(err);
@@ -141,7 +158,7 @@ module.exports = app => {
       marka,
       modell,
       kep,
-      ar, ev, allapot,
+      ar, ev,
       kivitel, km, szin,
       tomeg, uzemanyag,
       hengerUrtartalom,
@@ -154,7 +171,6 @@ module.exports = app => {
     car.kep = kep;
     car.ar = ar;
     car.ev = ev;
-    car.allapot = allapot;
     car.kivitel = kivitel;
     car.km = km;
     car.szin = szin;

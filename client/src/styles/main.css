@@ -41,11 +41,11 @@ html, body {
     flex-direction: column;
 }
 
-.horizontal--center {
+.vertical--center {
     align-items: center;
 }
 
-.horizontal--baseline {
+.vertical--baseline {
     align-items: baseline;
 }
 
@@ -267,6 +267,18 @@ form {
 
 .margin-top-small {
     margin-top: 10px;
+}
+
+.margin-right-big {
+    margin-right: 30px;
+}
+
+.margin-right-medium {
+    margin-right: 15px;
+}
+
+.margin-right-small {
+    margin-right: 10px;
 }
 
 .border-radius {

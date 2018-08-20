@@ -1,5 +1,4 @@
 import {
-  ADD_CAR,
   CLOUD_NAME,
   FETCH_CAR_BY_ID,
   FETCH_CAR_IMAGES_BY_ID,
@@ -10,7 +9,6 @@ import {
   UPDATE_CAR,
 } from '../constants';
 import axios from 'axios';
-import {history} from '../index';
 
 export const fetchCars = () => async dispatch => {
   const res = await axios.get('/api/cars');
@@ -24,8 +22,8 @@ export const fetchCarById = (id) => async dispatch => {
   dispatch({type: FETCH_CAR_BY_ID, payload: res.data});
 };
 
-export const fetchCarImagesById = (id) => async dispatch => {
-  const res = await axios.get(`/api/cars/${id}/images`);
+export const fetchCarImagesById = (carId) => async dispatch => {
+  const res = await axios.get(`/api/cars/${carId}/images`);
 
   dispatch({type: FETCH_CAR_IMAGES_BY_ID, payload: res.data});
 };
@@ -37,9 +35,7 @@ export const searchCars = (data) => async dispatch => {
 };
 
 export const addCar = (car) => async dispatch => {
-  const res = await axios.post('/api/cars', {car});
-
-  history.push(`/cars/${res.data}`);
+  await axios.post('/api/cars', {car});
 };
 
 export const updateCar = (car) => async dispatch => {
@@ -64,6 +60,12 @@ export const deleteCar = (carId, userId) => async dispatch => {
   await axios.delete(`/api/cars/delete/${carId}/${userId}`);
 };
 
-export const uploadCarImage = (image) => async dispatch => {
-  await axios.post(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, image);
+export const uploadCarImage = (image, carId) => async dispatch => {
+  const res = await axios.post(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, image);
+  const data = {
+    url: res.data.secure_url,
+    carId,
+  };
+
+  await axios.post(`/api/cars/images`, {data});
 };

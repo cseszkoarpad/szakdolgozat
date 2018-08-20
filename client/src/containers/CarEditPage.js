@@ -13,7 +13,6 @@ class CarEditPage extends Component {
     kep: '',
     ar: 0,
     ev: 0,
-    allapot: '',
     kivitel: '',
     km: 0,
     szin: '',
@@ -53,7 +52,7 @@ class CarEditPage extends Component {
 
     event.preventDefault();
     const {
-      id, marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      id, marka, modell, kep, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras,
     } = this.state;
     const car = {
@@ -63,7 +62,7 @@ class CarEditPage extends Component {
       kep,
       ar,
       ev,
-      allapot,
+
       kivitel,
       km,
       szin,
@@ -82,7 +81,7 @@ class CarEditPage extends Component {
   handleAddCar = (event) => {
     event.preventDefault();
     const {
-      marka, modell, kep, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      marka, modell, kep, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras,
     } = this.state;
     const car = {
@@ -91,7 +90,7 @@ class CarEditPage extends Component {
       kep,
       ar,
       ev,
-      allapot,
+
       kivitel,
       km,
       szin,
@@ -118,7 +117,7 @@ class CarEditPage extends Component {
   };
 
   render() {
-    let {kep, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
+    let {kep, modell, marka, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
     return (
       <Paper>
         {(marka && modell && kep) &&
@@ -165,12 +164,6 @@ class CarEditPage extends Component {
                 name="ev"
                 label="Évjárat:"
                 value={ev}
-                onChange={this.onChange}/>
-
-              <TextField
-                name="allapot"
-                label="Állapot:"
-                value={allapot}
                 onChange={this.onChange}/>
 
               <TextField

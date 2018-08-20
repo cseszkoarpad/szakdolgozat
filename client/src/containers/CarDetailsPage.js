@@ -104,7 +104,7 @@ class CarDetailsPage extends Component {
         {commentsNum > 0 && this.props.comments.map((comment, i) => {
           return (
             <div className="flex margin-big horizontal--center" key={i}>
-              <img className="circle margin-side-medium flex-start" src={comment.profilePic}
+              <img className="circle margin-right-medium flex-start" src={comment.profilePic}
                    alt={`${comment.name} profile`}/>
               <div className="flex vertical full-width">
                 <div className="flex horizontal--space-between">
@@ -143,7 +143,7 @@ class CarDetailsPage extends Component {
 
 
     if (Object.keys(cars).length > 0) {
-      let {id, userId, feltoltve, images, modell, marka, ar, ev, allapot, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
+      let {id, userId, feltoltve, images, modell, marka, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
       const {text, isDeleteModalOpen, error} = this.state;
       return (
         <Grid container spacing={8}>
@@ -158,7 +158,7 @@ class CarDetailsPage extends Component {
                 </Grid>
                 <div className="flex horizontal--space-between full-width">
                   <h1>{marka} - {modell}</h1>
-                  {this.props.auth.userId === userId &&
+                  {auth.userId === userId &&
                   <div className="block align-center">
                     <button className="btn btn--secondary margin-side-medium"
                             onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
@@ -176,7 +176,7 @@ class CarDetailsPage extends Component {
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
                     {images && images.length > 0 && images.map((img, index) => (
                         <div key={index}>
-                          <img src={img.secure_url}/>
+                          <img src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
                         </div>
                       ),
                     )}
@@ -184,7 +184,8 @@ class CarDetailsPage extends Component {
                   <Slider className="slider-small" {...smallSliderSettings}>
                     {images && images.length > 0 && images.map((img, index) => (
                         <div key={index} className="cursor--pointer">
-                          <img onClick={() => this.slider.slickGoTo(index)} src={img.secure_url}/>
+                          <img onClick={() => this.slider.slickGoTo(index)}
+                               src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
                         </div>
                       ),
                     )}
@@ -208,10 +209,6 @@ class CarDetailsPage extends Component {
                     <li className="list__item">
                       <span>Évjárat</span>
                       <b>{ev}</b>
-                    </li>
-                    <li className="list__item">
-                      <span>Állapot</span>
-                      <b>{allapot}</b>
                     </li>
                     <li className="list__item">
                       <span>Kivitel</span>
@@ -255,7 +252,7 @@ class CarDetailsPage extends Component {
                     </li>
                   </ul>
                 </Grid>
-                <form onSubmit={this.submitComment} className="flex full-width horizontal--baseline">
+                <form onSubmit={this.submitComment} className="flex full-width vertical--baseline">
                   <TextField
                     style={{width: '100%'}}
                     label="Hozzászólás"
