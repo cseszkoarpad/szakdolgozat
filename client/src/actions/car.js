@@ -34,7 +34,10 @@ export const searchCars = (data) => async dispatch => {
   dispatch({type: SEARCH_CARS, payload: res.data});
 };
 
-export const addCar = (car) => async dispatch => {
+export const addCar = (car, image) => async dispatch => {
+  const res = await axios.post(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`, image);
+  car.preview_url = res.data.secure_url;
+
   await axios.post('/api/cars', {car});
 };
 

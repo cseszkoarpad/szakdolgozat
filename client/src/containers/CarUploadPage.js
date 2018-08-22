@@ -20,6 +20,7 @@ import {
   VALTO_TIPUSOK,
 } from '../constants';
 import {SelectWrapped, styles} from '../components/Search';
+import Loader from '../components/Loader';
 
 const steps = ['Márka', 'Modell', 'Kép',
   'Ár', 'Év', 'Kivitel',
@@ -47,6 +48,7 @@ class CarUploadPage extends Component {
     valto: '',
     leiras: '',
     selectedFiles: [],
+    loading: false,
   };
 
   handleNext = (event) => {
@@ -76,15 +78,20 @@ class CarUploadPage extends Component {
     this.setState({selectedFiles: [...this.state.selectedFiles, image]});
   };
 
-  uploadHandler = (carId) => {
-    for (const image of this.state.selectedFiles) {
-      if(image.length === 1) {
-        const formData = new FormData();
-        formData.append('upload_preset', UNSIGNED_UPLOAD_PRESET);
-        formData.append('file', image[0]);
-        this.props.uploadCarImage(formData, carId);
+  uploadHandler = (car) => {
+    const {selectedFiles} = this.state;
+    selectedFiles[selectedFiles.length - 1].forEach((image, index) => {
+      const formData = new FormData();
+      formData.append('upload_preset', UNSIGNED_UPLOAD_PRESET);
+      formData.append('file', image);
+      if (index === 0) {
+        this.props.addCar(car, formData);
       }
-    }
+      this.props.uploadCarImage(formData, car.id);
+    });
+    setTimeout(() => {
+      this.props.history.push(`/cars/${car.id}`);
+    }, 5000);
   };
 
   handleAddCar = (event) => {
@@ -115,9 +122,8 @@ class CarUploadPage extends Component {
       valto,
       leiras,
     };
-    this.props.addCar(car);
-    this.uploadHandler(id);
-    this.props.history.push(`/cars/${id}`);
+    this.setState({loading: true});
+    this.uploadHandler(car);
   };
 
   handleCancelButton = () => {
@@ -129,456 +135,467 @@ class CarUploadPage extends Component {
       activeStep, modell, marka, ar, ev,
       kivitel, km, szin, tomeg, uzemanyag,
       hengerUrtartalom, teljesitmeny, hajtas, valto, leiras,
+      loading,
     } = this.state;
 
-    return (
-      <Paper classes={{root: 'flex vertical vertical--center padding-side-big padding-big flex'}}>
-        {activeStep === 0 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            name="marka"
-            label="Márka"
-            value={marka}
-            placeholder="Márka kiválasztása"
-            onChange={this.onSelectChange('marka')}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'marka',
-                simpleValue: true,
-                options: MARKAK,
-              },
-            }}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+    if (!loading) {
+      return (
+        <Paper classes={{root: 'flex vertical vertical--center padding-side-big padding-big flex'}}>
+          {activeStep === 0 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              name="marka"
+              label="Márka"
+              value={marka}
+              placeholder="Márka kiválasztása"
+              onChange={this.onSelectChange('marka')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'marka',
+                  simpleValue: true,
+                  options: MARKAK,
+                },
+              }}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 1 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            fullWidth
-            required
-            name="modell"
-            label="Modell"
-            value={modell}
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 1 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              fullWidth
+              required
+              name="modell"
+              label="Modell"
+              value={modell}
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 2 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <ImageUploader
-            withIcon={true}
-            buttonText='Válasszon ki képeket'
-            onChange={this.fileChangedHandler}
-            imgExtension={['.jpg', '.gif', '.png', '.gif']}
-            maxFileSize={5242880}
-            buttonClassName='btn btn--primary'
-            label='Minimum 4 képet és maximum 10 képet tölthet fel'
-            labelClass='font-size-big'
-            fileSizeError='Túl nagy a kép mérete! 5MB a maximum.'
-            fileTypeError='Nem támogatott fájl formátum!'
-            withPreview
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 2 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <ImageUploader
+              withIcon={true}
+              buttonText='Válasszon ki képeket'
+              onChange={this.fileChangedHandler}
+              imgExtension={['.jpg', '.gif', '.png', '.gif']}
+              maxFileSize={5242880}
+              buttonClassName='btn btn--primary'
+              label='Minimum 4 képet és maximum 10 képet tölthet fel'
+              labelClass='font-size-big'
+              fileSizeError='Túl nagy a kép mérete! 5MB a maximum.'
+              fileTypeError='Nem támogatott fájl formátum!'
+              withPreview
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 3 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            fullWidth
-            type="number"
-            name="ar"
-            label="Ár"
-            value={ar}
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 3 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              fullWidth
+              type="number"
+              name="ar"
+              label="Ár"
+              value={ar}
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 4 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            fullWidth
-            required
-            name="ev"
-            label="Évjárat"
-            value={ev}
-            onChange={this.onSelectChange('ev')}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'ev',
-                simpleValue: true,
-                options: EVJARATOK,
-              },
-            }}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 4 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              fullWidth
+              required
+              placeholder="Kiválasztás.."
+              name="ev"
+              label="Évjárat"
+              value={ev}
+              onChange={this.onSelectChange('ev')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'ev',
+                  simpleValue: true,
+                  options: EVJARATOK,
+                },
+              }}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 5 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            name="kivitel"
-            label="Kivitel"
-            value={kivitel}
-            onChange={this.onSelectChange('kivitel')}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'kivitel',
-                simpleValue: true,
-                options: KIVITELEK,
-              },
-            }}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 5 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              placeholder="Kiválasztás.."
+              name="kivitel"
+              label="Kivitel"
+              value={kivitel}
+              onChange={this.onSelectChange('kivitel')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'kivitel',
+                  simpleValue: true,
+                  options: KIVITELEK,
+                },
+              }}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 6 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            type="number"
-            name="km"
-            label="Km óra állása"
-            value={km}
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 6 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              type="number"
+              name="km"
+              label="Km óra állása"
+              value={km}
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 7 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            name="szin"
-            label="Szín"
-            value={szin}
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 7 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              name="szin"
+              label="Szín"
+              value={szin}
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 8 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            type="number"
-            name="tomeg"
-            label="Tömeg"
-            value={tomeg}
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 8 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              type="number"
+              name="tomeg"
+              label="Tömeg"
+              value={tomeg}
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 9 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            name="uzemanyag"
-            label="Üzemanyag"
-            value={uzemanyag}
-            onChange={this.onSelectChange('uzemanyag')}
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'uzemanyag',
-                simpleValue: true,
-                options: UZEMANYAG_TIPUSOK,
-              },
-            }}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 9 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              placeholder="Kiválasztás.."
+              name="uzemanyag"
+              label="Üzemanyag"
+              value={uzemanyag}
+              onChange={this.onSelectChange('uzemanyag')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'uzemanyag',
+                  simpleValue: true,
+                  options: UZEMANYAG_TIPUSOK,
+                },
+              }}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 10 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            type="number"
-            name="hengerUrtartalom"
-            label="Hengerűrtartalom"
-            value={hengerUrtartalom}
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 10 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              type="number"
+              name="hengerUrtartalom"
+              label="Hengerűrtartalom"
+              value={hengerUrtartalom}
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 11 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            required
-            fullWidth
-            type="number"
-            name="teljesitmeny"
-            label="Teljesítmény"
-            value={teljesitmeny}
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 11 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              required
+              fullWidth
+              type="number"
+              name="teljesitmeny"
+              label="Teljesítmény"
+              value={teljesitmeny}
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 12 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            name="hajtas"
-            label="Hajtás"
-            value={hajtas}
-            onChange={this.onSelectChange('hajtas')}
-            required
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'hajtas',
-                simpleValue: true,
-                options: HAJTAS_TIPUSOK,
-              },
-            }}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 12 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              name="hajtas"
+              label="Hajtás"
+              placeholder="Kiválasztás.."
+              value={hajtas}
+              onChange={this.onSelectChange('hajtas')}
+              required
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'hajtas',
+                  simpleValue: true,
+                  options: HAJTAS_TIPUSOK,
+                },
+              }}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 13 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            name="valto"
-            label="Váltó"
-            value={valto}
-            onChange={this.onSelectChange('valto')}
-            required
-            fullWidth
-            InputLabelProps={{
-              shrink: true,
-            }}
-            InputProps={{
-              inputComponent: SelectWrapped,
-              inputProps: {
-                instanceId: 'valto',
-                simpleValue: true,
-                options: VALTO_TIPUSOK,
-              },
-            }}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 13 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              name="valto"
+              label="Váltó"
+              placeholder="Kiválasztás.."
+              value={valto}
+              onChange={this.onSelectChange('valto')}
+              required
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'valto',
+                  simpleValue: true,
+                  options: VALTO_TIPUSOK,
+                },
+              }}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === 14 &&
-        <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
-          <TextField
-            style={{width: '300px'}}
-            autoFocus
-            fullWidth
-            name="leiras"
-            label="Leírás"
-            value={leiras}
-            multiline
-            onChange={this.onChange}
-          />
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-              Vissza
-            </button>
-            <button type="submit" className="btn btn--primary margin-side-medium">
-              Következő
-            </button>
-          </div>
-        </form>
-        }
+          {activeStep === 14 &&
+          <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
+            <TextField
+              style={{width: '300px'}}
+              autoFocus
+              fullWidth
+              name="leiras"
+              label="Leírás"
+              value={leiras}
+              multiline
+              onChange={this.onChange}
+            />
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+                Vissza
+              </button>
+              <button type="submit" className="btn btn--primary margin-side-medium">
+                Következő
+              </button>
+            </div>
+          </form>
+          }
 
-        {activeStep === steps.length && (
-          <div className="margin-big flex horizontal--center">
-            <button className="btn btn--secondary margin-side-medium"
-                    onClick={this.handleCancelButton}>Mégse
-            </button>
-            <button className="btn btn--secondary margin-side-medium"
-                    onClick={this.handleAddCar}>Létrehozás
-            </button>
-          </div>
-        )}
+          {activeStep === steps.length && (
+            <div className="margin-big flex horizontal--center">
+              <button className="btn btn--secondary margin-side-medium"
+                      onClick={this.handleCancelButton}>Mégse
+              </button>
+              <button className="btn btn--secondary margin-side-medium"
+                      onClick={this.handleAddCar}>Létrehozás
+              </button>
+            </div>
+          )}
 
-        <MediaQuery minWidth={1000}>
-          {activeStep !== steps.length &&
-          <Stepper classes={{root: 'full-width margin-big'}} activeStep={activeStep} alternativeLabel>
-            {steps.map(label => {
-              return (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>}
-        </MediaQuery>
-        <MediaQuery maxWidth={1000}>
-          <div>
-            {activeStep + 1} / {steps.length}
-          </div>
-        </MediaQuery>
-      </Paper>
-    );
+          <MediaQuery minWidth={1000}>
+            {activeStep !== steps.length &&
+            <Stepper classes={{root: 'full-width margin-big'}} activeStep={activeStep} alternativeLabel>
+              {steps.map(label => {
+                return (
+                  <Step key={label}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>}
+          </MediaQuery>
+          <MediaQuery maxWidth={1000}>
+            <div>
+              {activeStep + 1} / {steps.length}
+            </div>
+          </MediaQuery>
+        </Paper>
+      );
+    }
+    else {
+      return <Loader/>;
+    }
   }
 }
 

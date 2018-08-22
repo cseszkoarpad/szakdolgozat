@@ -130,8 +130,8 @@ module.exports = app => {
 
   app.post('/api/cars', requireLogin, (req, res) => {
     const {
-      id, marka,
-      modell,
+      id, preview_url,
+      marka, modell,
       ar, ev,
       kivitel, km, szin,
       tomeg, uzemanyag,
@@ -140,9 +140,9 @@ module.exports = app => {
       valto, leiras,
     } = req.body.car;
 
-    connection.query(`INSERT INTO cars (id, marka, modell, ar, ev, kivitel, km, szin, tomeg,
-     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [id, marka, modell, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
+    connection.query(`INSERT INTO cars (id, preview_url, marka, modell, ar, ev, kivitel, km, szin, tomeg,
+     uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [id, preview_url, marka, modell, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny,
         hajtas, valto, leiras, req.user.userId], (err, result) => {
         if (err) {
           console.log(err);

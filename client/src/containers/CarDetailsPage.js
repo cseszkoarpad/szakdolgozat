@@ -141,7 +141,6 @@ class CarDetailsPage extends Component {
   render() {
     const {cars, auth} = this.props;
 
-
     if (Object.keys(cars).length > 0) {
       let {id, userId, feltoltve, images, modell, marka, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
       const {text, isDeleteModalOpen, error} = this.state;
