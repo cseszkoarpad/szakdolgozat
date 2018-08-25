@@ -5,7 +5,7 @@ import {
   FETCH_CARS,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
-  SEARCH_CARS,
+  SEARCH,
   UPDATE_CAR,
 } from '../constants';
 import axios from 'axios';
@@ -28,10 +28,8 @@ export const fetchCarImagesById = (carId) => async dispatch => {
   dispatch({type: FETCH_CAR_IMAGES_BY_ID, payload: res.data});
 };
 
-export const searchCars = (data) => async dispatch => {
-  const res = await axios.post('/api/cars/search', {data});
-
-  dispatch({type: SEARCH_CARS, payload: res.data});
+export const search = (data) => async dispatch => {
+  dispatch({type: SEARCH, payload: data});
 };
 
 export const addCar = (car, image) => async dispatch => {

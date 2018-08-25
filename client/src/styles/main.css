@@ -61,6 +61,10 @@ html, body {
     width: 100%;
 }
 
+.text-decoration--none {
+    text-decoration: none;
+}
+
 .list {
     list-style: none;
     margin: 0;
@@ -310,9 +314,17 @@ h1 {
     margin-bottom: 5px;
 }
 
-.slick-slider .slick-arrow {
+.slick-arrow {
     z-index: 10;
     margin: 0 40px;
+    width: 30px;
+    height: 26px;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+}
+
+.slick-slider:hover .slick-arrow {
+    opacity: 1;
 }
 
 

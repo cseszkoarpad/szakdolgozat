@@ -17,8 +17,6 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const bigSliderSettings = {
-  dots: true,
-  fade: true,
   lazyLoad: true,
 };
 
@@ -29,6 +27,7 @@ const smallSliderSettings = {
   swipeToSlide: true,
   autoplay: true,
   focusOnSelect: true,
+  lazyLoad: true,
 };
 
 
@@ -174,18 +173,15 @@ class CarDetailsPage extends Component {
                 <Grid item xs={6}>
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
                     {images && images.length > 0 && images.map((img, index) => (
-                        <div key={index}>
-                          <img src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
-                        </div>
+                          <img key={`big-${index}`} src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
                       ),
                     )}
                   </Slider>
                   <Slider className="slider-small" {...smallSliderSettings}>
                     {images && images.length > 0 && images.map((img, index) => (
-                        <div key={index} className="cursor--pointer">
-                          <img onClick={() => this.slider.slickGoTo(index)}
+                          <img key={index} className="cursor--pointer"
+                               onClick={() => this.slider.slickGoTo(index)}
                                src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
-                        </div>
                       ),
                     )}
                   </Slider>
@@ -257,6 +253,7 @@ class CarDetailsPage extends Component {
                     label="Hozzászólás"
                     value={text}
                     multiline
+                    helperText={!auth && "A hozzászóláshoz bejelentkezés szükséges"}
                     onChange={this.handleChange('text')}
                     margin="normal"
                   />

@@ -26,7 +26,6 @@ const styles = {
   },
   profile: {
     display: 'flex',
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -104,11 +103,12 @@ class Header extends Component {
     return (
       <AppBar className={classes.header} position="static" color="default">
         <Toolbar>
-          <Link to={'/'}>
+          <Link className="flex vertical--center text-decoration--none" to={'/'}>
             <img
               className={classes.icon}
               src="http://www.pngpix.com/wp-content/uploads/2016/06/PNGPIX-COM-Yellow-Ferrari-F12tdf-Car-Front-PNG-Image.png"
-              alt="auto-portal-icon"/>
+              alt="auto-portal-logo"/>
+            <h1 className="font-size-extra">Luxus Autó Portál</h1>
           </Link>
           <Typography className={classes.spaceFiller}/>
           {this.renderMenu(classes)}

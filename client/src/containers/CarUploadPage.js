@@ -96,7 +96,7 @@ class CarUploadPage extends Component {
 
   handleAddCar = (event) => {
     event.preventDefault();
-    if (this.state.selectedFiles.length < 1) {
+    if (this.state.selectedFiles.length < 4 || this.state.selectedFiles.length > 10) {
       return this.setState({activeStep: 2});
     }
     const {

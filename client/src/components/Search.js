@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Select from 'react-select';
 import {connect} from 'react-redux';
-import {searchCars} from '../actions/car';
+import {search} from '../actions/car';
 import {KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK} from '../constants';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -209,7 +209,7 @@ class Search extends Component {
     if (Object.keys(data).length === 0 && data.constructor === Object) {
       return this.setState({error: 'Nincs kitöltve!'});
     }
-    this.props.searchCars(data);
+    this.props.search(data);
   };
 
   render() {
@@ -223,7 +223,7 @@ class Search extends Component {
             fullWidth
             value={marka}
             onChange={this.onChange('marka')}
-            placeholder="Válasszon márkát."
+            placeholder="Válasszon márkát"
             name="marka"
             label="Márka"
             InputLabelProps={{
@@ -244,7 +244,7 @@ class Search extends Component {
             fullWidth
             value={kivitel}
             onChange={this.onChange('kivitel')}
-            placeholder="Válasszon kivitelt."
+            placeholder="Válasszon kivitelt"
             name="kivitel"
             label="Kivitel"
             InputLabelProps={{
@@ -298,4 +298,4 @@ function mapStateToProps({cars}) {
   };
 }
 
-export default connect(mapStateToProps, {searchCars})(withStyles(styles)(Search));
+export default connect(mapStateToProps, {search})(withStyles(styles)(Search));

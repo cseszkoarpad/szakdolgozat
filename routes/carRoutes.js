@@ -54,37 +54,6 @@ module.exports = app => {
     });
   });
 
-  app.post('/api/cars/search', (req, res) => {
-    let queryString = `SELECT * FROM cars WHERE`;
-    let parameters = [];
-    if (req.body.data.marka) {
-      queryString += ` marka LIKE ?`;
-      parameters.push(req.body.data.marka);
-    }
-
-    if (req.body.data.kivitel && !req.body.data.marka) {
-      queryString += ` kivitel = ?`;
-      parameters.push(req.body.data.kivitel);
-    } else if (req.body.data.kivitel) {
-      queryString += ` AND kivitel = ?`;
-      parameters.push(req.body.data.kivitel);
-    }
-
-    if (req.body.data.uzemanyag && !req.body.data.marka && !req.body.data.kivitel) {
-      queryString += ` uzemanyag = ?`;
-      parameters.push(req.body.data.uzemanyag);
-    } else if (req.body.data.uzemanyag) {
-      queryString += ` AND uzemanyag = ?`;
-      parameters.push(req.body.data.uzemanyag);
-    }
-
-    connection.query(queryString, [...parameters], (err, cars) => {
-      if (cars && cars.length > 0) {
-        res.send(cars);
-      }
-    });
-  });
-
   app.get('/api/comments/:carId', (req, res) => {
     connection.query(`SELECT name, profilePic, text, feltoltve FROM users, comments WHERE carId = ? AND users.userId = comments.userId
      ORDER BY feltoltve DESC`, [req.params.carId], (err, comments) => {

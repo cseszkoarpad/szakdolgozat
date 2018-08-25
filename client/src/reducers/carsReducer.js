@@ -4,7 +4,7 @@ import {
   FETCH_CARS,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
-  SEARCH_CARS,
+  SEARCH,
   UPDATE_CAR,
 } from '../constants';
 
@@ -21,8 +21,14 @@ export default function (state = [], action) {
           ...action.payload,
         ],
       };
-    case SEARCH_CARS:
-      return action.payload;
+    case SEARCH:
+      const {marka, kivitel, uzemanyag} = action.payload;
+      return state.filter(car => {
+        if (((marka && car.marka === marka) || !marka) && ((kivitel && car.kivitel === kivitel) || !kivitel)
+          && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag)) {
+          return car;
+        }
+      });
     case ADD_CAR:
       return [
         ...state,

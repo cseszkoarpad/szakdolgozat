@@ -7,7 +7,6 @@ import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import InfoIcon from '@material-ui/icons/Info';
 import {fetchCars} from '../actions/car';
 
 class Main extends Component {
@@ -17,16 +16,12 @@ class Main extends Component {
   }
 
   renderCars = () => this.props.cars.map(car => (
-      <GridListTile key={car.id}>
-        <img onClick={() => this.props.history.push(`/cars/${car.id}`)} className="cursor--pointer"
-             src={car.preview_url}
+      <GridListTile onClick={() => this.props.history.push(`/cars/${car.id}`)} className="cursor--pointer" key={car.id}>
+        <img src={car.preview_url}
              alt={`${car.marka}-${car.modell}`}/>
         <GridListTileBar
           title={car.marka}
           subtitle={<span>{car.modell} ({car.ev})</span>}
-          actionIcon={
-            <InfoIcon/>
-          }
         />
       </GridListTile>
     ),
@@ -40,7 +35,7 @@ class Main extends Component {
             <Search/>
           </Grid>
           <Grid item xs={12} sm={8} md={9} lg={10}>
-            <Paper>
+            <Paper className="padding-medium padding-side-medium">
               <GridList spacing={10} cols={3}>
                 {this.renderCars()}
               </GridList>
