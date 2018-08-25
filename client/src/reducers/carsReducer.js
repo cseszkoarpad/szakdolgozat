@@ -8,49 +8,86 @@ import {
   UPDATE_CAR,
 } from '../constants';
 
-export default function (state = [], action) {
+const INITIAL_STATE = {
+  data: null,
+  search: {},
+  allCar: [],
+};
+
+export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_CARS:
-      return action.payload;
-    case FETCH_CAR_BY_ID:
-      return action.payload;
-    case FETCH_CAR_IMAGES_BY_ID:
       return {
         ...state,
-        images: [
+        allCar: [
           ...action.payload,
         ],
       };
+    case FETCH_CAR_BY_ID:
+      return {
+        ...state,
+        data: {
+          ...action.payload,
+        },
+      };
+    case FETCH_CAR_IMAGES_BY_ID:
+      return {
+        ...state,
+        data: {
+          ...state.data,
+          images: [
+            ...action.payload,
+          ],
+        },
+      };
     case SEARCH:
       const {marka, kivitel, uzemanyag} = action.payload;
-      return state.filter(car => {
-        if (((marka && car.marka === marka) || !marka) && ((kivitel && car.kivitel === kivitel) || !kivitel)
-          && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag)) {
-          return car;
-        }
-      });
-    case ADD_CAR:
-      return [
+      return {
         ...state,
-        action.payload,
-      ];
+        search: {
+          ...action.payload
+        },
+        data: state.allCar.length > 0 && state.allCar.filter(car => {
+          if (((marka && car.marka === marka) || !marka) && ((kivitel && car.kivitel === kivitel) || !kivitel)
+            && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag)) {
+            return car;
+          }
+        }),
+      };
+    case ADD_CAR:
+      return {
+        ...state,
+        allCar: [
+          ...state.allCar,
+          action.payload,
+        ],
+      };
     case UPDATE_CAR:
-      const updatedCarIndex = state.findIndex(car => car.id === action.payload.id);
-      return [
-        ...state.slice(0, updatedCarIndex),
-        action.payload,
-        ...state.slice(updatedCarIndex + 1),
-      ];
+      const updatedCarIndex = state.allCar.findIndex(car => car.id === action.payload.id);
+      return {
+        ...state,
+        allCar: [
+          ...state.allCar.slice(0, updatedCarIndex),
+          action.payload,
+          ...state.allCar.slice(updatedCarIndex + 1),
+        ],
+      };
     case INCREMENT_LIKES:
       if (action.payload.error) return {...state};
       return {
         ...state,
-        likes: state.likes + 1,
+        data: {
+          ...state.data,
+          likes: state.data.likes + 1,
+        },
       };
     case GET_LIKES_COUNT:
       return {
         ...state,
-        likes: action.payload,
+        data: {
+          ...state.data,
+          likes: action.payload,
+        }
       };
     default:
       return state;

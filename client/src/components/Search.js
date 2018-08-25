@@ -201,6 +201,7 @@ class Search extends Component {
   handleSearch = (event) => {
     event.preventDefault();
     const {marka, kivitel, uzemanyag} = this.state;
+    const {history, search} = this.props;
     const data = Object.assign({},
       marka && {marka},
       kivitel && {kivitel},
@@ -209,7 +210,8 @@ class Search extends Component {
     if (Object.keys(data).length === 0 && data.constructor === Object) {
       return this.setState({error: 'Nincs kitöltve!'});
     }
-    this.props.search(data);
+    search(data);
+    history.push('/');
   };
 
   render() {
