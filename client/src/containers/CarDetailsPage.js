@@ -66,7 +66,7 @@ class CarDetailsPage extends Component {
 
   handleDeleteCar = (carId) => {
     this.setState({isDeleteModalOpen: false});
-    this.props.deleteCar(carId, this.props.auth.id);
+    this.props.deleteCar(carId);
     this.props.history.push('/');
   };
 
@@ -140,7 +140,7 @@ class CarDetailsPage extends Component {
   render() {
     const {cars, auth} = this.props;
 
-    if (cars && Object.keys(cars).length > 0) {
+    if (cars && Object.keys(cars).length) {
       let {id, userId, feltoltve, images, modell, marka, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
       const {text, isDeleteModalOpen, error} = this.state;
       return (
@@ -156,7 +156,7 @@ class CarDetailsPage extends Component {
                 </Grid>
                 <div className="flex horizontal--space-between full-width">
                   <h1>{marka} - {modell}</h1>
-                  {auth.userId === userId &&
+                  {//auth.userId === userId &&
                   <div className="block align-center">
                     <button className="btn btn--secondary margin-side-medium"
                             onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
@@ -172,13 +172,13 @@ class CarDetailsPage extends Component {
                 </div>
                 <Grid item xs={6}>
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
-                    {images && images.length > 0 && images.map((img, index) => (
+                    {images && images.length && images.map((img, index) => (
                           <img key={`big-${index}`} src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
                       ),
                     )}
                   </Slider>
                   <Slider className="slider-small" {...smallSliderSettings}>
-                    {images && images.length > 0 && images.map((img, index) => (
+                    {images && images.length && images.map((img, index) => (
                           <img key={index} className="cursor--pointer"
                                onClick={() => this.slider.slickGoTo(index)}
                                src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>

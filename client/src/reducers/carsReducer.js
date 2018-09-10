@@ -47,7 +47,7 @@ export default function (state = INITIAL_STATE, action) {
         search: {
           ...action.payload
         },
-        data: state.allCar.length > 0 && state.allCar.filter(car => {
+        data: state.allCar.length && state.allCar.filter(car => {
           if (((marka && car.marka === marka) || !marka) && ((kivitel && car.kivitel === kivitel) || !kivitel)
             && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag)) {
             return car;

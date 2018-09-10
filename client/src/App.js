@@ -22,6 +22,7 @@ class App extends Component {
   renderPublicRoutes() {
     return (
       <Switch>
+        <Route exact path="/cars/:id/edit" component={CarEditPage}/>
         <Route exact path="/" component={Main}/>
         <Route exact path="/cars/:id" component={CarDetailsPage}/>
         <Redirect to="/"/>

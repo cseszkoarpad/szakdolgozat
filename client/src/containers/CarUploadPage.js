@@ -252,7 +252,7 @@ class CarUploadPage extends Component {
               autoFocus
               fullWidth
               required
-              placeholder="Kiválasztás.."
+              placeholder="Kiválasztás..."
               name="ev"
               label="Évjárat"
               value={ev}
@@ -287,7 +287,7 @@ class CarUploadPage extends Component {
               autoFocus
               required
               fullWidth
-              placeholder="Kiválasztás.."
+              placeholder="Kiválasztás..."
               name="kivitel"
               label="Kivitel"
               value={kivitel}
@@ -393,7 +393,7 @@ class CarUploadPage extends Component {
               autoFocus
               required
               fullWidth
-              placeholder="Kiválasztás.."
+              placeholder="Kiválasztás..."
               name="uzemanyag"
               label="Üzemanyag"
               value={uzemanyag}
@@ -476,7 +476,7 @@ class CarUploadPage extends Component {
               autoFocus
               name="hajtas"
               label="Hajtás"
-              placeholder="Kiválasztás.."
+              placeholder="Kiválasztás..."
               value={hajtas}
               onChange={this.onSelectChange('hajtas')}
               required
@@ -511,7 +511,7 @@ class CarUploadPage extends Component {
               autoFocus
               name="valto"
               label="Váltó"
-              placeholder="Kiválasztás.."
+              placeholder="Kiválasztás..."
               value={valto}
               onChange={this.onSelectChange('valto')}
               required

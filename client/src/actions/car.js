@@ -39,8 +39,8 @@ export const addCar = (car, image) => async dispatch => {
   await axios.post('/api/cars', {car});
 };
 
-export const updateCar = (car) => async dispatch => {
-  const res = await axios.put('/api/cars/edit', {car});
+export const updateCar = (id, car) => async dispatch => {
+  const res = await axios.put(`/api/cars/${id}/edit`, {car});
 
   dispatch({type: UPDATE_CAR, payload: res.data});
 };

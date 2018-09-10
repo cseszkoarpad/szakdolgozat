@@ -57,7 +57,7 @@ module.exports = app => {
   app.get('/api/comments/:carId', (req, res) => {
     connection.query(`SELECT name, profilePic, text, feltoltve FROM users, comments WHERE carId = ? AND users.userId = comments.userId
      ORDER BY feltoltve DESC`, [req.params.carId], (err, comments) => {
-      if (comments && comments.length > 0) {
+      if (comments && comments.length) {
         res.send(comments);
       } else {
         res.send([]);
@@ -122,39 +122,26 @@ module.exports = app => {
       });
   });
 
-  app.put('/api/cars/edit', requireLogin, (req, res) => {
+  app.put('/api/cars/:carId/edit', (req, res) => {
     const {
-      marka,
-      modell,
-      kep,
-      ar, ev,
-      kivitel, km, szin,
-      tomeg, uzemanyag,
-      hengerUrtartalom,
-      teljesitmeny, hajtas,
+      preview_url, marka, modell, ar, ev,
+      kivitel, km, szin, tomeg, uzemanyag,
+      hengerUrtartalom, teljesitmeny, hajtas,
       valto, leiras,
     } = req.body.car;
 
-    car.marka = marka;
-    car.modell = modell;
-    car.kep = kep;
-    car.ar = ar;
-    car.ev = ev;
-    car.kivitel = kivitel;
-    car.km = km;
-    car.szin = szin;
-    car.tomeg = tomeg;
-    car.uzemanyag = uzemanyag;
-    car.hengerUrtartalom = hengerUrtartalom;
-    car.teljesitmeny = teljesitmeny;
-    car.hajtas = hajtas;
-    car.valto = valto;
-    car.leiras = leiras;
-
+    connection.query(`UPDATE cars SET preview_url = ?, marka = ?, modell = ?, ar = ?, ev = ?, kivitel = ?, km = ?, szin = ?, tomeg = ?, uzemanyag = ?, hengerUrtartalom = ?, teljesitmeny = ?, hajtas = ?, valto = ?, leiras = ? WHERE id = ? LIMIT 1`,
+      [preview_url, marka, modell, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, req.params.carId], (err, result) => {
+      if (err) {
+        console.warn(err);
+      } else {
+        res.send({success: true});
+      }
+    });
   });
 
-  app.delete('/api/cars/delete/:carId/:userId', requireLogin, (req, res) => {
-    connection.query(`DELETE FROM cars WHERE id = ? AND cars.userId = ?`, [req.params.carId, req.params.userId], (err, result) => {
+  app.delete('/api/cars/delete/:carId', requireLogin, (req, res) => {
+    connection.query(`DELETE FROM cars WHERE id = ?`, [req.params.carId], (err, result) => {
       if (err) {
         res.send(err);
       } else {

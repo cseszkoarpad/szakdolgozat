@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addCar, deleteCar, updateCar} from '../actions/car';
+import {deleteCar, updateCar} from '../actions/car';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
+import ImageUploader from 'react-images-upload';
+import {EVJARATOK, HAJTAS_TIPUSOK, KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK, VALTO_TIPUSOK} from '../constants';
+import {SelectWrapped} from '../components/Search';
 
 class CarEditPage extends Component {
   state = {
-    id: '',
     marka: '',
     modell: '',
-    kep: '',
+    preview_url: '',
     ar: 0,
     ev: 0,
     kivitel: '',
@@ -23,87 +25,35 @@ class CarEditPage extends Component {
     hajtas: '',
     valto: '',
     leiras: '',
-    likes: 0,
-    feltoltve: '',
-    isEditing: false,
-    originalCar: {},
   };
 
   componentWillMount() {
-    if (!this.props.auth) {
-      this.props.history.push('/');
-    }
-    const originalCar = Object.assign({}, this.props.cars);
-    this.setState({...originalCar, originalCar});
+    this.setState({...this.props.cars.data});
   }
 
   onChange = (event) => {
     this.setState({[event.target.name]: event.target.value});
   };
 
-  handleUpdateCar = (event) => {
-
-    /*
-    //így kéne
-    const updateOps = {};
-    for (const ops of req.body) {
-      updateOps[ops.propName] = ops.value;
-    }*/
-
-    event.preventDefault();
-    const {
-      id, marka, modell, kep, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
-      teljesitmeny, hajtas, valto, leiras,
-    } = this.state;
-    const car = {
-      id,
-      marka,
-      modell,
-      kep,
-      ar,
-      ev,
-
-      kivitel,
-      km,
-      szin,
-      tomeg,
-      uzemanyag,
-      hengerUrtartalom,
-      teljesitmeny,
-      hajtas,
-      valto,
-      leiras,
-    };
-    this.props.updateCar(car);
-    this.props.history.push(`/cars/${id}`);
+  onSelectChange = (name) => (value) => {
+    this.setState({[name]: value});
   };
 
-  handleAddCar = (event) => {
+  handleUpdateCar = (event) => {
     event.preventDefault();
+    const id = this.props.match.params.id;
     const {
-      marka, modell, kep, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      marka, modell, preview_url, ar, ev, kivitel,
+      km, szin, tomeg, uzemanyag, hengerUrtartalom,
       teljesitmeny, hajtas, valto, leiras,
     } = this.state;
     const car = {
-      marka,
-      modell,
-      kep,
-      ar,
-      ev,
-
-      kivitel,
-      km,
-      szin,
-      tomeg,
-      uzemanyag,
-      hengerUrtartalom,
-      teljesitmeny,
-      hajtas,
-      valto,
-      leiras,
+      marka, modell, preview_url, ar, ev, kivitel,
+      km, szin, tomeg, uzemanyag, hengerUrtartalom,
+      teljesitmeny, hajtas, valto, leiras,
     };
-    this.props.addCar(car);
-    this.props.history.push(`/`);
+    this.props.updateCar(id, car);
+    this.props.history.push(`/cars/${id}`);
   };
 
   handleCancelButton = () => {
@@ -111,128 +61,263 @@ class CarEditPage extends Component {
   };
 
   handleDeleteCar = () => {
-    const carId = this.state.id;
-    const userId = this.props.auth.id;
-    this.props.deleteCar(carId, userId);
+    const carId = this.props.match.params.id;
+    this.props.deleteCar(carId);
   };
 
   render() {
-    let {kep, modell, marka, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, feltoltve, likes, isEditing} = this.state;
+    let {preview_url, modell, marka, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras} = this.state;
     return (
       <Paper>
-        {(marka && modell && kep) &&
-        <div>
-          <h6 className="title">{marka} - {modell}</h6>
-          <div className="col s7">
-            <img className="img"
-                 src={kep ? kep : 'http://maestroselectronics.com/wp-content/uploads/2017/12/No_Image_Available.jpg'}
-                 alt={`${marka}-${modell}`}/>
-            {isEditing && <ul className="points">
-              <li className="uploaded"><span>Feltöltve:</span>{feltoltve}</li>
-              <li className="text"><span>Kedvelések:</span>{likes}</li>
-            </ul>}
-          </div>
-        </div>}
-        <form onSubmit={isEditing ? (e) => this.handleUpdateCar(e) : (e) => this.handleAddCar(e)}>
-          <div className="col s5">
-            <ul className="points">
-              <TextField
-                name="marka"
-                label="Márka:"
-                value={marka}
-                onChange={this.onChange}/>
+        <form onSubmit={(e) => this.handleUpdateCar(e)}>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            name="marka"
+            label="Márka"
+            value={marka}
+            placeholder="Márka kiválasztása"
+            onChange={this.onSelectChange('marka')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'marka',
+                simpleValue: true,
+                options: MARKAK,
+              },
+            }}
+          />
 
-              <TextField
-                name="modell"
-                label="Modell:"
-                value={modell}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            required
+            name="modell"
+            label="Modell"
+            value={modell}
+            onChange={this.onChange}
+          />
 
-              <TextField
-                name="kep"
-                label="Kép url:"
-                value={kep}
-                onChange={this.onChange}/>
+          {/*<ImageUploader
+            withIcon={true}
+            buttonText='Válasszon ki képeket'
+            onChange={this.fileChangedHandler}
+            imgExtension={['.jpg', '.gif', '.png', '.gif']}
+            maxFileSize={5242880}
+            buttonClassName='btn btn--primary'
+            label='Minimum 4 képet és maximum 10 képet tölthet fel'
+            labelClass='font-size-big'
+            fileSizeError='Túl nagy a kép mérete! 5MB a maximum.'
+            fileTypeError='Nem támogatott fájl formátum!'
+            withPreview
+          />*/}
 
-              <TextField
-                name="ar"
-                label="Ár:"
-                value={ar}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            type="number"
+            name="ar"
+            label="Ár"
+            value={ar}
+            onChange={this.onChange}
+          />
 
-              <TextField
-                name="ev"
-                label="Évjárat:"
-                value={ev}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            required
+            placeholder="Kiválasztás..."
+            name="ev"
+            label="Évjárat"
+            value={ev}
+            onChange={this.onSelectChange('ev')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'ev',
+                simpleValue: true,
+                options: EVJARATOK,
+              },
+            }}
+          />
 
-              <TextField
-                name="kivitel"
-                label="Kivitel:"
-                value={kivitel}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            placeholder="Kiválasztás..."
+            name="kivitel"
+            label="Kivitel"
+            value={kivitel}
+            onChange={this.onSelectChange('kivitel')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'kivitel',
+                simpleValue: true,
+                options: KIVITELEK,
+              },
+            }}
+          />
 
-              <TextField
-                name="km"
-                label="Km óra állása:"
-                value={km}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="km"
+            label="Km óra állása"
+            value={km}
+            onChange={this.onChange}
+          />
 
-              <TextField
-                name="szin"
-                label="Szín:"
-                value={szin}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            name="szin"
+            label="Szín"
+            value={szin}
+            onChange={this.onChange}
+          />
 
-              <TextField
-                name="tomeg"
-                label="Tömeg:"
-                value={tomeg}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="tomeg"
+            label="Tömeg"
+            value={tomeg}
+            onChange={this.onChange}
+          />
 
-              <TextField
-                name="uzemanyag"
-                label="Üzemanyag:"
-                value={uzemanyag}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            placeholder="Kiválasztás..."
+            name="uzemanyag"
+            label="Üzemanyag"
+            value={uzemanyag}
+            onChange={this.onSelectChange('uzemanyag')}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'uzemanyag',
+                simpleValue: true,
+                options: UZEMANYAG_TIPUSOK,
+              },
+            }}
+          />
 
-              <TextField
-                name="hengerUrtartalom"
-                label="Hengerűrtartalom:"
-                value={hengerUrtartalom}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="hengerUrtartalom"
+            label="Hengerűrtartalom"
+            value={hengerUrtartalom}
+            onChange={this.onChange}
+          />
 
-              <TextField
-                name="teljesitmeny"
-                label="Teljesítmény:"
-                value={teljesitmeny}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            required
+            fullWidth
+            type="number"
+            name="teljesitmeny"
+            label="Teljesítmény"
+            value={teljesitmeny}
+            onChange={this.onChange}
+          />
 
-              <TextField
-                name="hajtas"
-                label="Hajtás:"
-                value={hajtas}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            name="hajtas"
+            label="Hajtás"
+            placeholder="Kiválasztás..."
+            value={hajtas}
+            onChange={this.onSelectChange('hajtas')}
+            required
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'hajtas',
+                simpleValue: true,
+                options: HAJTAS_TIPUSOK,
+              },
+            }}
+          />
 
-              <TextField
-                name="valto"
-                label="Váltó:"
-                value={valto}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            name="valto"
+            label="Váltó"
+            placeholder="Kiválasztás..."
+            value={valto}
+            onChange={this.onSelectChange('valto')}
+            required
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            InputProps={{
+              inputComponent: SelectWrapped,
+              inputProps: {
+                instanceId: 'valto',
+                simpleValue: true,
+                options: VALTO_TIPUSOK,
+              },
+            }}
+          />
 
-              <TextField
-                name="leiras"
-                label="Leírás:"
-                value={leiras}
-                multiline={true}
-                onChange={this.onChange}/>
+          <TextField
+            style={{width: '300px'}}
+            autoFocus
+            fullWidth
+            name="leiras"
+            label="Leírás"
+            value={leiras}
+            multiline
+            onChange={this.onChange}
+          />
 
-              <div>
-                <Button type="submit">Mentés</Button>
-                <Button onClick={this.handleCancelButton}>Mégse</Button>
-                <Button onClick={this.handleDeleteCar}>Törlés</Button>
-              </div>
-            </ul>
+          <div>
+            <Button type="submit">Mentés</Button>
+            <Button onClick={this.handleCancelButton}>Mégse</Button>
+            <Button onClick={this.handleDeleteCar}>Törlés</Button>
           </div>
         </form>
       </Paper>
@@ -240,11 +325,10 @@ class CarEditPage extends Component {
   }
 }
 
-const mapStateToProps = ({auth, cars}) => {
+const mapStateToProps = ({cars}) => {
   return {
-    auth,
     cars,
   };
 };
 
-export default connect(mapStateToProps, {updateCar, deleteCar, addCar})(CarEditPage);
+export default connect(mapStateToProps, {updateCar, deleteCar})(CarEditPage);

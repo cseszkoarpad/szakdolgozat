@@ -16,38 +16,23 @@ class Main extends Component {
   }
 
   renderCars = () => {
+    let carList;
     const {allCar, search, data} = this.props.cars;
-    if (Object.keys(search).length === 0 && search.constructor === Object) {
-      return allCar.map(car => (
-          <GridListTile onClick={() => this.props.history.push(`/cars/${car.id}`)} className="cursor--pointer"
-                        key={car.id}>
-            <img src={car.preview_url}
-                 alt={`${car.marka}-${car.modell}`}/>
-            <GridListTileBar
-              title={car.marka}
-              subtitle={<span>{car.modell} ({car.ev})</span>}
-            />
-          </GridListTile>
-        ),
-      );
-    } else {
-      return data.map(car => (
-          <GridListTile onClick={() => this.props.history.push(`/cars/${car.id}`)} className="cursor--pointer"
-                        key={car.id}>
-            <img src={car.preview_url}
-                 alt={`${car.marka}-${car.modell}`}/>
-            <GridListTileBar
-              title={car.marka}
-              subtitle={<span>{car.modell} ({car.ev})</span>}
-            />
-          </GridListTile>
-        ),
-      );
-    }
+    carList = (Object.keys(search).length === 0 && search.constructor === Object) ? allCar : data;
+    return carList.map(car => (
+        <GridListTile onClick={() => this.props.history.push(`/cars/${car.id}`)} key={car.id}
+                      className="cursor--pointer" classes={{root: 'cursor--pointer', tile: 'car-list-item'}}>
+          <img src={car.preview_url} alt={`${car.marka}-${car.modell}`}/>
+          <GridListTileBar
+            title={car.marka} subtitle={<span>{car.modell} ({car.ev})</span>}
+          />
+        </GridListTile>
+      ),
+    );
   };
 
   render() {
-    if (this.props.cars.allCar.length > 0) {
+    if (this.props.cars.allCar.length) {
       return (
         <Grid container spacing={8}>
           <Grid item xs={12} sm={4} md={3} lg={2}>
