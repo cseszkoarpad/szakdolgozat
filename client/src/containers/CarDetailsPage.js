@@ -72,9 +72,12 @@ class CarDetailsPage extends Component {
 
   convertPrice = (ar) => {
     if (ar) {
-      return ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.');
+      return [
+        <span className="font-weight-bold">{ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}</span>,
+        <span className="font-weight-high text--italic"> Ft</span>,
+      ];
     }
-    return 'Nincs megadva';
+    return <span className="font-weight-high">Nincs megadva</span>;
   };
 
   convertUploadTime = (date) => {
@@ -156,16 +159,16 @@ class CarDetailsPage extends Component {
                 </Grid>
                 <div className="flex horizontal--space-between full-width">
                   <h1>{marka} - {modell}</h1>
-                  {//auth.userId === userId &&
+                  {auth.userId === userId &&
                   <div className="block align-center">
                     <button className="btn btn--secondary margin-side-medium"
                             onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
                       <span className="margin-side-medium">Szerkesztés</span>
-                      <EditIcon/>
+                      <EditIcon style={{fontSize: 18}}/>
                     </button>
                     <button className="btn btn--danger margin-side-medium" onClick={this.openDeleteModal}>
                       <span className="margin-side-medium">Törlés</span>
-                      <DeleteIcon/>
+                      <DeleteIcon style={{fontSize: 18}}/>
                     </button>
                   </div>
                   }
@@ -173,76 +176,77 @@ class CarDetailsPage extends Component {
                 <Grid item xs={6}>
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
                     {images && images.length && images.map((img, index) => (
-                          <img key={`big-${index}`} src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
+                        <img key={`big-${index}`} src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
                       ),
                     )}
                   </Slider>
                   <Slider className="slider-small" {...smallSliderSettings}>
                     {images && images.length && images.map((img, index) => (
-                          <img key={index} className="cursor--pointer"
-                               onClick={() => this.slider.slickGoTo(index)}
-                               src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
+                        <img key={index} className="cursor--pointer"
+                             onClick={() => this.slider.slickGoTo(index)}
+                             src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
                       ),
                     )}
                   </Slider>
                   <div className="flex horizontal--space-between">
                     <div className="font-size-small">
-                      <span className="block">Feltöltve</span>
+                      <label className="car-detail-upload-date block font-weight-high">Feltöltve</label>
                       {feltoltve && this.convertUploadTime(feltoltve)}
                     </div>
                     <button className="btn btn--primary" onClick={this.incrementLikes}>
-                      <span className="margin-side-small">{likes}</span><LikeIcon/>
+                      <span className="margin-side-small">{likes}</span>
+                      <LikeIcon style={{fontSize: 18}}/>
                     </button>
                   </div>
                 </Grid>
                 <Grid item xs={6}>
                   <ul className="list">
                     <li className="list__item">
-                      <span>Ár </span>
-                      <div><b>{ar && this.convertPrice(ar)}</b><span className="text--italic"> Ft</span></div>
+                      <label>Ár </label>
+                      <div>{this.convertPrice(ar)}</div>
                     </li>
                     <li className="list__item">
-                      <span>Évjárat</span>
+                      <label>Évjárat</label>
                       <b>{ev}</b>
                     </li>
                     <li className="list__item">
-                      <span>Kivitel</span>
+                      <label>Kivitel</label>
                       <b>{kivitel}</b>
                     </li>
                     <li className="list__item">
-                      <span>Km óra állása</span>
-                      <div><b>{km}</b><span className="text--italic"> km</span></div>
+                      <label>Km óra állása</label>
+                      <div><b>{km}</b><span className="font-weight-high text--italic"> km</span></div>
                     </li>
                     <li className="list__item">
-                      <span>Szín</span>
+                      <label>Szín</label>
                       <b>{szin}</b>
                     </li>
                     <li className="list__item">
-                      <span>Tömeg</span>
-                      <div><b>{tomeg}</b><span className="text--italic"> kg</span></div>
+                      <label>Tömeg</label>
+                      <div><b>{tomeg}</b><span className="font-weight-high text--italic"> kg</span></div>
                     </li>
                     <li className="list__item">
-                      <span>Üzemanyag</span>
+                      <label>Üzemanyag</label>
                       <b>{uzemanyag}</b>
                     </li>
                     <li className="list__item">
-                      <span>Hengerűrtartalom</span>
-                      <div><b>{hengerUrtartalom}</b><span className="text--italic"> cc</span></div>
+                      <label>Hengerűrtartalom</label>
+                      <div><b>{hengerUrtartalom}</b><span className="font-weight-high text--italic"> cc</span></div>
                     </li>
                     <li className="list__item">
-                      <span>Teljesítmény</span>
-                      <div><b>{teljesitmeny}</b><span className="text--italic"> le</span></div>
+                      <label>Teljesítmény</label>
+                      <div><b>{teljesitmeny}</b><span className="font-weight-high text--italic"> le</span></div>
                     </li>
                     <li className="list__item">
-                      <span>Hajtás</span>
+                      <label>Hajtás</label>
                       <b>{hajtas}</b>
                     </li>
                     <li className="list__item">
-                      <span>Váltó típusa</span>
+                      <label>Váltó típusa</label>
                       <b>{valto}</b>
                     </li>
                     <li className="margin-top-big">
-                      <span>Leírás</span>
+                      <label className="font-weight-high">Leírás</label>
                       <p className="text--long font-size-medium">{leiras}</p>
                     </li>
                   </ul>
@@ -253,13 +257,13 @@ class CarDetailsPage extends Component {
                     label="Hozzászólás"
                     value={text}
                     multiline
-                    helperText={!auth && "A hozzászóláshoz bejelentkezés szükséges"}
+                    helperText={!auth && 'A hozzászóláshoz bejelentkezés szükséges'}
                     onChange={this.handleChange('text')}
                     margin="normal"
                   />
                   <button type="submit" className="btn btn--outlined margin-side-big">
                     <span className="margin-side-small">Küldés</span>
-                    <SendIcon/>
+                    <SendIcon style={{fontSize: 18}}/>
                   </button>
                 </form>
                 <Grid item xs={12}>

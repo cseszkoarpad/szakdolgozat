@@ -11,7 +11,6 @@ import CarDetailsPage from './containers/CarDetailsPage';
 import CarEditPage from './containers/CarEditPage';
 import CarListPage from './containers/CarListPage';
 import CarUploadPage from './containers/CarUploadPage';
-import 'normalize.css';
 import './styles/main.css';
 
 class App extends Component {

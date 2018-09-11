@@ -9,6 +9,19 @@ html, body {
     border: 1px solid darkgrey;
 }
 
+.grid-list-item-price {
+    margin-right: 16px;
+    font-style: italic;
+    color: white;
+    letter-spacing: 1.0px;
+    font-size: 14px;
+}
+
+.car-detail-upload-date {
+    font-size: 13px;
+    letter-spacing: 0.4px;
+}
+
 .circle {
     border-radius: 50%;
 }
@@ -71,8 +84,8 @@ html, body {
 
 .list {
     list-style: none;
-    margin: 0;
     padding: 0 20px;
+    margin-top: -10px;
 }
 
 .list--horizontal {
@@ -91,10 +104,9 @@ html, body {
     color: white;
     display: inline-flex;
     align-items: center;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border-radius: 5px;
     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
-    font-weight: 500;
     text-transform: uppercase;
     cursor: pointer;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -102,6 +114,8 @@ html, body {
     outline: none;
     font-size: 0.875rem;
     line-height: 1.4em;
+    font-weight: bold;
+    letter-spacing: 0.8px;
 }
 
 .btn--primary {
@@ -115,11 +129,11 @@ html, body {
 
 .btn--secondary {
     color: white;
-    background-color: yellow;
+    background-color: orange;
 }
 
 .btn--secondary:hover {
-    background-color: yellowgreen;
+    background-color: #FF6D00;
 }
 
 .btn--danger {
@@ -128,7 +142,7 @@ html, body {
 }
 
 .btn--danger:hover {
-    background-color: #f44336;
+    background-color: #DD2C00;
 }
 
 .btn--outlined {
@@ -156,6 +170,10 @@ html, body {
     font-size: 20px;
 }
 
+.font-size-big2 {
+    font-size: 18px;
+}
+
 .font-size-big {
     font-size: 16px;
 }
@@ -166,8 +184,27 @@ html, body {
 
 .font-size-small {
     font-size: 12px;
-    font-weight: 400;
     color: rgba(0, 0, 0, 0.54)
+}
+
+.font-weight-bold {
+    font-weight: 600;
+}
+
+.font-weight-high {
+    font-weight: 500;
+}
+
+.font-weight-normal {
+    font-weight: 400;
+}
+
+.font-weight-low {
+    font-weight: 300;
+}
+
+.Select-value {
+    color: rgba(0, 0, 0, 0.87) !important;
 }
 
 form {
@@ -289,10 +326,6 @@ form {
     margin-right: 10px;
 }
 
-.border-radius {
-    border-radius: 4px;
-}
-
 h1 {
     font-size: 1.5em;
 }
@@ -304,7 +337,6 @@ h1 {
 /*************** SLIDER ************* */
 .slick-slider {
     overflow: hidden;
-    border-radius: 4px;
 }
 
 .slick-slider img {
@@ -314,8 +346,12 @@ h1 {
 
 .slider-big {
     width: auto;
-    height: 300px;
+    height: auto;
     margin-bottom: 5px;
+}
+
+.slider-big img {
+    border-radius: 4px;
 }
 
 .slick-arrow {
@@ -337,8 +373,12 @@ h1 {
 }
 
 .slider-small {
-    height: 80px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    border-radius: 2px;
+    height: auto;
+}
+
+.slider-small .slick-list {
 }
 
 /* error alert section */

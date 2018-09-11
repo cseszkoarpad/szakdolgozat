@@ -15,6 +15,10 @@ class Main extends Component {
     this.props.fetchCars();
   }
 
+  convertPrice = (ar) => {
+    return ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') + ' Ft';
+  };
+
   renderCars = () => {
     let carList;
     const {allCar, search, data} = this.props.cars;
@@ -23,8 +27,13 @@ class Main extends Component {
         <GridListTile onClick={() => this.props.history.push(`/cars/${car.id}`)} key={car.id}
                       className="cursor--pointer" classes={{root: 'cursor--pointer', tile: 'car-list-item'}}>
           <img src={car.preview_url} alt={`${car.marka}-${car.modell}`}/>
-          <GridListTileBar
-            title={car.marka} subtitle={<span>{car.modell} ({car.ev})</span>}
+          <GridListTileBar title={<span className="font-size-big2">{car.marka}</span>}
+                           subtitle={<span className="font-size-medium">{car.modell} ({car.ev})</span>}
+                           actionIcon={
+                             <span className="grid-list-item-price">
+                               {car.ar > 0 && this.convertPrice(car.ar)}
+                             </span>
+                           }
           />
         </GridListTile>
       ),
