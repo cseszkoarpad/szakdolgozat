@@ -28,13 +28,27 @@ html, body {
 
 /*** CAR DETAILS PAGE ***/
 
+.car-detail-header {
+    margin-bottom: 15px;
+}
+
 .car-detail-title {
-    margin-top: 0;
+    margin: 0;
+}
+
+.car-details-body {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.car-details-sliders-wrapper {
+    width: 50%;
 }
 
 .car-detail-spec-list {
+    width: 45%;
     list-style: none;
-    padding: 0 20px;
+    padding-left: 20px;
     margin-top: -10px;
 }
 
@@ -43,6 +57,10 @@ html, body {
     display: flex;
     justify-content: space-between;
     white-space: nowrap;
+}
+
+.submit-comment-button {
+    margin-left: 20px;
 }
 
 .circle {
@@ -235,6 +253,10 @@ form {
     width: 100%;
 }
 
+.padding-20px {
+    padding: 20px;
+}
+
 .padding-extra {
     padding-top: 25px;
     padding-bottom: 25px;
@@ -258,6 +280,16 @@ form {
 .padding-side-big {
     padding-left: 30px;
     padding-right: 30px;
+}
+
+.padding-side-20px {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.padding-side-15px {
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .padding-side-medium {
@@ -458,8 +490,23 @@ h1 {
         margin-top: 15px;
     }
 
+    .car-details-sliders-wrapper {
+        width: 100%;
+    }
+
     .car-detail-spec-list {
+        width: 100%;
         margin-top: 25px;
+        padding-left: 0;
+    }
+
+    .submit-comment-form {
+        padding: 0;
+        flex-direction: column;
+    }
+
+    .submit-comment-button {
+        align-self: flex-end;
     }
 }
 

@@ -40,12 +40,12 @@ const WarningModal = ({classes, title, desc, submitButton, cancelButton, isOpen,
           {desc}
         </Typography>
         <div className={classes.buttonWrapper}>
-          <Button onClick={deleteCar} variant="contained" color="secondary">
+          <button onClick={deleteCar} className="btn btn--danger">
             {submitButton}
-          </Button>
-          <Button onClick={cancelDelete} variant="contained">
+          </button>
+          <button onClick={cancelDelete} className="btn">
             {cancelButton}
-          </Button>
+          </button>
         </div>
       </div>
     </Modal>

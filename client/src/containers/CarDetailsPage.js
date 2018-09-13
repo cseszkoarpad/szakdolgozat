@@ -131,14 +131,17 @@ class CarDetailsPage extends Component {
 
   submitComment = (event) => {
     event.preventDefault();
+    const {text} = this.state;
     if (!this.props.auth) {
       this.setState({error: 'Ehhez a funkcióhoz be kell jelentkezni!'});
       document.documentElement.scrollTop = 0;
       return;
     }
 
-    this.props.submitComment(this.props.match.params.id, this.state.text);
-    this.setState({text: ''});
+    if (text !== '') {
+      this.props.submitComment(this.props.match.params.id, text);
+      this.setState({text: ''});
+    }
   };
 
   render() {
@@ -151,134 +154,125 @@ class CarDetailsPage extends Component {
       } = cars;
       const {text, isDeleteModalOpen, error} = this.state;
       return (
-        <Grid container spacing={8}>
-          <Grid item sm={2}>
-          </Grid>
-          <Grid item sm={8}>
-            <Paper className="padding-big padding-side-big">
-              <Grid container>
-                {error && this.errorShowUp(error)}
-                <div className="car-detail-header flex flex-direction--row-reverse flex--wrap horizontal--space-between full-width">
-                  <h1 className="car-detail-title">{marka} - {modell}</h1>
-                  {//auth.userId === userId &&
-                  <div className="block align-center">
-                    <button className="btn btn--secondary margin-side-medium"
-                            onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
-                      <span className="margin-side-medium">Szerkesztés</span>
-                      <EditIcon style={{fontSize: 18}}/>
-                    </button>
-                    <button className="btn btn--danger margin-side-medium" onClick={this.openDeleteModal}>
-                      <span className="margin-side-medium">Törlés</span>
-                      <DeleteIcon style={{fontSize: 18}}/>
-                    </button>
-                  </div>
-                  }
-                </div>
-                <Grid item md={6} sm={12}>
-                  <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
-                    {images && images.length && images.map((img, index) => (
-                        <img key={`big-${index}`} src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
-                      ),
-                    )}
-                  </Slider>
-                  <Slider className="slider-small" {...smallSliderSettings}>
-                    {images && images.length && images.map((img, index) => (
-                        <img key={index} className="cursor--pointer"
-                             onClick={() => this.slider.slickGoTo(index)}
-                             src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
-                      ),
-                    )}
-                  </Slider>
-                  <div className="flex horizontal--space-between">
-                    <div className="font-size-small">
-                      <label className="font-size-13px block font-weight-high">Feltöltve</label>
-                      {feltoltve && this.convertUploadTime(feltoltve)}
-                    </div>
-                    <button className="btn btn--primary" onClick={this.incrementLikes}>
-                      <span className="margin-side-small">{likes}</span>
-                      <LikeIcon style={{fontSize: 18}}/>
-                    </button>
-                  </div>
-                </Grid>
-                <Grid item md={6} sm={12}>
-                  <ul className="car-detail-spec-list">
-                    <li className="car-detail-spec-list-item">
-                      <label>Ár </label>
-                      {this.convertPrice(ar)}
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Évjárat</label>
-                      <b>{ev}</b>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Kivitel</label>
-                      <b>{kivitel}</b>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Km óra állása</label>
-                      <div><b>{km}</b><span className="font-weight-high text--italic"> km</span></div>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Szín</label>
-                      <b>{szin}</b>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Tömeg</label>
-                      <div><b>{tomeg}</b><span className="font-weight-high text--italic"> kg</span></div>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Üzemanyag</label>
-                      <b>{uzemanyag}</b>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Hengerűrtartalom</label>
-                      <div><b>{hengerUrtartalom}</b><span className="font-weight-high text--italic"> cc</span></div>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Teljesítmény</label>
-                      <div><b>{teljesitmeny}</b><span className="font-weight-high text--italic"> le</span></div>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Hajtás</label>
-                      <b>{hajtas}</b>
-                    </li>
-                    <li className="car-detail-spec-list-item">
-                      <label>Váltó típusa</label>
-                      <b>{valto}</b>
-                    </li>
-                    <li className="margin-top-big">
-                      <label className="font-weight-high">Leírás</label>
-                      <p className="text--long font-size-medium">{leiras}</p>
-                    </li>
-                  </ul>
-                </Grid>
-                <form onSubmit={this.submitComment} className="flex full-width vertical--baseline">
-                  <TextField
-                    style={{width: '100%'}}
-                    label="Hozzászólás"
-                    value={text}
-                    multiline
-                    helperText={!auth && 'A hozzászóláshoz bejelentkezés szükséges'}
-                    onChange={this.handleChange('text')}
-                    margin="normal"
-                  />
-                  <button type="submit" className="btn btn--outlined margin-side-big">
-                    <span className="margin-side-small">Küldés</span>
-                    <SendIcon style={{fontSize: 18}}/>
+        <div className="car-details-page-wrapper">
+          <Paper className="padding-20px">
+            {error && this.errorShowUp(error)}
+            <div
+              className="car-detail-header flex flex-direction--row-reverse flex--wrap horizontal--space-between full-width">
+              <h1 className="car-detail-title">{marka} - {modell}</h1>
+              {//auth.userId === userId &&
+                <div className="block align-center">
+                  <button className="btn btn--secondary margin-side-medium"
+                          onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
+                    <span className="margin-side-medium">Szerkesztés</span>
+                    <EditIcon style={{fontSize: 18}}/>
                   </button>
-                </form>
-                {this.renderComments()}
-              </Grid>
-            </Paper>
-          </Grid>
-          <Grid item xs={2}>
-            <Paper>
-            </Paper>
-          </Grid>
+                  <button className="btn btn--danger margin-side-medium" onClick={this.openDeleteModal}>
+                    <span className="margin-side-medium">Törlés</span>
+                    <DeleteIcon style={{fontSize: 18}}/>
+                  </button>
+                </div>
+              }
+            </div>
+            <div className="car-details-body">
+              <div className="car-details-sliders-wrapper">
+                <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
+                  {images && images.length && images.map((img, index) => (
+                      <img key={`big-${index}`} src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
+                    ),
+                  )}
+                </Slider>
+                <Slider className="slider-small" {...smallSliderSettings}>
+                  {images && images.length && images.map((img, index) => (
+                      <img key={index} className="cursor--pointer"
+                           onClick={() => this.slider.slickGoTo(index)}
+                           src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
+                    ),
+                  )}
+                </Slider>
+                <div className="flex horizontal--space-between">
+                  <div className="font-size-small">
+                    <label className="font-size-13px block font-weight-high">Feltöltve</label>
+                    {feltoltve && this.convertUploadTime(feltoltve)}
+                  </div>
+                  <button className="btn btn--primary" onClick={this.incrementLikes}>
+                    <span className="margin-side-small">{likes}</span>
+                    <LikeIcon style={{fontSize: 18}}/>
+                  </button>
+                </div>
+              </div>
+              <ul className="car-detail-spec-list">
+                <li className="car-detail-spec-list-item">
+                  <label>Ár </label>
+                  {this.convertPrice(ar)}
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Évjárat</label>
+                  <b>{ev}</b>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Kivitel</label>
+                  <b>{kivitel}</b>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Km óra állása</label>
+                  <div><b>{km}</b><span className="font-weight-high text--italic"> km</span></div>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Szín</label>
+                  <b>{szin}</b>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Tömeg</label>
+                  <div><b>{tomeg}</b><span className="font-weight-high text--italic"> kg</span></div>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Üzemanyag</label>
+                  <b>{uzemanyag}</b>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Hengerűrtartalom</label>
+                  <div><b>{hengerUrtartalom}</b><span className="font-weight-high text--italic"> cc</span></div>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Teljesítmény</label>
+                  <div><b>{teljesitmeny}</b><span className="font-weight-high text--italic"> le</span></div>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Hajtás</label>
+                  <b>{hajtas}</b>
+                </li>
+                <li className="car-detail-spec-list-item">
+                  <label>Váltó típusa</label>
+                  <b>{valto}</b>
+                </li>
+                <li className="margin-top-big">
+                  <label className="font-weight-high">Leírás</label>
+                  <p className="text--long font-size-medium">{leiras}</p>
+                </li>
+              </ul>
+            </div>
+            <form onSubmit={this.submitComment} className="submit-comment-form flex vertical--baseline">
+              <TextField
+                style={{width: '100%'}}
+                label="Hozzászólás"
+                value={text}
+                multiline
+                helperText={!auth && 'A hozzászóláshoz bejelentkezés szükséges'}
+                onChange={this.handleChange('text')}
+                margin="normal"
+              />
+              <button type="submit" className="submit-comment-button btn btn--outlined">
+                <span className="margin-side-small">Küldés</span>
+                <SendIcon style={{fontSize: 18}}/>
+              </button>
+            </form>
+            {this.renderComments()}
+          </Paper>
           <WarningModal title={'Biztosan törli?'} desc={'A törlés nem vonható vissza!'} submitButton={'Törlés'}
                         cancelButton={'Mégse'} isOpen={isDeleteModalOpen} deleteCar={() => this.handleDeleteCar(id)}
                         cancelDelete={this.closeDeleteModal}/>
-        </Grid>
+        </div>
       );
     } else {
       return <Loader/>;
