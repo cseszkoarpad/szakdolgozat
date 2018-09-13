@@ -25,7 +25,7 @@ class Main extends Component {
     carList = (Object.keys(search).length === 0 && search.constructor === Object) ? allCar : data;
     return carList.map(car => (
         <GridListTile onClick={() => this.props.history.push(`/cars/${car.id}`)} key={car.id}
-                      className="cursor--pointer" classes={{root: 'cursor--pointer', tile: 'car-list-item'}}>
+                      classes={{root: 'grid-car-list-item', tile: 'grid-car-list-item-tile'}}>
           <img src={car.preview_url} alt={`${car.marka}-${car.modell}`}/>
           <GridListTileBar title={<span className="font-size-big2">{car.marka}</span>}
                            subtitle={<span className="font-size-medium">{car.modell} ({car.ev})</span>}
@@ -45,11 +45,11 @@ class Main extends Component {
       return (
         <Grid container spacing={8}>
           <Grid item xs={12} sm={4} md={3} lg={2}>
-            <Search/>
+            <Search history={this.props.history}/>
           </Grid>
           <Grid item xs={12} sm={8} md={9} lg={10}>
             <Paper className="padding-medium padding-side-medium">
-              <GridList spacing={10} cols={3}>
+              <GridList spacing={10}>
                 {this.renderCars()}
               </GridList>
             </Paper>

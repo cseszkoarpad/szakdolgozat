@@ -17,7 +17,7 @@ class CarListPage extends Component {
         <Grid container spacing={8}>
           <Grid item xs={2}>
             <Paper style={{padding: '15px'}}>
-              <Search/>
+              <Search history={this.props.history}/>
             </Paper>
           </Grid>
           <Grid item xs={10}>
@@ -31,9 +31,8 @@ class CarListPage extends Component {
   }
 }
 
-function mapStateToProps({auth, cars}) {
+function mapStateToProps({cars}) {
   return {
-    auth,
     cars
   };
 }

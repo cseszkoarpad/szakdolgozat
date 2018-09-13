@@ -45,14 +45,12 @@ export default function (state = INITIAL_STATE, action) {
       return {
         ...state,
         search: {
-          ...action.payload
+          ...action.payload,
         },
-        data: state.allCar.length && state.allCar.filter(car => {
-          if (((marka && car.marka === marka) || !marka) && ((kivitel && car.kivitel === kivitel) || !kivitel)
-            && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag)) {
-            return car;
-          }
-        }),
+        data: state.allCar.length && state.allCar.filter(car =>
+          (((marka && car.marka === marka) || !marka) && ((kivitel && car.kivitel === kivitel) || !kivitel)
+          && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag))
+        ),
       };
     case ADD_CAR:
       return {
@@ -87,7 +85,7 @@ export default function (state = INITIAL_STATE, action) {
         data: {
           ...state.data,
           likes: action.payload,
-        }
+        },
       };
     default:
       return state;

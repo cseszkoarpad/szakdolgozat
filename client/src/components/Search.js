@@ -45,7 +45,7 @@ export function SelectWrapped(props) {
   return (
     <Select
       optionComponent={Option}
-      noResultsText={<Typography>{'No results found'}</Typography>}
+      noResultsText={<Typography>{'Nincs találat'}</Typography>}
       arrowRenderer={arrowProps => {
         return arrowProps.isOpen ? <ArrowDropUpIcon/> : <ArrowDropDownIcon/>;
       }}
@@ -191,6 +191,7 @@ class Search extends Component {
     error: null,
   };
 
+  //TODO REALTIME KERESÉS
   onChange = (name) => (value) => {
     this.setState({[name]: value});
     if (this.state.error) {
@@ -293,10 +294,4 @@ class Search extends Component {
   }
 }
 
-function mapStateToProps({cars}) {
-  return {
-    cars,
-  };
-}
-
-export default connect(mapStateToProps, {search})(withStyles(styles)(Search));
+export default connect(null, {search})(withStyles(styles)(Search));

@@ -7,7 +7,6 @@ import WarningModal from '../components/WarningModal';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import Search from '../components/Search';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 import SendIcon from '@material-ui/icons/Send';
 import Slider from 'react-slick';
@@ -72,10 +71,12 @@ class CarDetailsPage extends Component {
 
   convertPrice = (ar) => {
     if (ar) {
-      return [
-        <span className="font-weight-bold">{ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}</span>,
-        <span className="font-weight-high text--italic"> Ft</span>,
-      ];
+      return (
+        <div>
+          <span className="font-weight-bold">{ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')}</span>
+          <span className="font-weight-high text--italic"> Ft</span>
+        </div>
+      );
     }
     return <span className="font-weight-high">Nincs megadva</span>;
   };
@@ -101,7 +102,7 @@ class CarDetailsPage extends Component {
     let commentsNum = this.props.comments.length;
 
     return (
-      <div>
+      <div className="full-width">
         <h5>{commentsNum} hozzászólás</h5>
         {commentsNum > 0 && this.props.comments.map((comment, i) => {
           return (
@@ -144,22 +145,22 @@ class CarDetailsPage extends Component {
     const {cars, auth} = this.props;
 
     if (cars && Object.keys(cars).length) {
-      let {id, userId, feltoltve, images, modell, marka, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes} = cars;
+      let {
+        id, userId, feltoltve, images, modell, marka, ar, ev, kivitel, km, szin,
+        tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes,
+      } = cars;
       const {text, isDeleteModalOpen, error} = this.state;
       return (
         <Grid container spacing={8}>
-          <Grid item xs={2}>
-            <Search/>
+          <Grid item sm={2}>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item sm={8}>
             <Paper className="padding-big padding-side-big">
               <Grid container>
-                <Grid item xs={12}>
-                  {error && this.errorShowUp(error)}
-                </Grid>
-                <div className="flex horizontal--space-between full-width">
-                  <h1>{marka} - {modell}</h1>
-                  {auth.userId === userId &&
+                {error && this.errorShowUp(error)}
+                <div className="car-detail-header flex flex-direction--row-reverse flex--wrap horizontal--space-between full-width">
+                  <h1 className="car-detail-title">{marka} - {modell}</h1>
+                  {//auth.userId === userId &&
                   <div className="block align-center">
                     <button className="btn btn--secondary margin-side-medium"
                             onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
@@ -173,7 +174,7 @@ class CarDetailsPage extends Component {
                   </div>
                   }
                 </div>
-                <Grid item xs={6}>
+                <Grid item md={6} sm={12}>
                   <Slider className="slider-big" ref={slider => (this.slider = slider)} {...bigSliderSettings}>
                     {images && images.length && images.map((img, index) => (
                         <img key={`big-${index}`} src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
@@ -190,7 +191,7 @@ class CarDetailsPage extends Component {
                   </Slider>
                   <div className="flex horizontal--space-between">
                     <div className="font-size-small">
-                      <label className="car-detail-upload-date block font-weight-high">Feltöltve</label>
+                      <label className="font-size-13px block font-weight-high">Feltöltve</label>
                       {feltoltve && this.convertUploadTime(feltoltve)}
                     </div>
                     <button className="btn btn--primary" onClick={this.incrementLikes}>
@@ -199,49 +200,49 @@ class CarDetailsPage extends Component {
                     </button>
                   </div>
                 </Grid>
-                <Grid item xs={6}>
-                  <ul className="list">
-                    <li className="list__item">
+                <Grid item md={6} sm={12}>
+                  <ul className="car-detail-spec-list">
+                    <li className="car-detail-spec-list-item">
                       <label>Ár </label>
-                      <div>{this.convertPrice(ar)}</div>
+                      {this.convertPrice(ar)}
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Évjárat</label>
                       <b>{ev}</b>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Kivitel</label>
                       <b>{kivitel}</b>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Km óra állása</label>
                       <div><b>{km}</b><span className="font-weight-high text--italic"> km</span></div>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Szín</label>
                       <b>{szin}</b>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Tömeg</label>
                       <div><b>{tomeg}</b><span className="font-weight-high text--italic"> kg</span></div>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Üzemanyag</label>
                       <b>{uzemanyag}</b>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Hengerűrtartalom</label>
                       <div><b>{hengerUrtartalom}</b><span className="font-weight-high text--italic"> cc</span></div>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Teljesítmény</label>
                       <div><b>{teljesitmeny}</b><span className="font-weight-high text--italic"> le</span></div>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Hajtás</label>
                       <b>{hajtas}</b>
                     </li>
-                    <li className="list__item">
+                    <li className="car-detail-spec-list-item">
                       <label>Váltó típusa</label>
                       <b>{valto}</b>
                     </li>
@@ -266,9 +267,7 @@ class CarDetailsPage extends Component {
                     <SendIcon style={{fontSize: 18}}/>
                   </button>
                 </form>
-                <Grid item xs={12}>
-                  {this.renderComments()}
-                </Grid>
+                {this.renderComments()}
               </Grid>
             </Paper>
           </Grid>

@@ -5,7 +5,14 @@ html, body {
     overflow-x: hidden;
 }
 
-.car-list-item {
+/******* MAIN PAGE ********/
+
+.grid-car-list-item {
+    cursor: pointer;
+    width: 33.3% !important;
+}
+
+.grid-car-list-item-tile {
     border: 1px solid darkgrey;
 }
 
@@ -17,9 +24,25 @@ html, body {
     font-size: 14px;
 }
 
-.car-detail-upload-date {
-    font-size: 13px;
-    letter-spacing: 0.4px;
+
+
+/*** CAR DETAILS PAGE ***/
+
+.car-detail-title {
+    margin-top: 0;
+}
+
+.car-detail-spec-list {
+    list-style: none;
+    padding: 0 20px;
+    margin-top: -10px;
+}
+
+.car-detail-spec-list-item {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
 }
 
 .circle {
@@ -82,22 +105,9 @@ html, body {
     text-decoration: none;
 }
 
-.list {
-    list-style: none;
-    padding: 0 20px;
-    margin-top: -10px;
-}
-
 .list--horizontal {
     display: flex;
     justify-content: space-around;
-}
-
-.list__item {
-    margin: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    white-space: nowrap;
 }
 
 .btn {
@@ -115,7 +125,6 @@ html, body {
     font-size: 0.875rem;
     line-height: 1.4em;
     font-weight: bold;
-    letter-spacing: 0.8px;
 }
 
 .btn--primary {
@@ -180,6 +189,10 @@ html, body {
 
 .font-size-medium {
     font-size: 14px;
+}
+
+.font-size-13px {
+    font-size: 13px;
 }
 
 .font-size-small {
@@ -378,9 +391,6 @@ h1 {
     height: auto;
 }
 
-.slider-small .slick-list {
-}
-
 /* error alert section */
 /* The alert message box */
 .alert {
@@ -388,6 +398,8 @@ h1 {
     background-color: #f44336; /* Red */
     color: white;
     margin-bottom: 15px;
+    border-radius: 5px;
+    width: 100%;
 }
 
 .closebtn {
@@ -428,4 +440,31 @@ h1 {
 .uploadPictureContainer .deleteImage {
     background: red;
     font-size: 15px;
+}
+
+
+/******** MOBIL OPTIMALISATION **********/
+
+@media screen and (max-width: 769px) {
+    .grid-car-list-item {
+        width: 50% !important;
+    }
+
+    .car-detail-header {
+        flex-direction: column-reverse;
+    }
+
+    .car-detail-title {
+        margin-top: 15px;
+    }
+
+    .car-detail-spec-list {
+        margin-top: 25px;
+    }
+}
+
+@media screen and (max-width: 415px) {
+    .grid-car-list-item {
+        width: 100% !important;
+    }
 }
