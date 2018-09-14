@@ -7,7 +7,7 @@ import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import {fetchCars} from '../actions/car';
+import {fetchCars, search} from '../actions/car';
 
 class Main extends Component {
 
@@ -17,6 +17,10 @@ class Main extends Component {
 
   convertPrice = (ar) => {
     return ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') + ' Ft';
+  };
+
+  handleDeleteSearchTerms = () => {
+    this.props.search({});
   };
 
   renderCars = () => {
@@ -49,6 +53,9 @@ class Main extends Component {
           </Grid>
           <Grid item xs={12} sm={8} md={9} lg={10}>
             <Paper className="padding-medium padding-side-medium">
+              {//this.props.cars.search.length > 0 &&
+              <div onClick={this.handleDeleteSearchTerms}>Keresési beállítások törlése</div>
+              }
               <GridList spacing={10}>
                 {this.renderCars()}
               </GridList>
@@ -68,4 +75,4 @@ function mapStateToProps({cars}) {
   };
 }
 
-export default connect(mapStateToProps, {fetchCars})(Main);
+export default connect(mapStateToProps, {fetchCars, search})(Main);

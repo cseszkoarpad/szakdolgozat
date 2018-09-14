@@ -11,7 +11,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/es/Menu/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {setAuthToNull} from '../actions/user';
-import {search} from '../actions/car';
 import {history} from '../index';
 import {withStyles} from '@material-ui/core';
 
@@ -42,11 +41,6 @@ const styles = {
 class Header extends Component {
   state = {
     anchorEl: null,
-  };
-
-  goToMainPageAndNullSearchTerms = () => {
-    this.props.search({});
-    history.push('/');
   };
 
   handleClick = event => {
@@ -109,13 +103,13 @@ class Header extends Component {
     return (
       <AppBar className={classes.header} position="static" color="default">
         <Toolbar>
-          <div className="flex vertical--center text-decoration--none cursor--pointer" onClick={this.goToMainPageAndNullSearchTerms}>
+          <Link className="flex vertical--center text-decoration--none" to={'/'}>
             <img
               className={classes.icon}
               src="http://www.pngpix.com/wp-content/uploads/2016/06/PNGPIX-COM-Yellow-Ferrari-F12tdf-Car-Front-PNG-Image.png"
               alt="auto-portal-logo"/>
             <h1 className="font-size-extra">Luxus Autó Portál</h1>
-          </div>
+          </Link>
           <Typography className={classes.spaceFiller}/>
           {this.renderMenu(classes)}
         </Toolbar>
@@ -130,4 +124,4 @@ function mapStateToProps({auth}) {
   };
 }
 
-export default connect(mapStateToProps, {setAuthToNull, search})(withStyles(styles)(Header));
+export default connect(mapStateToProps, {setAuthToNull})(withStyles(styles)(Header));

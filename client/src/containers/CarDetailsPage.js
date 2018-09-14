@@ -159,7 +159,7 @@ class CarDetailsPage extends Component {
             <div
               className="car-detail-header flex flex-direction--row-reverse flex--wrap horizontal--space-between full-width">
               <h1 className="car-detail-title">{marka} - {modell}</h1>
-              {//auth.userId === userId &&
+              {auth.userId === userId &&
                 <div className="block align-center">
                   <button className="btn btn--secondary margin-side-medium"
                           onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
