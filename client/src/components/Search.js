@@ -191,9 +191,18 @@ class Search extends Component {
     error: null,
   };
 
-  //TODO REALTIME KERESÉS
   onChange = (name) => (value) => {
-    this.setState({[name]: value});
+    this.setState({[name]: value}, () => {
+      const {marka, kivitel, uzemanyag} = this.state;
+      const data = Object.assign({},
+        marka && {marka},
+        kivitel && {kivitel},
+        uzemanyag && {uzemanyag},
+      );
+
+      this.props.search(data);
+    });
+
     if (this.state.error) {
       this.setState({error: null});
     }
@@ -207,11 +216,10 @@ class Search extends Component {
       kivitel && {kivitel},
       uzemanyag && {uzemanyag},
     );
+
     if (Object.keys(data).length === 0 && data.constructor === Object) {
       return this.setState({error: 'Nincs kitöltve!'});
     }
-    this.props.search(data);
-    this.props.history.push('/');
   };
 
   render() {

@@ -5,7 +5,6 @@ import {fetchComments, submitComment} from '../actions/comment';
 import Loader from '../components/Loader';
 import WarningModal from '../components/WarningModal';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import LikeIcon from '@material-ui/icons/ThumbUp';
 import SendIcon from '@material-ui/icons/Send';

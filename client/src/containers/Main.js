@@ -45,7 +45,7 @@ class Main extends Component {
       return (
         <Grid container spacing={8}>
           <Grid item xs={12} sm={4} md={3} lg={2}>
-            <Search history={this.props.history}/>
+            <Search/>
           </Grid>
           <Grid item xs={12} sm={8} md={9} lg={10}>
             <Paper className="padding-medium padding-side-medium">
