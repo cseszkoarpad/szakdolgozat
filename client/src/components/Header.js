@@ -58,15 +58,16 @@ class Header extends Component {
 
   renderMenu = (classes) => {
     const {anchorEl} = this.state;
+    const {auth} = this.props
 
-    if (!this.props.auth) {
+    if (!auth) {
       return <Button href="/auth/google">Bejelentkezés</Button>;
     }
     else {
       return [
-        <Typography key="1" classes={{subheading: classes.name}} component={Link} to={'/'} variant='subheading'
-                    color="inherit">{this.props.auth.name}</Typography>,
-        <Avatar key="2" classes={{root: classes.img}} component={Link} to={'/'}
+        <Typography key="1" classes={{subheading: classes.name}} component={Link} to={`/users/${auth.userId}`}
+                    variant='subheading' color="inherit">{this.props.auth.name}</Typography>,
+        <Avatar key="2" classes={{root: classes.img}} component={Link} to={`/users/${auth.userId}`}
                 alt={`${this.props.auth.name}-profile-picture`}
                 src={this.props.auth.profilePic}/>,
         <IconButton key="3"

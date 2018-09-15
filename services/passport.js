@@ -17,7 +17,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((userId, done) => {
-  connection.query(`select * from users where userId = ${userId}`, function (err, rows) {
+  connection.query(`SELECT * FROM users WHERE userId = ${userId}`, function (err, rows) {
     done(err, rows[0]);
   });
 });
@@ -31,7 +31,7 @@ passport.use(
       proxy: true,
     },
     async (accessToken, refreshToken, profile, done) => {
-      connection.query(`select * from users where userId = ${profile.id}`, function (err, rows) {
+      connection.query(`SELECT * FROM users WHERE userId = ${profile.id}`, function (err, rows) {
         if (rows.length) {
           return done(err, rows[0]);
         } else {
@@ -39,7 +39,7 @@ passport.use(
           newUser.userId = profile.id;
           newUser.name = profile.displayName;
           newUser.profilePic = profile.photos[0].value;
-          connection.query('INSERT INTO users ( userId, name, profilePic ) values (?, ?, ?)', [profile.id, profile.displayName, profile.photos[0].value], function (err, rows) {
+          connection.query('INSERT INTO users ( userId, name, profilePic ) VALUES (?, ?, ?)', [profile.id, profile.displayName, profile.photos[0].value], function (err, rows) {
             newUser.id = rows.insertId;
 
             return done(null, newUser);

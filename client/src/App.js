@@ -12,6 +12,7 @@ import CarEditPage from './containers/CarEditPage';
 import CarListPage from './containers/CarListPage';
 import CarUploadPage from './containers/CarUploadPage';
 import './styles/main.css';
+import UserProfilePage from './containers/UserProfilePage';
 
 class App extends Component {
   componentDidMount() {
@@ -37,6 +38,7 @@ class App extends Component {
         <Route exact path="/cars/:id" component={CarDetailsPage}/>
         <Route exact path="/cars/:id/edit" component={CarEditPage}/>
         <Route exact path="/upload/new" component={CarUploadPage}/>
+        <Route exact path="/users/:id" component={UserProfilePage}/>
         <Redirect to="/"/>
       </Switch>
     );

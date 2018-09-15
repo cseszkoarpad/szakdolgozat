@@ -1,4 +1,4 @@
-const requireLogin = require('..//middlewares/requireLogin');
+const requireLogin = require('../middlewares/requireLogin');
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
