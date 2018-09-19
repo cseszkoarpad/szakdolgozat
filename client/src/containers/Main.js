@@ -53,9 +53,6 @@ class Main extends Component {
           </Grid>
           <Grid item xs={12} sm={8} md={9} lg={10}>
             <Paper className="padding-medium padding-side-medium">
-              {//this.props.cars.search.length > 0 &&
-              <div onClick={this.handleDeleteSearchTerms}>Keresési beállítások törlése</div>
-              }
               <GridList spacing={10}>
                 {this.renderCars()}
               </GridList>
