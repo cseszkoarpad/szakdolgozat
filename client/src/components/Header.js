@@ -36,6 +36,10 @@ const styles = {
   img: {
     marginRight: '15px',
   },
+  menu: {
+    top: '50px !important',
+    left: '780px !important',
+  },
 };
 
 class Header extends Component {
@@ -58,7 +62,7 @@ class Header extends Component {
 
   renderMenu = (classes) => {
     const {anchorEl} = this.state;
-    const {auth} = this.props
+    const {auth} = this.props;
 
     if (!auth) {
       return <Button href="/auth/google">Bejelentkezés</Button>;
@@ -66,10 +70,10 @@ class Header extends Component {
     else {
       return [
         <Typography key="1" classes={{subheading: classes.name}} component={Link} to={`/users/${auth.userId}`}
-                    variant='subheading' color="inherit">{this.props.auth.name}</Typography>,
+                    variant='subheading' color="inherit">{auth.name}</Typography>,
         <Avatar key="2" classes={{root: classes.img}} component={Link} to={`/users/${auth.userId}`}
-                alt={`${this.props.auth.name}-profile-picture`}
-                src={this.props.auth.profilePic}/>,
+                alt={`${auth.name}-profile-picture`}
+                src={auth.profilePic}/>,
         <IconButton key="3"
                     aria-owns={anchorEl ? 'simple-menu' : null}
                     aria-haspopup="true"
@@ -78,6 +82,7 @@ class Header extends Component {
           <MenuIcon/>
         </IconButton>,
         <Menu
+          classes={{paper: classes.menu}}
           key="4"
           id="simple-menu"
           anchorEl={anchorEl}
@@ -88,7 +93,7 @@ class Header extends Component {
           <MenuItem component={Link} to="/upload/new">
             Feltöltés
           </MenuItem>
-          <MenuItem component={Link} to={`/my-cars/${this.props.auth.id}`}>
+          <MenuItem component={Link} to={`/my-cars/${auth.userId}`}>
             Autóim
           </MenuItem>
           <MenuItem onClick={this.handleLogout}>

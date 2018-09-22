@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {deleteCar, updateCar} from '../actions/car';
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import ImageUploader from 'react-images-upload';
 import {EVJARATOK, HAJTAS_TIPUSOK, KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK, VALTO_TIPUSOK} from '../constants';
 import {SelectWrapped} from '../components/Search';
 
@@ -72,7 +70,6 @@ class CarEditPage extends Component {
         <form onSubmit={(e) => this.handleUpdateCar(e)}>
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             name="marka"
@@ -95,7 +92,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             fullWidth
             required
             name="modell"
@@ -120,7 +116,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             fullWidth
             type="number"
             name="ar"
@@ -131,7 +126,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             fullWidth
             required
             placeholder="Kiválasztás..."
@@ -154,7 +148,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             placeholder="Kiválasztás..."
@@ -177,7 +170,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             type="number"
@@ -189,7 +181,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             name="szin"
@@ -200,7 +191,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             type="number"
@@ -212,7 +202,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             placeholder="Kiválasztás..."
@@ -235,7 +224,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             type="number"
@@ -247,7 +235,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             required
             fullWidth
             type="number"
@@ -259,7 +246,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             name="hajtas"
             label="Hajtás"
             placeholder="Kiválasztás..."
@@ -282,7 +268,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             name="valto"
             label="Váltó"
             placeholder="Kiválasztás..."
@@ -305,7 +290,6 @@ class CarEditPage extends Component {
 
           <TextField
             style={{width: '300px'}}
-            autoFocus
             fullWidth
             name="leiras"
             label="Leírás"
@@ -314,10 +298,10 @@ class CarEditPage extends Component {
             onChange={this.onChange}
           />
 
-          <div>
-            <Button type="submit">Mentés</Button>
-            <Button onClick={this.handleCancelButton}>Mégse</Button>
-            <Button onClick={this.handleDeleteCar}>Törlés</Button>
+          <div style={{display: 'flex', justifyContent: 'center', margin: '20px 0 50px 0', flexDirection: 'row-reverse'}}>
+            <button type="submit" className="btn btn--primary margin-side-medium">Mentés</button>
+            <button onClick={this.handleCancelButton} className="btn btn--secondary margin-side-medium">Mégse</button>
+            <button onClick={this.handleDeleteCar} className="btn btn--danger margin-side-medium">Törlés</button>
           </div>
         </form>
       </Paper>

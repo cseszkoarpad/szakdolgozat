@@ -1,7 +1,7 @@
 import {
   ADD_CAR,
   FETCH_CAR_BY_ID, FETCH_CAR_IMAGES_BY_ID,
-  FETCH_CARS,
+  FETCH_CARS, FETCH_CARS_FROM_USER,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
   SEARCH,
@@ -30,6 +30,13 @@ export default function (state = INITIAL_STATE, action) {
           ...action.payload,
         },
       };
+    case FETCH_CARS_FROM_USER:
+      return {
+        ...state,
+        data: [
+          ...action.payload,
+        ],
+      };
     case FETCH_CAR_IMAGES_BY_ID:
       return {
         ...state,
@@ -49,7 +56,7 @@ export default function (state = INITIAL_STATE, action) {
         },
         data: state.allCar.length && state.allCar.filter(car =>
           (((marka && car.marka === marka) || !marka) && ((kivitel && car.kivitel === kivitel) || !kivitel)
-          && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag))
+            && ((uzemanyag && car.uzemanyag === uzemanyag) || !uzemanyag)),
         ),
       };
     case ADD_CAR:

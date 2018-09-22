@@ -20,6 +20,15 @@ module.exports = app => {
     });
   });
 
+  app.get('/api/cars/by-user/:userId', (req, res) => {
+    connection.query(`SELECT * FROM cars WHERE userId = ?`, [req.params.userId], (err, cars) => {
+      if (err) console.log(err);
+      else {
+        res.send(cars);
+      }
+    });
+  });
+
   app.get('/api/cars/:id', (req, res) => {
     connection.query(`SELECT * FROM cars WHERE id = ? LIMIT 1`, [req.params.id], (err, result) => {
       res.send(result[0]);

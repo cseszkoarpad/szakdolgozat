@@ -96,7 +96,8 @@ class CarUploadPage extends Component {
 
   handleAddCar = (event) => {
     event.preventDefault();
-    if (this.state.selectedFiles.length < 4 || this.state.selectedFiles.length > 10) {
+    const {selectedFiles} = this.state;
+    if (selectedFiles[selectedFiles.length - 1].length < 4 || selectedFiles[selectedFiles.length - 1].length > 10) {
       return this.setState({activeStep: 2});
     }
     const {
@@ -130,6 +131,18 @@ class CarUploadPage extends Component {
     this.props.history.goBack();
   };
 
+  renderStepButtons = () =>
+    (
+      <div className="upload-step-buttons-wrapper">
+        <button type="submit" className="btn btn--primary margin-side-medium">
+          Következő
+        </button>
+        <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
+          Vissza
+        </button>
+      </div>
+    );
+
   render() {
     const {
       activeStep, modell, marka, ar, ev,
@@ -144,7 +157,7 @@ class CarUploadPage extends Component {
           {activeStep === 0 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -176,7 +189,7 @@ class CarUploadPage extends Component {
           {activeStep === 1 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               fullWidth
               required
@@ -185,14 +198,7 @@ class CarUploadPage extends Component {
               value={modell}
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
@@ -211,21 +217,14 @@ class CarUploadPage extends Component {
               fileTypeError='Nem támogatott fájl formátum!'
               withPreview
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 3 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               fullWidth
               type="number"
@@ -234,21 +233,14 @@ class CarUploadPage extends Component {
               value={ar}
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 4 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               fullWidth
               required
@@ -269,21 +261,14 @@ class CarUploadPage extends Component {
                 },
               }}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 5 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -304,21 +289,14 @@ class CarUploadPage extends Component {
                 },
               }}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 6 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -328,21 +306,14 @@ class CarUploadPage extends Component {
               value={km}
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 7 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -351,21 +322,14 @@ class CarUploadPage extends Component {
               value={szin}
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 8 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -375,21 +339,14 @@ class CarUploadPage extends Component {
               value={tomeg}
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 9 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -410,21 +367,14 @@ class CarUploadPage extends Component {
                 },
               }}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 10 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -434,21 +384,14 @@ class CarUploadPage extends Component {
               value={hengerUrtartalom}
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 11 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               required
               fullWidth
@@ -458,21 +401,14 @@ class CarUploadPage extends Component {
               value={teljesitmeny}
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 12 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               name="hajtas"
               label="Hajtás"
@@ -493,21 +429,14 @@ class CarUploadPage extends Component {
                 },
               }}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 13 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '300px', marginTop: '50px'}}
               autoFocus
               name="valto"
               label="Váltó"
@@ -528,21 +457,14 @@ class CarUploadPage extends Component {
                 },
               }}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
           {activeStep === 14 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '300px'}}
+              style={{width: '600px'}}
               autoFocus
               fullWidth
               name="leiras"
@@ -551,14 +473,7 @@ class CarUploadPage extends Component {
               multiline
               onChange={this.onChange}
             />
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium" onClick={this.handleBack}>
-                Vissza
-              </button>
-              <button type="submit" className="btn btn--primary margin-side-medium">
-                Következő
-              </button>
-            </div>
+            {this.renderStepButtons()}
           </form>
           }
 
@@ -567,7 +482,7 @@ class CarUploadPage extends Component {
               <button className="btn btn--secondary margin-side-medium"
                       onClick={this.handleCancelButton}>Mégse
               </button>
-              <button className="btn btn--secondary margin-side-medium"
+              <button className="btn btn--primary margin-side-medium"
                       onClick={this.handleAddCar}>Létrehozás
               </button>
             </div>

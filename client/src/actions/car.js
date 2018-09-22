@@ -2,7 +2,7 @@ import {
   CLOUD_NAME,
   FETCH_CAR_BY_ID,
   FETCH_CAR_IMAGES_BY_ID,
-  FETCH_CARS, FETCH_SUGGESTED_CARS,
+  FETCH_CARS, FETCH_CARS_FROM_USER, FETCH_SUGGESTED_CARS,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
   SEARCH,
@@ -26,6 +26,12 @@ export const fetchSuggestedCars = (userId) => async dispatch => {
   const res = await axios.get(`/api/cars/suggested/${userId}`);
 
   dispatch({type: FETCH_SUGGESTED_CARS, payload: res.data});
+};
+
+export const fetchCarsFromUser = (userId) => async dispatch => {
+  const res = await axios.get(`/api/cars/by-user/${userId}`);
+
+  dispatch({type: FETCH_CARS_FROM_USER, payload: res.data});
 };
 
 export const fetchCarImagesById = (carId) => async dispatch => {

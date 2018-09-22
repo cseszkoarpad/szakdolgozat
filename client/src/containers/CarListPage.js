@@ -2,28 +2,24 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import CarCapture from '../components/CarCapture';
 import Loader from '../components/Loader';
-import Search from '../components/Search';
 import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
+import {fetchCarsFromUser} from '../actions/car';
 
 class CarListPage extends Component {
-  renderCars = () => {
-    return this.props.cars.map(car => <CarCapture key={car._id} {...car} />);
-  };
+
+  componentWillMount() {
+    this.props.fetchCarsFromUser(this.props.auth.userId);
+  }
 
   render() {
-    if (this.props.cars) {
+    const {cars} = this.props;
+    console.log(cars);
+    if (cars) {
       return (
-        <Grid container spacing={8}>
-          <Grid item xs={2}>
-            <Paper style={{padding: '15px'}}>
-              <Search history={this.props.history}/>
-            </Paper>
-          </Grid>
-          <Grid item xs={10}>
-            <Paper className="cars">{this.renderCars()}</Paper>
-          </Grid>
-        </Grid>
+        <Paper>
+          {cars.length ? cars.map(car => <CarCapture key={car.id} {...car} />)
+              : <h6>Nincs feltöltve autója</h6>}
+        </Paper>
       );
     } else {
       return <Loader/>;
@@ -31,10 +27,11 @@ class CarListPage extends Component {
   }
 }
 
-function mapStateToProps({cars}) {
+function mapStateToProps({auth, cars}) {
   return {
-    cars
+    auth,
+    cars: cars.data,
   };
 }
 
-export default connect(mapStateToProps)(CarListPage);
+export default connect(mapStateToProps, {fetchCarsFromUser})(CarListPage);
