@@ -20,6 +20,7 @@ export const MARKAK = [
   {value: 'Audi', label: 'Audi'},
   {value: 'Bentley', label: 'Bentley'},
   {value: 'BMW', label: 'BMW'},
+  {value: 'Dodge', label: 'Dodge'},
   {value: 'Ferrari', label: 'Ferrari'},
   {value: 'Jaguar', label: 'Jaguar'},
   {value: 'Lamborghini', label: 'Lamborghini'},

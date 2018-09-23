@@ -13,12 +13,11 @@ class CarListPage extends Component {
 
   render() {
     const {cars} = this.props;
-    console.log(cars);
     if (cars) {
       return (
         <Paper>
           {cars.length ? cars.map(car => <CarCapture key={car.id} {...car} />)
-              : <h6>Nincs feltöltve autója</h6>}
+              : <h5 className="no-car-title">Nincs feltöltve autója</h5>}
         </Paper>
       );
     } else {

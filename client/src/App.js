@@ -35,6 +35,7 @@ class App extends Component {
       <Switch>
         <Route exact path="/" component={Main}/>
         <Route exact path="/my-cars/:id" component={CarListPage}/>
+        <Route exact path="/cars/suggested" component={Main}/>
         <Route exact path="/cars/:id" component={CarDetailsPage}/>
         <Route exact path="/cars/:id/edit" component={CarEditPage}/>
         <Route exact path="/upload/new" component={CarUploadPage}/>

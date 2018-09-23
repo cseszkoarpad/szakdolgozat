@@ -12,7 +12,7 @@ connection.connect();
 
 module.exports = app => {
   app.get('/api/cars', (req, res) => {
-    connection.query(`SELECT * FROM cars`, (err, cars) => {
+    connection.query(`SELECT * FROM cars LIMIT 25`, (err, cars) => {
       if (err) console.log(err);
       else {
         res.send(cars);
@@ -27,6 +27,41 @@ module.exports = app => {
         res.send(cars);
       }
     });
+  });
+
+
+  //MŰKÖDIK DE NINCS RÁ CSINÁLVA FRONTEND OLDAL
+  app.get('/api/cars/suggested/:userId', (req, res) => {
+    connection.query(`SELECT preview_url, marka, modell, ar, ev, kivitel, km, szin, tomeg, uzemanyag,
+     hengerUrtartalom, teljesitmeny, hajtas, valto, leiras FROM cars, likes WHERE likes.carId = cars.id AND likes.userId = ?`,
+      [req.params.userId], (err, cars) => {
+        if (err) console.log(err);
+        else {
+          let kivitelek = {};
+          cars.forEach(car => {
+            if (kivitelek[car.kivitel]) {
+              kivitelek[car.kivitel]++;
+            } else {
+              kivitelek[car.kivitel] = 1;
+            }
+          });
+          let favouriteKivitel;
+          for (let i in kivitelek) {
+            let maxCount = 0;
+            if (kivitelek.hasOwnProperty(i) && kivitelek[i] > maxCount) {
+              maxCount = kivitelek[i];
+              favouriteKivitel = i;
+            }
+          }
+          connection.query(`SELECT * FROM cars WHERE kivitel = ? LIMIT 25`, [favouriteKivitel], (err, cars) => {
+            if(err) {
+              console.error(err)
+            } else {
+              res.send(cars);
+            }
+          });
+        }
+      });
   });
 
   app.get('/api/cars/:id', (req, res) => {
@@ -141,12 +176,12 @@ module.exports = app => {
 
     connection.query(`UPDATE cars SET preview_url = ?, marka = ?, modell = ?, ar = ?, ev = ?, kivitel = ?, km = ?, szin = ?, tomeg = ?, uzemanyag = ?, hengerUrtartalom = ?, teljesitmeny = ?, hajtas = ?, valto = ?, leiras = ? WHERE id = ? LIMIT 1`,
       [preview_url, marka, modell, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, req.params.carId], (err, result) => {
-      if (err) {
-        console.warn(err);
-      } else {
-        res.send({success: true});
-      }
-    });
+        if (err) {
+          console.warn(err);
+        } else {
+          res.send({success: true});
+        }
+      });
   });
 
   app.delete('/api/cars/delete/:carId', requireLogin, (req, res) => {

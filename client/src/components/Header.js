@@ -36,10 +36,6 @@ const styles = {
   img: {
     marginRight: '15px',
   },
-  menu: {
-    top: '50px !important',
-    left: '780px !important',
-  },
 };
 
 class Header extends Component {
@@ -82,7 +78,6 @@ class Header extends Component {
           <MenuIcon/>
         </IconButton>,
         <Menu
-          classes={{paper: classes.menu}}
           key="4"
           id="simple-menu"
           anchorEl={anchorEl}
@@ -95,6 +90,9 @@ class Header extends Component {
           </MenuItem>
           <MenuItem component={Link} to={`/my-cars/${auth.userId}`}>
             Autóim
+          </MenuItem>
+          <MenuItem component={Link} to={`/cars/suggested`}>
+            Nekem ajánlott
           </MenuItem>
           <MenuItem onClick={this.handleLogout}>
             Kijelentkezés
@@ -114,7 +112,7 @@ class Header extends Component {
               className={classes.icon}
               src="http://www.pngpix.com/wp-content/uploads/2016/06/PNGPIX-COM-Yellow-Ferrari-F12tdf-Car-Front-PNG-Image.png"
               alt="auto-portal-logo"/>
-            <h1 className="font-size-extra">Luxus Autó Portál</h1>
+            <h1 className="no-mobile font-size-extra">Luxus Autó Portál</h1>
           </Link>
           <Typography className={classes.spaceFiller}/>
           {this.renderMenu(classes)}

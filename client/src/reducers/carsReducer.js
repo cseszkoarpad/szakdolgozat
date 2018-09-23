@@ -1,7 +1,7 @@
 import {
   ADD_CAR,
   FETCH_CAR_BY_ID, FETCH_CAR_IMAGES_BY_ID,
-  FETCH_CARS, FETCH_CARS_FROM_USER,
+  FETCH_CARS, FETCH_CARS_FROM_USER, FETCH_SUGGESTED_CARS,
   GET_LIKES_COUNT,
   INCREMENT_LIKES,
   SEARCH,
@@ -17,6 +17,13 @@ const INITIAL_STATE = {
 export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
     case FETCH_CARS:
+      return {
+        ...state,
+        allCar: [
+          ...action.payload,
+        ],
+      };
+    case FETCH_SUGGESTED_CARS:
       return {
         ...state,
         allCar: [
