@@ -15,10 +15,6 @@ class Main extends Component {
     this.props.fetchCars();
   }
 
-  componentDidUpdate() {
-    console.log('asd');
-  }
-
   convertPrice = (ar) => {
     return ar.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.') + ' Ft';
   };

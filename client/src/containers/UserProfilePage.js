@@ -84,8 +84,8 @@ class UserProfilePage extends Component {
             onChange={this.onChange}
           />
           <div className="user-profile-buttons-wrapper">
-            <button type="submit" className="btn btn--primary" style={{marginRight: '20px'}}>Mentés</button>
-            <button onClick={this.handleGoBack} className="btn btn--secondary">Mégse</button>
+            <button type="submit" className="btn btn--primary">Mentés</button>
+            <button onClick={this.handleGoBack} style={{marginRight: '20px'}} className="btn btn--secondary">Mégse</button>
           </div>
         </form>
       </Paper>

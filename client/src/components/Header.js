@@ -79,7 +79,6 @@ class Header extends Component {
         </IconButton>,
         <Menu
           key="4"
-          id="simple-menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
@@ -91,9 +90,9 @@ class Header extends Component {
           <MenuItem component={Link} to={`/my-cars/${auth.userId}`}>
             Autóim
           </MenuItem>
-          <MenuItem component={Link} to={`/cars/suggested`}>
+          {/*<MenuItem component={Link} to={`/cars/suggested`}>
             Nekem ajánlott
-          </MenuItem>
+          </MenuItem>*/}
           <MenuItem onClick={this.handleLogout}>
             Kijelentkezés
           </MenuItem>
@@ -112,7 +111,7 @@ class Header extends Component {
               className={classes.icon}
               src="http://www.pngpix.com/wp-content/uploads/2016/06/PNGPIX-COM-Yellow-Ferrari-F12tdf-Car-Front-PNG-Image.png"
               alt="auto-portal-logo"/>
-            <h1 className="no-mobile font-size-extra">Luxus Autó Portál</h1>
+            <h1 className="no-mobile header-title">Luxus Autó Portál</h1>
           </Link>
           <Typography className={classes.spaceFiller}/>
           {this.renderMenu(classes)}

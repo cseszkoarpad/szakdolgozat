@@ -4,7 +4,8 @@ import {deleteCar, updateCar} from '../actions/car';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import {EVJARATOK, HAJTAS_TIPUSOK, KIVITELEK, MARKAK, UZEMANYAG_TIPUSOK, VALTO_TIPUSOK} from '../constants';
-import {SelectWrapped} from '../components/Search';
+import {SelectWrapped, styles} from '../components/Search';
+import {withStyles} from '@material-ui/core';
 
 class CarEditPage extends Component {
   state = {
@@ -69,7 +70,7 @@ class CarEditPage extends Component {
       <Paper>
         <form onSubmit={(e) => this.handleUpdateCar(e)}>
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             name="marka"
@@ -91,7 +92,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             fullWidth
             required
             name="modell"
@@ -115,7 +116,7 @@ class CarEditPage extends Component {
           />*/}
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             fullWidth
             type="number"
             name="ar"
@@ -125,7 +126,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             fullWidth
             required
             placeholder="Kiválasztás..."
@@ -147,7 +148,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             placeholder="Kiválasztás..."
@@ -169,7 +170,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             type="number"
@@ -180,7 +181,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             name="szin"
@@ -190,7 +191,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             type="number"
@@ -201,7 +202,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             placeholder="Kiválasztás..."
@@ -223,7 +224,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             type="number"
@@ -234,7 +235,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             required
             fullWidth
             type="number"
@@ -245,7 +246,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             name="hajtas"
             label="Hajtás"
             placeholder="Kiválasztás..."
@@ -267,7 +268,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             name="valto"
             label="Váltó"
             placeholder="Kiválasztás..."
@@ -289,7 +290,7 @@ class CarEditPage extends Component {
           />
 
           <TextField
-            style={{width: '300px'}}
+            style={{width: '300px', margin: '10px'}}
             fullWidth
             name="leiras"
             label="Leírás"
@@ -298,7 +299,7 @@ class CarEditPage extends Component {
             onChange={this.onChange}
           />
 
-          <div style={{display: 'flex', justifyContent: 'center', margin: '20px 0 50px 0', flexDirection: 'row-reverse'}}>
+          <div className="car-edit-buttons">
             <button type="submit" className="btn btn--primary margin-side-medium">Mentés</button>
             <button onClick={this.handleCancelButton} className="btn btn--secondary margin-side-medium">Mégse</button>
             <button onClick={this.handleDeleteCar} className="btn btn--danger margin-side-medium">Törlés</button>
@@ -315,4 +316,4 @@ const mapStateToProps = ({cars}) => {
   };
 };
 
-export default connect(mapStateToProps, {updateCar, deleteCar})(CarEditPage);
+export default connect(mapStateToProps, {updateCar, deleteCar})(withStyles(styles)(CarEditPage));

@@ -4,6 +4,7 @@ import MediaQuery from 'react-responsive';
 import {connect} from 'react-redux';
 import {addCar, uploadCarImage} from '../actions/car';
 import ImageUploader from 'react-images-upload';
+import CarEditPage from './CarEditPage';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';
@@ -34,7 +35,6 @@ class CarUploadPage extends Component {
     activeStep: 0,
     marka: '',
     modell: '',
-    kep: '',
     ar: 0,
     ev: 0,
     kivitel: '',
@@ -142,6 +142,218 @@ class CarUploadPage extends Component {
         </button>
       </div>
     );
+
+  renderSummary = () => {
+    const {marka, modell, ar, ev, kivitel, km, szin, tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras} = this.state;
+
+    return (
+      <div>
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          name="marka"
+          label="Márka"
+          value={marka}
+          placeholder="Márka kiválasztása"
+          onChange={this.onSelectChange('marka')}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            inputComponent: SelectWrapped,
+            inputProps: {
+              instanceId: 'marka',
+              simpleValue: true,
+              options: MARKAK,
+            },
+          }}
+        />
+
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          fullWidth
+          required
+          name="modell"
+          label="Modell"
+          value={modell}
+          onChange={this.onChange}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          fullWidth
+          type="number"
+          name="ar"
+          label="Ár"
+          value={ar}
+          onChange={this.onChange}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          fullWidth
+          required
+          placeholder="Kiválasztás..."
+          name="ev"
+          label="Évjárat"
+          value={ev}
+          onChange={this.onSelectChange('ev')}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            inputComponent: SelectWrapped,
+            inputProps: {
+              instanceId: 'ev',
+              simpleValue: true,
+              options: EVJARATOK,
+            },
+          }}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          placeholder="Kiválasztás..."
+          name="kivitel"
+          label="Kivitel"
+          value={kivitel}
+          onChange={this.onSelectChange('kivitel')}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            inputComponent: SelectWrapped,
+            inputProps: {
+              instanceId: 'kivitel',
+              simpleValue: true,
+              options: KIVITELEK,
+            },
+          }}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          type="number"
+          name="km"
+          label="Km óra állása"
+          value={km}
+          onChange={this.onChange}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          name="szin"
+          label="Szín"
+          value={szin}
+          onChange={this.onChange}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          type="number"
+          name="tomeg"
+          label="Tömeg"
+          value={tomeg}
+          onChange={this.onChange}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          placeholder="Kiválasztás..."
+          name="uzemanyag"
+          label="Üzemanyag"
+          value={uzemanyag}
+          onChange={this.onSelectChange('uzemanyag')}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            inputComponent: SelectWrapped,
+            inputProps: {
+              instanceId: 'uzemanyag',
+              simpleValue: true,
+              options: UZEMANYAG_TIPUSOK,
+            },
+          }}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          type="number"
+          name="hengerUrtartalom"
+          label="Hengerűrtartalom"
+          value={hengerUrtartalom}
+          onChange={this.onChange}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          required
+          fullWidth
+          type="number"
+          name="teljesitmeny"
+          label="Teljesítmény"
+          value={teljesitmeny}
+          onChange={this.onChange}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          name="hajtas"
+          label="Hajtás"
+          placeholder="Kiválasztás..."
+          value={hajtas}
+          onChange={this.onSelectChange('hajtas')}
+          required
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            inputComponent: SelectWrapped,
+            inputProps: {
+              instanceId: 'hajtas',
+              simpleValue: true,
+              options: HAJTAS_TIPUSOK,
+            },
+          }}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          name="valto"
+          label="Váltó"
+          placeholder="Kiválasztás..."
+          value={valto}
+          onChange={this.onSelectChange('valto')}
+          required
+          fullWidth
+          InputLabelProps={{
+            shrink: true,
+          }}
+          InputProps={{
+            inputComponent: SelectWrapped,
+            inputProps: {
+              instanceId: 'valto',
+              simpleValue: true,
+              options: VALTO_TIPUSOK,
+            },
+          }}
+        />
+        <TextField
+          style={{width: '300px', margin: '10px'}}
+          fullWidth
+          name="leiras"
+          label="Leírás"
+          value={leiras}
+          multiline
+          onChange={this.onChange}
+        />
+      </div>
+    );
+  };
 
   render() {
     const {
@@ -464,7 +676,7 @@ class CarUploadPage extends Component {
           {activeStep === 14 &&
           <form onSubmit={(e) => this.handleNext(e)} className="flex full-width vertical vertical--center margin-big">
             <TextField
-              style={{width: '600px'}}
+              style={{width: '600px', marginTop: '50px'}}
               autoFocus
               fullWidth
               name="leiras"
@@ -478,13 +690,17 @@ class CarUploadPage extends Component {
           }
 
           {activeStep === steps.length && (
-            <div className="margin-big flex horizontal--center">
-              <button className="btn btn--secondary margin-side-medium"
-                      onClick={this.handleCancelButton}>Mégse
-              </button>
-              <button className="btn btn--primary margin-side-medium"
-                      onClick={this.handleAddCar}>Létrehozás
-              </button>
+            <div className="car-upload-summary">
+              <h3>Összesítés</h3>
+              {this.renderSummary()}
+              <div className="margin-big flex horizontal--center">
+                <button className="btn btn--secondary margin-side-medium"
+                        onClick={this.handleCancelButton}>Mégse
+                </button>
+                <button className="btn btn--primary margin-side-medium"
+                        onClick={this.handleAddCar}>Létrehozás
+                </button>
+              </div>
             </div>
           )}
 

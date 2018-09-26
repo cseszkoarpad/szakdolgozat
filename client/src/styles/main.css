@@ -1,12 +1,33 @@
+:root {
+    --black-text-color: #333;
+    --grey-text-color: #8e8e8e;
+    --white-text-color: #e6e6e6;
+    --page-gold-color: #C0B283;
+    --silk-color: #DCD0C0;
+    --paper-color: #F4F4F4;
+    --charcoal-color: #373737;
+    --box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12);
+    --black-color: rgba(0, 0, 0, 0.87);
+}
+
 html, body {
-    background: #EFEBE9;
+    background: var(--silk-color);
+    color: var(--charcoal-color);
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     box-sizing: border-box;
+    margin: 0;
     overflow-x: hidden;
 }
 
 /*****HEADER *************/
+header {
+    background: var(--page-gold-color) !important;
+}
 
+.header-title {
+    font-size: 18px;
+    color: var(--black-color);
+}
 
 
 /******* MAIN PAGE ********/
@@ -115,10 +136,10 @@ html, body {
 }
 
 .capture-image {
-    width: 150px;
+    width: 160px;
     height: 100px;
     border-radius: 2px;
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--box-shadow);
 }
 
 .capture-info-wrapper {
@@ -134,6 +155,15 @@ html, body {
 
 .capture-body-text {
     font-size: 14px;
+}
+
+/******* CAR EDIT PAGE *******************/
+
+.car-edit-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    margin: 20px 0 50px 0;
 }
 
 /*********** USER EDIT PAGE *******************/
@@ -156,8 +186,52 @@ html, body {
 
 .user-profile-buttons-wrapper {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     margin: 20px 0;
+}
+
+
+/******* FOOTER *********/
+
+footer {
+    background: var(--page-gold-color);
+    padding: 20px;
+    margin-top: 10px;
+    box-shadow: var(--box-shadow);
+}
+
+.footer-menu-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.footer-list {
+    list-style: none;
+}
+
+.footer-list li {
+    margin-bottom: 15px;
+}
+
+.footer-list a {
+    text-decoration: none;
+    color: var(--black-color);
+    font-weight: 500;
+}
+
+.footer-logo {
+    width: 80px;
+    min-width: 50px;
+    max-height: 300px;
+}
+
+.footer-copyright {
+    text-align: center;
+    font-size: 13px;
+    color: var(--white-text-color);
+    margin-top: 30px;
 }
 
 /****/
@@ -233,7 +307,7 @@ html, body {
     align-items: center;
     padding: 6px 12px;
     border-radius: 5px;
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--box-shadow);
     text-transform: uppercase;
     cursor: pointer;
     transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -347,7 +421,7 @@ form {
 }
 
 .container {
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--box-shadow);
     background: white;
     width: 100%;
 }
@@ -496,7 +570,7 @@ h1 {
 
 .slider-big img {
     border-radius: 4px;
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+    box-shadow: var(--box-shadow);
 }
 
 .slick-arrow {
@@ -561,6 +635,10 @@ h1 {
 /******** IMAGE UPLOAD ****************/
 .uploadPictureContainer {
     margin: 2% !important;
+}
+
+.fileContainer {
+    box-shadow: none;
 }
 
 .uploadPictureContainer img {
