@@ -4,7 +4,6 @@ import MediaQuery from 'react-responsive';
 import {connect} from 'react-redux';
 import {addCar, uploadCarImage} from '../actions/car';
 import ImageUploader from 'react-images-upload';
-import CarEditPage from './CarEditPage';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import Stepper from '@material-ui/core/Stepper';

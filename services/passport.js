@@ -37,13 +37,15 @@ passport.use(
         } else {
           let newUser = {};
           newUser.userId = profile.id;
+          newUser.email = profile.emails[0].value;
           newUser.name = profile.displayName;
           newUser.profilePic = profile.photos[0].value;
-          connection.query('INSERT INTO users ( userId, name, profilePic ) VALUES (?, ?, ?)', [profile.id, profile.displayName, profile.photos[0].value], function (err, rows) {
-            newUser.id = rows.insertId;
+          connection.query('INSERT INTO users ( userId, email, name, profilePic ) VALUES (?, ?, ?, ?)',
+            [profile.id, profile.emails[0].value, profile.displayName, profile.photos[0].value], function (err, rows) {
+              newUser.id = rows.insertId;
 
-            return done(null, newUser);
-          });
+              return done(null, newUser);
+            });
         }
       });
     }));

@@ -93,6 +93,9 @@ class Header extends Component {
           {/*<MenuItem component={Link} to={`/cars/suggested`}>
             Nekem ajánlott
           </MenuItem>*/}
+          <MenuItem component={Link} to={`/kapcsolat`}>
+            Kapcsolatfelvétel
+          </MenuItem>
           <MenuItem onClick={this.handleLogout}>
             Kijelentkezés
           </MenuItem>

@@ -13,8 +13,8 @@ module.exports = app => {
   app.get(
     '/auth/google',
     passport.authenticate('google', {
-      scope: ['profile']
-    })
+      scope: ['profile', 'email'],
+    }),
   );
 
   app.get(
@@ -22,7 +22,7 @@ module.exports = app => {
     passport.authenticate('google'),
     (req, res) => {
       res.redirect('/');
-    }
+    },
   );
 
   app.get('/api/logout', (req, res) => {
@@ -38,9 +38,9 @@ module.exports = app => {
     connection.query(`UPDATE users SET name=?, profilePic=?, location=?, phone=? WHERE userId=? LIMIT 1`,
       [req.body.data.name, req.body.data.profilePic, req.body.data.location, req.body.data.phone, req.params.userId],
       (err, result) => {
-        if(err) return console.error(err)
+        if (err) return console.error(err);
 
         res.send(req.body.data);
-    });
-  })
+      });
+  });
 };

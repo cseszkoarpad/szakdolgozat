@@ -60,6 +60,20 @@ header {
     margin: 20px 0 40px 0;
 }
 
+/*************** CONTACT PAGE ***********/
+
+.contact-page-title {
+    font-size: 22px;
+    margin: 30px 0 20px 0;
+}
+
+.contact-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 /*** CAR DETAILS PAGE ***/
 
 .car-detail-header {
@@ -305,7 +319,7 @@ footer {
     color: white;
     display: inline-flex;
     align-items: center;
-    padding: 6px 12px;
+    padding: 6px 15px;
     border-radius: 5px;
     box-shadow: var(--box-shadow);
     text-transform: uppercase;

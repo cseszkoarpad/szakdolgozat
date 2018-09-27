@@ -11,6 +11,7 @@ import CarDetailsPage from './containers/CarDetailsPage';
 import CarEditPage from './containers/CarEditPage';
 import CarListPage from './containers/CarListPage';
 import CarUploadPage from './containers/CarUploadPage';
+import ContactPage from './containers/ContactPage';
 import './styles/main.css';
 import UserProfilePage from './containers/UserProfilePage';
 
@@ -25,6 +26,7 @@ class App extends Component {
         <Route exact path="/cars/:id/edit" component={CarEditPage}/>
         <Route exact path="/" component={Main}/>
         <Route exact path="/cars/:id" component={CarDetailsPage}/>
+        <Route exact path="/kapcsolat" component={ContactPage}/>
         <Redirect to="/"/>
       </Switch>
     );
@@ -40,6 +42,7 @@ class App extends Component {
         <Route exact path="/cars/:id/edit" component={CarEditPage}/>
         <Route exact path="/upload/new" component={CarUploadPage}/>
         <Route exact path="/users/:id" component={UserProfilePage}/>
+        <Route exact path="/kapcsolat" component={ContactPage}/>
         <Redirect to="/"/>
       </Switch>
     );

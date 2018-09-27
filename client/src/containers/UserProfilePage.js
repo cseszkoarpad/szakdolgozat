@@ -20,7 +20,8 @@ class UserProfilePage extends Component {
     this.setState({[event.target.name]: event.target.value});
   };
 
-  handleGoBack = () => {
+  handleGoBack = (e) => {
+    e.preventDefault();
     this.props.history.goBack();
   };
 
@@ -28,7 +29,6 @@ class UserProfilePage extends Component {
     event.preventDefault();
     const {userId, name, profilePic, location, phone} = this.state;
     const data = {userId, name, profilePic, location, phone};
-    console.log(data);
     this.props.updateUser(data);
     this.props.history.push('/');
   };
@@ -44,6 +44,7 @@ class UserProfilePage extends Component {
             style={{width: '400px'}}
             autoFocus
             fullWidth
+            required
             type="string"
             name="name"
             label="Név"
@@ -85,7 +86,8 @@ class UserProfilePage extends Component {
           />
           <div className="user-profile-buttons-wrapper">
             <button type="submit" className="btn btn--primary">Mentés</button>
-            <button onClick={this.handleGoBack} style={{marginRight: '20px'}} className="btn btn--secondary">Mégse</button>
+            <button onClick={this.handleGoBack} style={{marginRight: '20px'}} className="btn btn--secondary">Mégse
+            </button>
           </div>
         </form>
       </Paper>
