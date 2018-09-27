@@ -18,9 +18,6 @@ const styles = {
   header: {
     marginBottom: '10px',
   },
-  icon: {
-    width: '100px',
-  },
   spaceFiller: {
     flexGrow: 1,
   },
@@ -32,9 +29,6 @@ const styles = {
   name: {
     textDecoration: 'none',
     marginRight: '10px',
-  },
-  img: {
-    marginRight: '15px',
   },
 };
 
@@ -65,10 +59,10 @@ class Header extends Component {
     }
     else {
       return [
-        <Typography key="1" classes={{subheading: classes.name}} component={Link} to={`/users/${auth.userId}`}
+        <Typography className="no-mobile" key="1" classes={{subheading: classes.name}} component={Link} to={`/users/${auth.userId}`}
                     variant='subheading' color="inherit">{auth.name}</Typography>,
-        <Avatar key="2" classes={{root: classes.img}} component={Link} to={`/users/${auth.userId}`}
-                alt={`${auth.name}-profile-picture`}
+        <Avatar key="2" classes={{root: 'header-user-logo'}} component={Link} to={`/users/${auth.userId}`}
+                alt={'profile-picture'}
                 src={auth.profilePic}/>,
         <IconButton key="3"
                     aria-owns={anchorEl ? 'simple-menu' : null}
@@ -93,6 +87,9 @@ class Header extends Component {
           {/*<MenuItem component={Link} to={`/cars/suggested`}>
             Nekem ajánlott
           </MenuItem>*/}
+          <MenuItem component={Link} to={`/users/${auth.userId}`}>
+            Profilom
+          </MenuItem>
           <MenuItem component={Link} to={`/kapcsolat`}>
             Kapcsolatfelvétel
           </MenuItem>
@@ -111,10 +108,10 @@ class Header extends Component {
         <Toolbar>
           <Link className="flex vertical--center text-decoration--none" to={'/'}>
             <img
-              className={classes.icon}
+              className="header-logo"
               src="http://www.pngpix.com/wp-content/uploads/2016/06/PNGPIX-COM-Yellow-Ferrari-F12tdf-Car-Front-PNG-Image.png"
               alt="auto-portal-logo"/>
-            <h1 className="no-mobile header-title">Luxus Autó Portál</h1>
+            <h1 className="header-title">Luxus Autó Portál</h1>
           </Link>
           <Typography className={classes.spaceFiller}/>
           {this.renderMenu(classes)}
