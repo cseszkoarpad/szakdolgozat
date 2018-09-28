@@ -13,6 +13,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import MailIcon from '@material-ui/icons/MailOutline';
 
 const bigSliderSettings = {
   lazyLoad: true,
@@ -32,7 +33,8 @@ const smallSliderSettings = {
 class CarDetailsPage extends Component {
   state = {
     text: '',
-    isDeleteModalOpen: false,
+    showDeleteModal: false,
+    showInterestModal: false,
     error: null,
   };
 
@@ -48,22 +50,14 @@ class CarDetailsPage extends Component {
 
   incrementLikes = () => {
     if (!this.props.auth) {
+      window.scrollTo(0, 0);
       return this.setState({error: 'A kedveléshez be kell jelentkezni!'});
     }
 
     this.props.incrementLikes(this.props.match.params.id);
   };
 
-  openDeleteModal = () => {
-    this.setState({isDeleteModalOpen: true});
-  };
-
-  closeDeleteModal = () => {
-    this.setState({isDeleteModalOpen: false});
-  };
-
   handleDeleteCar = (carId) => {
-    this.setState({isDeleteModalOpen: false});
     this.props.deleteCar(carId);
     this.props.history.push('/');
   };
@@ -151,7 +145,7 @@ class CarDetailsPage extends Component {
         id, userId, feltoltve, images, modell, marka, ar, ev, kivitel, km, szin,
         tomeg, uzemanyag, hengerUrtartalom, teljesitmeny, hajtas, valto, leiras, likes,
       } = cars;
-      const {text, isDeleteModalOpen, error} = this.state;
+      const {text, showDeleteModal, error} = this.state;
       return (
         <div className="car-details-page-wrapper">
           <Paper className="padding-20px">
@@ -160,17 +154,18 @@ class CarDetailsPage extends Component {
               className="car-detail-header flex flex-direction--row-reverse flex--wrap horizontal--space-between full-width">
               <h1 className="car-detail-title">{marka} - {modell}</h1>
               {auth.userId === userId &&
-                <div className="block align-center">
-                  <button className="btn btn--secondary margin-side-medium"
-                          onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
-                    <span className="margin-side-medium">Szerkesztés</span>
-                    <EditIcon style={{fontSize: 18}}/>
-                  </button>
-                  <button className="btn btn--danger margin-side-medium" onClick={this.openDeleteModal}>
-                    <span className="margin-side-medium">Törlés</span>
-                    <DeleteIcon style={{fontSize: 18}}/>
-                  </button>
-                </div>
+              <div className="block align-center">
+                <button className="btn btn--secondary margin-side-medium"
+                        onClick={() => this.props.history.push(`/cars/${id}/edit`)}>
+                  <span className="margin-side-medium">Szerkesztés</span>
+                  <EditIcon style={{fontSize: 18}}/>
+                </button>
+                <button className="btn btn--danger margin-side-medium"
+                        onClick={() => this.setState({showDeleteModal: true})}>
+                  <span className="margin-side-medium">Törlés</span>
+                  <DeleteIcon style={{fontSize: 18}}/>
+                </button>
+              </div>
               }
             </div>
             <div className="car-details-body">
@@ -249,6 +244,12 @@ class CarDetailsPage extends Component {
                   <label className="font-weight-high">Leírás</label>
                   <p className="text--long font-size-medium">{leiras}</p>
                 </li>
+                <div style={{display: 'flex', marginTop: '40px'}}>
+                  <button onClick={() => this.props.history.push('/kapcsolat')} style={{margin: '0 auto'}}
+                          className="btn btn--primary">
+                    <span style={{marginRight: '5px'}}>Érdekel</span> <MailIcon/>
+                  </button>
+                </div>
               </ul>
             </div>
             <form onSubmit={this.submitComment} className="submit-comment-form flex vertical--baseline">
@@ -269,8 +270,8 @@ class CarDetailsPage extends Component {
             {this.renderComments()}
           </Paper>
           <WarningModal title={'Biztosan törli?'} desc={'A törlés nem vonható vissza!'} submitButton={'Törlés'}
-                        cancelButton={'Mégse'} isOpen={isDeleteModalOpen} deleteCar={() => this.handleDeleteCar(id)}
-                        cancelDelete={this.closeDeleteModal}/>
+                        cancelButton={'Mégse'} isOpen={showDeleteModal} deleteCar={() => this.handleDeleteCar(id)}
+                        cancelDelete={() => this.setState({showDeleteModal: false})}/>
         </div>
       );
     } else {

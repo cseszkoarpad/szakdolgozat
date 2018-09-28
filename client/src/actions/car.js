@@ -69,8 +69,8 @@ export const incrementLikes = (carId) => async dispatch => {
   dispatch({type: INCREMENT_LIKES, payload: res.data});
 };
 
-export const deleteCar = (carId, userId) => async dispatch => {
-  await axios.delete(`/api/cars/delete/${carId}/${userId}`);
+export const deleteCar = (carId) => async dispatch => {
+  await axios.delete(`/api/cars/delete/${carId}`);
 };
 
 export const uploadCarImage = (image, carId) => async dispatch => {

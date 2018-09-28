@@ -43,4 +43,15 @@ module.exports = app => {
         res.send(req.body.data);
       });
   });
+
+  app.post('/api/messages', (req, res) => {
+    connection.query('INSERT INTO messages (email, name, message) VALUES (?, ?, ?)',
+      [req.body.data.email, req.body.data.name, req.body.data.message], (error, result) => {
+        if (error) {
+          console.warn(error);
+        } else {
+          res.send({message: 'success'});
+        }
+      });
+  });
 };
