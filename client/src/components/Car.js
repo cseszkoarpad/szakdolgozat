@@ -1,8 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import GridListTile from '@material-ui/core/es/GridListTile/GridListTile';
-import GridListTileBar from '@material-ui/core/es/GridListTileBar/GridListTileBar';
-import IconButton from '@material-ui/core/es/IconButton/IconButton';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 
 const Car = ({kep, marka, modell, id}) => (
