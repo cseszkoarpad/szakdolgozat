@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
 const morgan = require('morgan');
-const config = require('./config/keys');
 
 require('./services/passport');
 
@@ -15,7 +14,7 @@ if (process.env.NODE_ENV !== 'production') {
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(session({
-  secret: config.secret,
+  secret: process.env.SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
   cookie: {

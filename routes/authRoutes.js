@@ -1,13 +1,12 @@
 const passport = require('passport');
 const requireLogin = require('../middlewares/requireLogin');
-const config = require('../config/keys');
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-  host: config.DB_HOST,
-  user: config.DB_USER,
-  password: config.DB_PASSWORD,
-  database: config.DB_NAME,
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
 module.exports = app => {
