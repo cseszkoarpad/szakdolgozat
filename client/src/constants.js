@@ -28,9 +28,11 @@ export const MARKAK = [
   {value: 'Lexus', label: 'Lexus'},
   {value: 'Maserati', label: 'Maserati'},
   {value: 'Mercedes', label: 'Mercedes'},
+  {value: 'Mini', label: 'Mini'},
   {value: 'Porsche', label: 'Porsche'},
   {value: 'Rolls-Royce', label: 'Rolls-Royce'},
   {value: 'Tesla', label: 'Tesla'},
+  {value: 'Volvo', label: 'Volvo'},
 ];
 export const KIVITELEK = [
   {value: 'Cabrio', label: 'Cabrio'},

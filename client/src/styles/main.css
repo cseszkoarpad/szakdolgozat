@@ -123,7 +123,11 @@ header {
 
 .no-car-title {
     text-align: center;
-    padding: 60px;
+    font-size: 20px;
+    padding: 150px 0 !important;
+    margin: 0;
+    width: 100% !important;
+    height: unset !important;
 }
 
 .user-car-capture {

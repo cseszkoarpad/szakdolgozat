@@ -27,7 +27,7 @@ class Main extends Component {
     let carList;
     const {allCar, search, data} = this.props.cars;
     carList = (Object.keys(search).length === 0 && search.constructor === Object) ? allCar : data;
-    return carList.map(car => (
+    return carList.length > 0 ? carList.map(car => (
         <GridListTile onClick={() => this.props.history.push(`/cars/${car.id}`)} key={car.id}
                       classes={{root: 'grid-car-list-item', tile: 'grid-car-list-item-tile'}}>
           <img src={car.preview_url} alt={`${car.marka}-${car.modell}`}/>
@@ -41,7 +41,10 @@ class Main extends Component {
           />
         </GridListTile>
       ),
-    );
+      )
+      : <h5 className="no-car-title">
+        Nincs találat
+      </h5>;
   };
 
   render() {

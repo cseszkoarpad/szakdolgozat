@@ -264,7 +264,6 @@ class Search extends Component {
               inputComponent: SelectWrapped,
               inputProps: {
                 instanceId: 'kivitel',
-                multi: true,
                 simpleValue: true,
                 options: KIVITELEK,
               },
@@ -287,7 +286,6 @@ class Search extends Component {
               inputComponent: SelectWrapped,
               inputProps: {
                 instanceId: 'uzemanyag',
-                multi: true,
                 simpleValue: true,
                 options: UZEMANYAG_TIPUSOK,
               },
