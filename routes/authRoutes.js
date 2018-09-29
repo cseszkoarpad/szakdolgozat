@@ -1,12 +1,13 @@
 const passport = require('passport');
 const requireLogin = require('../middlewares/requireLogin');
+const config = require('../config/keys');
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'luxusautoportal',
+  host: config.DB_HOST,
+  user: config.DB_USER,
+  password: config.DB_PASSWORD,
+  database: config.DB_NAME,
 });
 
 module.exports = app => {

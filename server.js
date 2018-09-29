@@ -6,18 +6,12 @@ const session = require('express-session');
 const passport = require('passport');
 const morgan = require('morgan');
 const config = require('./config/keys');
-const mysql = require('mysql');
 
 require('./services/passport');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'luxusautoportal',
-}).connect();
-
-app.use(morgan('dev'));
+if (process.env.NODE_ENV !== 'production') {
+  app.use(morgan('dev'));
+}
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(session({
