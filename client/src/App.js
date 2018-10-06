@@ -12,12 +12,30 @@ import CarEditPage from './containers/CarEditPage';
 import CarListPage from './containers/CarListPage';
 import CarUploadPage from './containers/CarUploadPage';
 import ContactPage from './containers/ContactPage';
+import PrivacyPage from './containers/PrivacyPage';
+import AszfPage from './containers/AszfPage';
 import './styles/main.css';
 import UserProfilePage from './containers/UserProfilePage';
+import * as ReactGA from 'react-ga';
+import {withCookies} from 'react-cookie';
+import CookieWarning from './components/CookieWarning';
+import {history} from './index';
 
 class App extends Component {
   componentDidMount() {
+    const {cookies} = this.props;
+
     this.props.fetchUser();
+
+    if ((process.env.NODE_ENV === 'production') && (cookies.get('use-statistics') === 'true')) {
+      ReactGA.initialize('UA-115438886-2', {
+        debug: process.env.NODE_ENV !== 'production',
+      });
+      history.listen((location, action) => {
+        ReactGA.set({page: location.pathname});
+        ReactGA.pageview(location.pathname);
+      });
+    }
   }
 
   renderPublicRoutes() {
@@ -27,6 +45,8 @@ class App extends Component {
         <Route exact path="/" component={Main}/>
         <Route exact path="/cars/:id" component={CarDetailsPage}/>
         <Route exact path="/kapcsolat" component={ContactPage}/>
+        <Route exact path="/adatvedelmi-tajekoztato" component={PrivacyPage}/>
+        <Route exact path="/aszf-jogi-nyilatkozat" component={AszfPage}/>
         <Redirect to="/"/>
       </Switch>
     );
@@ -43,6 +63,8 @@ class App extends Component {
         <Route exact path="/upload/new" component={CarUploadPage}/>
         <Route exact path="/users/:id" component={UserProfilePage}/>
         <Route exact path="/kapcsolat" component={ContactPage}/>
+        <Route exact path="/adatvedelmi-tajekoztato" component={PrivacyPage}/>
+        <Route exact path="/aszf-jogi-nyilatkozat" component={AszfPage}/>
         <Redirect to="/"/>
       </Switch>
     );
@@ -55,6 +77,7 @@ class App extends Component {
           <Header/>
           {this.props.auth ? this.renderPrivateRoutes() : this.renderPublicRoutes()}
           <Footer/>
+          <CookieWarning/>
         </div>
       </BrowserRouter>
     );
@@ -65,4 +88,4 @@ function mapStateToProps({auth}) {
   return {auth};
 }
 
-export default connect(mapStateToProps, {fetchUser, fetchCars})(hot(module)(App));
+export default connect(mapStateToProps, {fetchUser, fetchCars})(hot(module)(withCookies(App)));

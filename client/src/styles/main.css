@@ -16,7 +16,36 @@ html, body {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     box-sizing: border-box;
     margin: 0;
+    padding-right: 0 !important;
     overflow-x: hidden;
+}
+
+/*****COOKIE *************/
+.cookie-wrapper {
+    background: var(--black-color);
+    color: var(--white-text-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px;
+}
+
+.cookie-checkbox {
+    color: var(--page-gold-color) !important;
+}
+
+.cookie-checkbox-label {
+    color: var(--white-text-color) !important;
+}
+
+.cookie-more-info {
+    color: #3f51b5;
 }
 
 /*****HEADER *************/

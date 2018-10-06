@@ -78,7 +78,7 @@ class UserProfilePage extends Component {
             classes={{root: 'margin-medium--important'}}
             style={{width: '400px'}}
             fullWidth
-            type="phone"
+            type="tel"
             name="phone"
             label="Telefonszám"
             value={phone}

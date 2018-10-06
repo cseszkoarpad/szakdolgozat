@@ -4,6 +4,7 @@ import {Provider} from 'react-redux';
 import {applyMiddleware, compose, createStore} from 'redux';
 import reduxThunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
+import {CookiesProvider} from 'react-cookie';
 
 import App from './App';
 import reducers from './reducers';
@@ -15,13 +16,15 @@ const store = createStore(
   {},
   compose(
     applyMiddleware(reduxThunk),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+    process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
 
 render(
   <Provider store={store}>
-    <App/>
+    <CookiesProvider>
+      <App/>
+    </CookiesProvider>
   </Provider>,
   document.getElementById('root'),
 );

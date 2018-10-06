@@ -59,13 +59,14 @@ class Header extends Component {
     }
     else {
       return [
-        <Typography className="no-mobile" key="1" classes={{subheading: classes.name}} component={Link} to={`/users/${auth.userId}`}
+        <Typography className="no-mobile" key="1" classes={{subheading: classes.name}} component={Link}
+                    to={`/users/${auth.userId}`}
                     variant='subheading' color="inherit">{auth.name}</Typography>,
         <Avatar key="2" classes={{root: 'header-user-logo'}} component={Link} to={`/users/${auth.userId}`}
                 alt={'profile-picture'}
                 src={auth.profilePic}/>,
         <IconButton key="3"
-                    aria-owns={anchorEl ? 'simple-menu' : null}
+                    aria-owns={anchorEl ? 'menu' : null}
                     aria-haspopup="true"
                     onClick={this.handleClick}
                     color="inherit" aria-label="Menu">
@@ -73,6 +74,7 @@ class Header extends Component {
         </IconButton>,
         <Menu
           key="4"
+          id="menu"
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
@@ -89,9 +91,6 @@ class Header extends Component {
           </MenuItem>*/}
           <MenuItem component={Link} to={`/users/${auth.userId}`}>
             Profilom
-          </MenuItem>
-          <MenuItem component={Link} to={`/kapcsolat`}>
-            Kapcsolatfelvétel
           </MenuItem>
           <MenuItem onClick={this.handleLogout}>
             Kijelentkezés
