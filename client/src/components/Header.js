@@ -11,7 +11,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {setAuthToNull} from '../actions/user';
-import {history} from '../index';
 import {withStyles} from '@material-ui/core';
 
 const styles = {
@@ -47,7 +46,7 @@ class Header extends Component {
 
   handleLogout = () => {
     this.props.setAuthToNull();
-    history.push('/');
+    this.props.history.push('/');
   };
 
   renderMenu = (classes) => {

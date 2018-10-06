@@ -1,6 +1,5 @@
 import React from 'react';
 import {render} from 'react-dom';
-import {Provider} from 'react-redux';
 import {applyMiddleware, compose, createStore} from 'redux';
 import reduxThunk from 'redux-thunk';
 import createHistory from 'history/createBrowserHistory';
@@ -21,10 +20,8 @@ const store = createStore(
 );
 
 render(
-  <Provider store={store}>
-    <CookiesProvider>
-      <App/>
-    </CookiesProvider>
-  </Provider>,
+  <CookiesProvider>
+    <App store={store} history={history}/>
+  </CookiesProvider>,
   document.getElementById('root'),
 );

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {hot} from 'react-hot-loader';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {Router, Redirect, Route, Switch} from 'react-router-dom';
+import {connect, Provider} from 'react-redux';
 import {fetchUser} from './actions/user';
 import {fetchCars} from './actions/car';
 import Main from './containers/Main';
@@ -17,13 +17,19 @@ import AszfPage from './containers/AszfPage';
 import './styles/main.css';
 import UserProfilePage from './containers/UserProfilePage';
 import * as ReactGA from 'react-ga';
-import {withCookies} from 'react-cookie';
+import {Cookies, withCookies} from 'react-cookie';
 import CookieWarning from './components/CookieWarning';
-import {history} from './index';
+import PropTypes, {instanceOf} from 'prop-types';
 
 class App extends Component {
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired,
+    store: PropTypes.object.isRequired,
+    history: PropTypes.object.isRequired,
+  };
+
   componentDidMount() {
-    const {cookies} = this.props;
+    const {cookies, history} = this.props;
 
     this.props.fetchUser();
 
@@ -71,15 +77,19 @@ class App extends Component {
   };
 
   render() {
+    const {store, history} = this.props;
+
     return (
-      <BrowserRouter>
-        <div>
-          <Header/>
-          {this.props.auth ? this.renderPrivateRoutes() : this.renderPublicRoutes()}
-          <Footer/>
-          <CookieWarning/>
-        </div>
-      </BrowserRouter>
+      <Provider store={store}>
+        <Router history={history}>
+          <div>
+            <Header/>
+            {this.props.auth ? this.renderPrivateRoutes() : this.renderPublicRoutes()}
+            <Footer/>
+            <CookieWarning/>
+          </div>
+        </Router>
+      </Provider>
     );
   }
 }
