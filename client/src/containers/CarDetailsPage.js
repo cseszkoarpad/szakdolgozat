@@ -178,7 +178,7 @@ class CarDetailsPage extends Component {
                 </Slider>
                 <Slider className="slider-small" {...smallSliderSettings}>
                   {images && images.length && images.map((img, index) => (
-                      <img key={index} className="cursor--pointer"
+                      <img key={index} className="slider-small-image"
                            onClick={() => this.slider.slickGoTo(index)}
                            src={img.secure_url} alt={`${marka}-${modell}-${index}`}/>
                     ),

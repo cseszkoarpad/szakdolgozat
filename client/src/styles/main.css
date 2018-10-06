@@ -622,6 +622,14 @@ h1 {
     height: auto;
 }
 
+.slider-small-image {
+    cursor: pointer;
+}
+
+.slider-small-image:focus {
+    outline-color: var(--page-gold-color)
+}
+
 /* error alert section */
 /* The alert message box */
 .alert {

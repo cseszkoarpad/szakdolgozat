@@ -67,3 +67,9 @@ export const EVJARATOK = [
   {value: '2011', label: '2011'},
   {value: '2010', label: '2010'},
 ];
+
+export const UZENET_TIPUSOK = [
+  {value: 'Auto erdeklodes', label: 'Autó iránt érdeklődés'},
+  {value: 'Velemeny', label: 'Vélemény nyílvánítás'},
+  {value: 'Hibabejelentes', label: 'Hiba bejelentés'},
+];

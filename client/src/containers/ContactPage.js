@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
-import {styles} from '../components/Search';
+import {SelectWrapped, styles} from '../components/Search';
 import {withStyles} from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import {connect} from 'react-redux';
 import axios from 'axios';
 import Loader from '../components/Loader';
+import {UZENET_TIPUSOK} from '../constants';
 
 class ContactPage extends Component {
   state = {
     email: '',
     name: '',
+    type: '',
     message: '',
     loading: false,
   };
@@ -25,6 +27,10 @@ class ContactPage extends Component {
     this.setState({[event.target.name]: event.target.value});
   };
 
+  onSelectChange = (name) => (value) => {
+    this.setState({[name]: value});
+  };
+
   //TODO MODAL HA SIKERES ÉS LEOKÉZÁS UTÁN TESZ A FŐOLDALRA VISSZA
   onSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +38,7 @@ class ContactPage extends Component {
     const data = {
       email: this.state.email,
       name: this.state.name,
+      type: this.state.type,
       message: this.state.message,
     };
     axios.post(`/api/messages`, {data})
@@ -43,7 +50,7 @@ class ContactPage extends Component {
   };
 
   render() {
-    const {email, name, message, loading} = this.state;
+    const {email, name, message, type, loading} = this.state;
     const {auth} = this.props;
 
     if (!loading) {
@@ -52,7 +59,7 @@ class ContactPage extends Component {
           <form className="contact-page-wrapper" onSubmit={this.onSubmit}>
             <h1 className="contact-page-title">Vegye fel velünk a kapcsolatot</h1>
             <TextField
-              style={{width: '600px', marginTop: '20px'}}
+              style={{width: '600px', marginTop: '10px'}}
               autoFocus={!auth && true}
               required
               fullWidth
@@ -63,7 +70,7 @@ class ContactPage extends Component {
             />
 
             <TextField
-              style={{width: '600px', marginTop: '30px'}}
+              style={{width: '600px', marginTop: '10px'}}
               fullWidth
               required
               name="name"
@@ -73,7 +80,29 @@ class ContactPage extends Component {
             />
 
             <TextField
-              style={{width: '600px', marginTop: '40px', marginBottom: '40px'}}
+              style={{width: '600px', marginTop: '30px'}}
+              name="type"
+              label="Az üzenet témája"
+              placeholder="Kiválasztás..."
+              value={type}
+              onChange={this.onSelectChange('type')}
+              required
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                inputComponent: SelectWrapped,
+                inputProps: {
+                  instanceId: 'type',
+                  simpleValue: true,
+                  options: UZENET_TIPUSOK,
+                },
+              }}
+            />
+
+            <TextField
+              style={{width: '600px', marginTop: '20px', marginBottom: '40px'}}
               fullWidth
               autoFocus={auth && true}
               required

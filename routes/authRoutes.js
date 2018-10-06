@@ -45,8 +45,8 @@ module.exports = app => {
   });
 
   app.post('/api/messages', (req, res) => {
-    connection.query('INSERT INTO messages (email, name, message) VALUES (?, ?, ?)',
-      [req.body.data.email, req.body.data.name, req.body.data.message], (error, result) => {
+    connection.query('INSERT INTO messages (email, name, type, message) VALUES (?, ?, ?, ?)',
+      [req.body.data.email, req.body.data.name, req.body.data.type, req.body.data.message], (error, result) => {
         if (error) {
           console.warn(error);
         } else {

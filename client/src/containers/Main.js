@@ -48,24 +48,20 @@ class Main extends Component {
   };
 
   render() {
-    if (this.props.cars.allCar.length) {
-      return (
-        <Grid container spacing={8}>
-          <Grid item xs={12} sm={4} md={3} lg={2}>
-            <Search/>
-          </Grid>
-          <Grid item xs={12} sm={8} md={9} lg={10}>
-            <Paper className="padding-medium padding-side-medium">
-              <GridList spacing={10}>
-                {this.renderCars()}
-              </GridList>
-            </Paper>
-          </Grid>
+    return (
+      <Grid container spacing={8}>
+        <Grid item xs={12} sm={4} md={3} lg={2}>
+          <Search/>
         </Grid>
-      );
-    } else {
-      return <Loader/>;
-    }
+        <Grid item xs={12} sm={8} md={9} lg={10}>
+          <Paper className="padding-medium padding-side-medium">
+            <GridList spacing={10}>
+              {this.props.cars.allCar.length ? this.renderCars() : <Loader/>}
+            </GridList>
+          </Paper>
+        </Grid>
+      </Grid>
+    );
   }
 }
 
