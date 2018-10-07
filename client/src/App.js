@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {hot} from 'react-hot-loader';
-import {Router, Redirect, Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Router, Switch} from 'react-router-dom';
 import {connect, Provider} from 'react-redux';
 import {fetchUser} from './actions/user';
 import {fetchCars} from './actions/car';
@@ -98,4 +98,9 @@ function mapStateToProps({auth}) {
   return {auth};
 }
 
-export default connect(mapStateToProps, {fetchUser, fetchCars})(hot(module)(withCookies(App)));
+const mapDispatchToProps = {
+  fetchCars,
+  fetchUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(hot(module)(withCookies(App)));
