@@ -12,6 +12,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {setAuthToNull} from '../actions/user';
 import {withStyles} from '@material-ui/core';
+import {history} from '../index';
+import userAvatar from '../resources/default_user_avatar.png';
 
 const styles = {
   header: {
@@ -46,7 +48,7 @@ class Header extends Component {
 
   handleLogout = () => {
     this.props.setAuthToNull();
-    this.props.history.push('/');
+    history.push('/');
   };
 
   renderMenu = (classes) => {
@@ -62,8 +64,8 @@ class Header extends Component {
                     to={`/users/${auth.userId}`}
                     variant='subheading' color="inherit">{auth.name}</Typography>,
         <Avatar key="2" classes={{root: 'header-user-logo'}} component={Link} to={`/users/${auth.userId}`}
-                alt={'profile-picture'}
-                src={auth.profilePic}/>,
+                alt={'user-avatar'}
+                src={auth.profilePic ? auth.profilePic : userAvatar}/>,
         <IconButton key="3"
                     aria-owns={anchorEl ? 'menu' : null}
                     aria-haspopup="true"

@@ -45,6 +45,28 @@ module.exports = app => {
       });
   });
 
+  app.delete('/api/users/:userId/delete', requireLogin, (req, res) => {
+    connection.query(`DELETE FROM users WHERE userId = ? LIMIT 1`, [req.params.userId], (err, result) => {
+      if (err) {
+        res.send({success: false});
+      } else {
+        console.log(result);
+        res.send({success: true});
+      }
+    });
+  });
+
+  app.post('/api/subscribe', (req, res) => {
+    connection.query('INSERT INTO newsletter (email, name) VALUES (?, ?)',
+      [req.body.data.email, req.body.data.name], (error, result) => {
+        if (error) {
+          res.send({success: false});
+        } else {
+          res.send({success: true});
+        }
+      });
+  });
+
   app.post('/api/messages', (req, res) => {
     connection.query('INSERT INTO messages (email, name, type, message) VALUES (?, ?, ?, ?)',
       [req.body.data.email, req.body.data.name, req.body.data.type, req.body.data.message], (error, result) => {

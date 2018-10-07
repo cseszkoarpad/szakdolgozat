@@ -37,7 +37,7 @@ class CookieWarning extends React.Component {
       return (
         <div className="cookie-wrapper">
           <p>
-            Oldalunk cookie-kat használ a felhasználói élmény növelése érdekében. A “Rendben” gomb megnyomásával
+            Oldalunk “cookie”-kat használ a felhasználói élmény növelése érdekében. A “Rendben” gomb megnyomásával
             elfogadod.{' '}
             <a className="cookie-more-info" rel="noopener noreferrer" target="_blank" href="./adatvedelmi-tajekoztato">
               További információk
@@ -50,15 +50,15 @@ class CookieWarning extends React.Component {
               }} classes={{root: 'cookie-checkbox'}}
               />
             }
-                              classes={{label: 'cookie-checkbox-label'}}
-                              label={'Engedélyezem, hogy az oldal anonim módon statisztikai adatokat gyűjtsön tevékenységemről.'}
+            classes={{label: 'cookie-checkbox-label'}}
+            label={'Engedélyezem, hogy az oldal anonim módon statisztikai adatokat gyűjtsön tevékenységemről.'}
             />
             <button className="btn btn--primary" onClick={this.acceptCookies}>Rendben</button>
           </div>
         </div>
       );
     } else {
-      return null
+      return null;
     }
   }
 }

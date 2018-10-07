@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
-import {updateUser} from '../actions/user';
+import {deleteUser, updateUser} from '../actions/user';
+import userAvatar from '../resources/default_user_avatar.png';
 
 class UserProfilePage extends Component {
   state = {
@@ -23,6 +24,11 @@ class UserProfilePage extends Component {
   handleGoBack = (e) => {
     e.preventDefault();
     this.props.history.goBack();
+  };
+
+  handleDeleteUser = (e) => {
+    e.preventDefault();
+    this.props.deleteUser(this.state.userId);
   };
 
   handleSubmitUser = (event) => {
@@ -58,11 +64,12 @@ class UserProfilePage extends Component {
               fullWidth
               type="string"
               name="profilePic"
-              label="Profilkép"
+              label="Profilkép url"
               value={profilePic}
               onChange={this.onChange}
             />
-            <img className="user-profile-avatar" src={`${profilePic}`} alt="user-profile-avatar"/>
+            <img className="user-profile-avatar" src={`${profilePic ? profilePic : userAvatar}`}
+                 alt="user-profile-avatar"/>
           </div>
           <TextField
             classes={{root: 'margin-medium--important'}}
@@ -70,7 +77,7 @@ class UserProfilePage extends Component {
             fullWidth
             type="string"
             name="location"
-            label="Város"
+            label="Lakhely"
             value={location}
             onChange={this.onChange}
           />
@@ -78,6 +85,7 @@ class UserProfilePage extends Component {
             classes={{root: 'margin-medium--important'}}
             style={{width: '400px'}}
             fullWidth
+            required
             type="tel"
             name="phone"
             label="Telefonszám"
@@ -86,7 +94,11 @@ class UserProfilePage extends Component {
           />
           <div className="user-profile-buttons-wrapper">
             <button type="submit" className="btn btn--primary">Mentés</button>
-            <button onClick={this.handleGoBack} style={{marginRight: '20px'}} className="btn btn--secondary">Mégse
+            <button onClick={this.handleGoBack} style={{marginRight: '20px'}} className="btn btn--secondary">
+              Mégse
+            </button>
+            <button onClick={this.handleDeleteUser} style={{marginRight: '20px'}} className="btn btn--danger">
+              Profil törlése
             </button>
           </div>
         </form>
@@ -101,4 +113,4 @@ function mapStateToProps({auth}) {
   };
 }
 
-export default connect(mapStateToProps, {updateUser})(UserProfilePage);
+export default connect(mapStateToProps, {updateUser, deleteUser})(UserProfilePage);

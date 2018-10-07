@@ -10,12 +10,15 @@ import reducers from './reducers';
 
 export const history = createHistory();
 
+const composeSetup = process.env.NODE_ENV !== 'production' && typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose;
+
 const store = createStore(
   reducers,
   {},
-  compose(
+  composeSetup(
     applyMiddleware(reduxThunk),
-    process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
 

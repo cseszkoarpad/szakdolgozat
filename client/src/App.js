@@ -20,6 +20,7 @@ import * as ReactGA from 'react-ga';
 import {Cookies, withCookies} from 'react-cookie';
 import CookieWarning from './components/CookieWarning';
 import PropTypes, {instanceOf} from 'prop-types';
+import NewsLetter from './components/NewsLetter';
 
 class App extends Component {
   static propTypes = {
@@ -86,6 +87,7 @@ class App extends Component {
             <Header/>
             {this.props.auth ? this.renderPrivateRoutes() : this.renderPublicRoutes()}
             <Footer/>
+            <NewsLetter/>
             <CookieWarning/>
           </div>
         </Router>

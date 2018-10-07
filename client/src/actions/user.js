@@ -1,4 +1,4 @@
-import {FETCH_USER, SET_AUTH_TO_NULL, UPDATE_USER} from '../constants';
+import {DELETE_USER, FETCH_USER, SET_AUTH_TO_NULL, UPDATE_USER} from '../constants';
 import axios from 'axios';
 
 export const fetchUser = () => async dispatch => {
@@ -15,4 +15,10 @@ export const updateUser = (data) => async dispatch => {
 
 export const setAuthToNull = () => async dispatch => {
   dispatch({type: SET_AUTH_TO_NULL});
+};
+
+export const deleteUser = (userId) => async dispatch => {
+  const res = await axios.delete(`/api/users/${userId}/delete`);
+
+  dispatch({type: DELETE_USER, payload: res.data});
 };

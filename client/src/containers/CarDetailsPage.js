@@ -209,7 +209,7 @@ class CarDetailsPage extends Component {
                   <b>{kivitel}</b>
                 </li>
                 <li className="car-detail-spec-list-item">
-                  <label>Km óra állása</label>
+                  <label>Kilométeróra állása</label>
                   <div><b>{km}</b><span className="font-weight-high text--italic"> km</span></div>
                 </li>
                 <li className="car-detail-spec-list-item">
