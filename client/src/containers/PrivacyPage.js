@@ -154,13 +154,13 @@ const PrivacyPage = () => {
       </p>
       <h2>12. A személyes adatok tárolásának módja, az adatkezelés biztonsága</h2>
       <p>Az Adatkezelő a személyes adatok kezelésére alkalmazott informatikai eszközöket
-        úgy választja meg és üzemelteti, hogy a kezelt adat:
-        <ul>
-          <li>csak az arra feljogosítottak számára legyen hozzáférhető,</li>
-          <li>hitelessége és hitelesítése biztosított, változatlansága igazolható, valamint</li>
-          <li>a jogosulatlan hozzáférés, betekintés és felhasználás ellen védett legyen.</li>
-        </ul>
-        A Munkáltató az adatokat megfelelő intézkedésekkel védi különösen a jogosulatlan
+        úgy választja meg és üzemelteti, hogy a kezelt adat:</p>
+      <ul>
+        <li>csak az arra feljogosítottak számára legyen hozzáférhető,</li>
+        <li>hitelessége és hitelesítése biztosított, változatlansága igazolható, valamint</li>
+        <li>a jogosulatlan hozzáférés, betekintés és felhasználás ellen védett legyen.</li>
+      </ul>
+      <p>A Munkáltató az adatokat megfelelő intézkedésekkel védi különösen a jogosulatlan
         hozzáférés, a szándékos vagy véletlen megváltoztatás, továbbítás, nyilvánosságra
         hozatal, törlés vagy megsemmisítés, valamint sérülés, illetve az alkalmazott technika
         változásaiból fakadó hozzáférhetetlenné válás ellen.
