@@ -715,6 +715,9 @@ h1 {
     top: 50%;
 }
 
+.loader-circle {
+    color: var(--page-gold-color) !important;
+}
 /******** IMAGE UPLOAD ****************/
 .uploadPictureContainer {
     margin: 2% !important;

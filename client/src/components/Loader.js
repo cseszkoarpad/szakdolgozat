@@ -3,7 +3,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Loader = () => (
   <div className="full-page">
-    <CircularProgress className="loader" size={50}/>
+    <CircularProgress className="loader" classes={{root: 'loader-circle'}} size={50}/>
   </div>
 );
 
