@@ -164,7 +164,7 @@ module.exports = app => {
       });
   });
 
-  app.put('/api/cars/:carId/edit', (req, res) => {
+  app.put('/api/cars/:carId/edit', requireLogin, (req, res) => {
     const {
       preview_url, marka, modell, ar, ev,
       kivitel, km, szin, tomeg, uzemanyag,

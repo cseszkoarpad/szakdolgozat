@@ -1,26 +1,25 @@
-import React, {Component} from 'react';
-import {hot} from 'react-hot-loader';
-import {Redirect, Route, Router, Switch} from 'react-router-dom';
-import {connect, Provider} from 'react-redux';
-import {fetchUser} from './actions/user';
-import {fetchCars} from './actions/car';
-import Main from './containers/Main';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import CarDetailsPage from './containers/CarDetailsPage';
-import CarEditPage from './containers/CarEditPage';
-import CarListPage from './containers/CarListPage';
-import CarUploadPage from './containers/CarUploadPage';
-import ContactPage from './containers/ContactPage';
-import PrivacyPage from './containers/PrivacyPage';
-import AszfPage from './containers/AszfPage';
-import './styles/main.css';
-import UserProfilePage from './containers/UserProfilePage';
-import * as ReactGA from 'react-ga';
-import {Cookies, withCookies} from 'react-cookie';
-import CookieWarning from './components/CookieWarning';
-import PropTypes, {instanceOf} from 'prop-types';
-import NewsLetter from './components/NewsLetter';
+import React, {Component} from 'react'
+import {hot} from 'react-hot-loader'
+import {Redirect, Route, Router, Switch} from 'react-router-dom'
+import {connect, Provider} from 'react-redux'
+import {fetchUser} from './actions/user'
+import Main from './containers/Main'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import CarDetailsPage from './containers/CarDetailsPage'
+import CarEditPage from './containers/CarEditPage'
+import CarListPage from './containers/CarListPage'
+import CarUploadPage from './containers/CarUploadPage'
+import ContactPage from './containers/ContactPage'
+import PrivacyPage from './containers/PrivacyPage'
+import AszfPage from './containers/AszfPage'
+import './styles/main.css'
+import UserProfilePage from './containers/UserProfilePage'
+import * as ReactGA from 'react-ga'
+import {Cookies, withCookies} from 'react-cookie'
+import CookieWarning from './components/CookieWarning'
+import PropTypes, {instanceOf} from 'prop-types'
+import NewsLetter from './components/NewsLetter'
 
 class App extends Component {
   static propTypes = {
@@ -101,8 +100,7 @@ function mapStateToProps({auth}) {
 }
 
 const mapDispatchToProps = {
-  fetchCars,
-  fetchUser,
+  fetchUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(hot(module)(withCookies(App)));
