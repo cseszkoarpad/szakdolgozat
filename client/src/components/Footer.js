@@ -10,8 +10,8 @@ const Footer = () => (
       </ul>
       <ul className="footer-list">
         <li><Link to="/kapcsolat">Kapcsolat</Link></li>
-        <li><Link to="/adatvedelmi-tajekoztato">Adatvédelmi tájékoztató</Link></li>
-        <li><Link to="/aszf-jogi-nyilatkozat">ÁSZF és jogi nyilatkozat</Link></li>
+        {/*<li><Link to="/adatvedelmi-tajekoztato">Adatvédelmi tájékoztató</Link></li>
+        <li><Link to="/aszf-jogi-nyilatkozat">ÁSZF és jogi nyilatkozat</Link></li>*/}
       </ul>
       <Link to={'/'}>
         <img
@@ -20,7 +20,7 @@ const Footer = () => (
       </Link>
     </div>
     <div className="footer-copyright">
-      © {new Date().getFullYear()}. Luxusautó portál
+      © {new Date().getFullYear()}. Személygépjármű portál
     </div>
   </footer>
 );

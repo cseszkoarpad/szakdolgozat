@@ -31,7 +31,6 @@ class ContactPage extends Component {
     this.setState({[name]: value});
   };
 
-  //TODO MODAL HA SIKERES ÉS LEOKÉZÁS UTÁN TESZ A FŐOLDALRA VISSZA
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({loading: true});
@@ -57,7 +56,7 @@ class ContactPage extends Component {
       return (
         <Paper>
           <form className="contact-page-wrapper" onSubmit={this.onSubmit}>
-            <h1 className="contact-page-title">Vegye fel velünk a kapcsolatot</h1>
+            <h1 className="contact-page-title">Vegye fel a kapcsolatot</h1>
             <TextField
               style={{width: '600px', marginTop: '10px'}}
               autoFocus={!auth && true}

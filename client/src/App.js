@@ -51,8 +51,8 @@ class App extends Component {
         <Route exact path="/" component={Main}/>
         <Route exact path="/cars/:id" component={CarDetailsPage}/>
         <Route exact path="/kapcsolat" component={ContactPage}/>
-        <Route exact path="/adatvedelmi-tajekoztato" component={PrivacyPage}/>
-        <Route exact path="/aszf-jogi-nyilatkozat" component={AszfPage}/>
+        {/*<Route exact path="/adatvedelmi-tajekoztato" component={PrivacyPage}/>
+        <Route exact path="/aszf-jogi-nyilatkozat" component={AszfPage}/>*/}
         <Redirect to="/"/>
       </Switch>
     );
@@ -69,8 +69,8 @@ class App extends Component {
         <Route exact path="/upload/new" component={CarUploadPage}/>
         <Route exact path="/users/:id" component={UserProfilePage}/>
         <Route exact path="/kapcsolat" component={ContactPage}/>
-        <Route exact path="/adatvedelmi-tajekoztato" component={PrivacyPage}/>
-        <Route exact path="/aszf-jogi-nyilatkozat" component={AszfPage}/>
+        {/*<Route exact path="/adatvedelmi-tajekoztato" component={PrivacyPage}/>
+        <Route exact path="/aszf-jogi-nyilatkozat" component={AszfPage}/>*/}
         <Redirect to="/"/>
       </Switch>
     );
