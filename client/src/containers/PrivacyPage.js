@@ -103,7 +103,7 @@ const PrivacyPage = () => {
         hozzájárulás bármikor visszavonható.
       </p>
       <h2>5. Az Adatkezelő megnevezése</h2>
-      <p>Luxus autó portál
+      <p>Személygépjármű portál
       </p>
       <h2>6. Az adatkezelés időtartama</h2>
       <p>Az automatikusan gyűjtött nem személyes adatokat a rendszer - az utolsó látogatás

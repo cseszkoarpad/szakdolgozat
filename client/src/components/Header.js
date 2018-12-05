@@ -111,7 +111,7 @@ class Header extends Component {
               className="header-logo"
               src="http://www.pngpix.com/wp-content/uploads/2016/06/PNGPIX-COM-Yellow-Ferrari-F12tdf-Car-Front-PNG-Image.png"
               alt="auto-portal-logo"/>
-            <h1 className="header-title">Luxus Autó Portál</h1>
+            <h1 className="header-title">Személygépjármű Portál</h1>
           </Link>
           <Typography className={classes.spaceFiller}/>
           {this.renderMenu(classes)}
